@@ -20,9 +20,7 @@ So I started collecting real scenarios I’ve seen:
 * CSVs with 2 million rows and 6 different date formats,
 * JSON events with new fields added mid-release,
 * ETL jobs that “succeed” but quietly skip records,
-* Dashboards that stop updating without errors.
-
-Each one became a small, reproducible exercise — so others can learn the same lessons without the 2 a.m. panic.
+* Dashboards that stop updating without errors, etc.
 
 ---
 
@@ -38,21 +36,22 @@ Each one became a small, reproducible exercise — so others can learn the same 
 
 And many more coming ...
 
-Each problem is small enough to solve in hours,
-but real enough to prepare you for production.
+> Each problem is small enough to solve in hours, but real enough to prepare you for production.
 
 ---
 
 ## Getting Started
 
 ```bash
+# 1. Set up your environment
 python -m venv venv && source venv/bin/activate
+
+# 2. Use Python 3.10+
+# 3. Pick a problem
+#    Each folder has a question.md and a reference solution.py
 ```
 
-Use **Python 3.10+**,
-open any `question.md`, and try the problem yourself before checking the `solution.py`.
-
-All examples are designed for streaming-safe, memory-aware patterns.
+Inputs live in `data/`, outputs are generated beside them for easy inspection. Data files are excluded intentionally to keep the repo lightweight.
 
 ---
 
