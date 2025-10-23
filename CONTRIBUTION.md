@@ -47,8 +47,6 @@ Before opening a pull request, confirm:
 
 - [ ] `question.md` reads cleanly with correct Markdown formatting.
 - [ ] `solution.py` runs locally using the provided instructions.
-- [ ] New or modified datasets are documented and reasonably sized.
-- [ ] Tests (if added) pass locally; include command snippets in the PR description.
 - [ ] README references (if touched) remain accurate.
 
 Thank you for sharing your expertise and helping fellow engineers level up. Star the repository to stay notified about new challenges and updates!
