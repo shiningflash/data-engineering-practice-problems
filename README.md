@@ -47,11 +47,27 @@ And many more coming ...
 python -m venv venv && source venv/bin/activate
 
 # 2. Use Python 3.10+
-# 3. Pick a problem
-#    Each folder has a question.md and a reference solution.py
+# 3. Browse PROBLEMS.md for the full index, or open any folder in problems/.
+#    Each problem lives in problems/NNN-slug/ and contains:
+#      - question.md   (problem statement, with YAML frontmatter)
+#      - solution.md   (written walkthrough)  OR  solution.py (runnable code)
 ```
 
 Inputs live in `data/`, outputs are generated beside them for easy inspection. Data files are excluded intentionally to keep the repo lightweight.
+
+### Repo layout
+
+```
+problems/
+  001-log-file-error-analysis/
+    question.md
+    solution.py
+  ...
+data/                # sample input files (gitignored where large)
+scripts/
+  build_index.py     # regenerates PROBLEMS.md from question.md frontmatter
+PROBLEMS.md          # generated index — do not edit by hand
+```
 
 ---
 
