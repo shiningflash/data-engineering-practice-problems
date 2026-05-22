@@ -1,0 +1,38 @@
+name: Notify Blog
+
+# Fires a repository_dispatch event at shiningflash/shiningflash.github.io
+# whenever problems or PROBLEMS.md change on main, so the blog's
+# sync-practice workflow runs and the new content goes live within ~1 minute.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "problems/**"
+      - "PROBLEMS.md"
+      - "scripts/build_index.py"
+
+  workflow_dispatch:
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch to blog
+        env:
+          # A fine-grained PAT with "Contents: write" on shiningflash.github.io.
+          # Add it as a repo secret named BLOG_DISPATCH_TOKEN.
+          GH_TOKEN: ${{ secrets.BLOG_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "BLOG_DISPATCH_TOKEN secret not set — skipping dispatch."
+            echo "Add it under Settings → Secrets and variables → Actions."
+            exit 0
+          fi
+          curl -fsSL -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/shiningflash/shiningflash.github.io/dispatches \
+            -d '{"event_type":"practice-problems-updated","client_payload":{"source_repo":"${{ github.repository }}","sha":"${{ github.sha }}"}}'
+          echo "Dispatched practice-problems-updated to blog."

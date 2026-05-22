@@ -19,12 +19,43 @@ Thanks for helping expand the Data Engineering Practice Problems collection. Thi
 
 ## Repository Structure Standards
 
-- Each problem lives in its own folder at the repository root, e.g. `Problem X: <Descriptive Title>/`.
+- Every problem lives in `problems/NNN-kebab-case-title/` where `NNN` is a zero-padded id (`001`, `065`, ...). Pick the next free id.
 - Inside each problem directory:
-  - `question.md` – prompt or requirements written in Markdown; include context, inputs, outputs, and any bonus objectives.
-  - `solution.py` – reference implementation using standard library where possible; include a short module docstring explaining the approach.
-  - Optional subdirectories (`data/`, `tests/`) if the problem demands bespoke assets. Keep paths relative (e.g., `../data/` for shared sample data).
+  - `question.md` – the problem prompt. **Must start with YAML frontmatter** (see below), followed by a single H1 `# Problem N — Title`, then the body.
+  - `solution.md` – written walkthrough (preferred for design / discussion problems), **or** `solution.py` for runnable code problems. Pick one; the frontmatter declares which.
+  - Optional subdirectories (`data/`, `tests/`) if the problem demands bespoke assets. Keep paths relative (e.g., `../../data/` for shared sample data).
 - Shared datasets belong in the top-level `data/` directory. Provide a `README` snippet or inline comments describing their provenance if they are newly added.
+
+### Required frontmatter
+
+Every `question.md` begins with this block — `PROBLEMS.md` is generated from it:
+
+```yaml
+---
+id: 21
+title: Data Platform for an Electricity Retailer
+category: System Design
+topics: [smart meter, IoT, warehouse, batch]
+difficulty: Hard
+solution: solution.md
+---
+```
+
+Allowed `category` values match the legend in `PROBLEMS.md`. `difficulty` is one of `Easy`, `Medium`, `Hard`. `solution` is the filename of the answer file in the same folder.
+
+### Regenerating the index
+
+After adding or editing a problem, regenerate the top-level index:
+
+```bash
+python3 scripts/build_index.py
+```
+
+CI (or a pre-PR check) can verify staleness with:
+
+```bash
+python3 scripts/build_index.py --check
+```
 
 ## Problem Design Guidelines
 
@@ -45,8 +76,10 @@ Thanks for helping expand the Data Engineering Practice Problems collection. Thi
 
 Before opening a pull request, confirm:
 
+- [ ] `question.md` has valid frontmatter (id, title, category, topics, difficulty, solution).
 - [ ] `question.md` reads cleanly with correct Markdown formatting.
-- [ ] `solution.py` runs locally using the provided instructions.
+- [ ] The declared `solution` file exists and is the right type (`.md` or `.py`).
+- [ ] `python3 scripts/build_index.py --check` passes.
 - [ ] README references (if touched) remain accurate.
 
 Thank you for sharing your expertise and helping fellow engineers level up. Star the repository to stay notified about new challenges and updates!
