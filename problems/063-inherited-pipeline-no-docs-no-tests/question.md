@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 63 — Inherited Pipeline No Docs No Tests
+# Problem 63, Inherited Pipeline No Docs No Tests
 
 **Scenario:**
 You join a team and inherit a critical pipeline. The previous owner left. There is no documentation, no tests, and the code is dense. You are expected to keep it running and eventually own it. The pipeline runs nightly and the business depends on it.

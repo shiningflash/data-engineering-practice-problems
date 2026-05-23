@@ -47,16 +47,16 @@ Cheap. Hard to govern.
 
 ### What each one is good at
 
-| Need                                           | Lake | Warehouse | Lakehouse |
+| Need | Lake | Warehouse | Lakehouse |
 | ---------------------------------------------- | ---- | --------- | --------- |
-| Store anything cheaply, including non-tabular   | Yes  | No        | No        |
-| Run SQL with sub-second latency                | No   | Yes       | Sometimes |
-| ACID transactions on tables                    | No   | Yes       | Yes       |
-| Time travel (query as of a past time)          | No   | Yes (limited) | Yes   |
-| Schema enforcement and evolution               | No   | Yes       | Yes       |
-| Multi-engine read (Spark, Trino, BigQuery, …)  | Yes  | No        | Yes       |
-| Built-in governance, access control            | DIY  | Yes       | Partial   |
-| Cost                                           | Lowest | Highest | Middle  |
+| Store anything cheaply, including non-tabular | Yes | No | No |
+| Run SQL with sub-second latency | No | Yes | Sometimes |
+| ACID transactions on tables | No | Yes | Yes |
+| Time travel (query as of a past time) | No | Yes (limited) | Yes |
+| Schema enforcement and evolution | No | Yes | Yes |
+| Multi-engine read (Spark, Trino, BigQuery, …) | Yes | No | Yes |
+| Built-in governance, access control | DIY | Yes | Partial |
+| Cost | Lowest | Highest | Middle |
 
 ### Where each fits in a real pipeline
 

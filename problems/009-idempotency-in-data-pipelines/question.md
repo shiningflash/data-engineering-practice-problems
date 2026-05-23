@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 9 — Idempotency in Data Pipelines
+# Problem 9, Idempotency in Data Pipelines
 
 **Scenario:**
 A scheduled job that loads daily orders into your warehouse failed at 2 AM, retried automatically, and finished successfully on the second attempt. The next morning, the revenue dashboard shows yesterday's number is exactly double. The team is confused. You explain that the job was not idempotent.

@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 28 — Low Balance Notification Pipeline
+# Problem 28, Low Balance Notification Pipeline
 
 **Scenario:**
 A neobank wants to send a push notification "your balance is below $50" to each customer whose balance drops under that threshold. The notification should fire at most once per day per customer, must never wake up the wrong customer, and must respect the customer's local time zone (no push at 3 AM). They have 8 million customers.

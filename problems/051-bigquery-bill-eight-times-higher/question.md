@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 51 — BigQuery Bill Eight Times Higher
+# Problem 51, BigQuery Bill Eight Times Higher
 
 **Scenario:**
 The monthly BigQuery bill jumped from $500 to $4,000 between April and May. Nobody on the team can immediately say why. Finance wants an answer this week. You have full access to billing data and INFORMATION_SCHEMA.

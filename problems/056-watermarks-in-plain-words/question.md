@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 56 — Watermarks in Plain Words
+# Problem 56, Watermarks in Plain Words
 
 **Scenario:**
 The team is building a streaming pipeline that computes 5-minute windowed aggregates. Late events are common. The pipeline is using Flink, and the engineer setting it up keeps asking how to choose the watermark. They have read the docs but it has not clicked yet.

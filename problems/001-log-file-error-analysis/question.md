@@ -7,10 +7,10 @@ difficulty: Easy
 solution: solution.py
 ---
 
-# Problem 1 — Log File Error Analysis
+# Problem 1, Log File Error Analysis
 
 **Scenario:**
-You have a huge log file from an IoT platform. Each line follows this structure:
+You have a huge log file from an IoT platform. Each line looks like this:
 
 ```
 2025-10-11T13:45:20Z sensor_12 OK
@@ -20,23 +20,23 @@ You have a huge log file from an IoT platform. Each line follows this structure:
 ...
 ```
 
-Each line contains:
+Each line has:
 
 * A timestamp (ISO format)
 * A sensor ID
 * A status (`OK` or `ERROR`)
 
-The file can be **very large (10+ GB)** — so you **cannot load it fully into memory**.
+The file can be very large (10+ GB), so you cannot load it fully into memory.
 
 ---
 
 ### Task:
 
-Write a **Python program** that:
+Write a Python program that:
 
-1. Reads the log file efficiently (without loading the entire file).
+1. Reads the log file efficiently, without loading the whole file.
 2. Counts how many times each sensor reported `ERROR`.
-3. Prints the **top 5 sensors** with the highest error counts.
+3. Prints the top 5 sensors with the highest error counts.
 
 **Bonus (Optional):**
 
@@ -45,10 +45,10 @@ Write a **Python program** that:
 
 ---
 
-💡 **Tips:**
+**Tips:**
 
-* Think about streaming/iterative processing.
-* Consider using `Counter`, `heapq`, or generator patterns.
-* Clean and readable code matters as much as correctness.
+* Think streaming, not batch.
+* Look at `Counter`, `heapq`, or generator patterns.
+* Clean, readable code matters as much as correctness.
 
 ---

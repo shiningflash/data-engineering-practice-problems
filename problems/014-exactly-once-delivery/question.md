@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 14 — Exactly Once Delivery
+# Problem 14, Exactly Once Delivery
 
 **Scenario:**
 A payments engineer says their Kafka topic provides "exactly once" so the downstream job does not need any deduplication logic. The job processes a payment confirmation, and one day, a customer is charged twice. The engineer is surprised. You explain that exactly once is more subtle than it sounds.

@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 62 — Postmortem After a Bad Day
+# Problem 62, Postmortem After a Bad Day
 
 **Scenario:**
 A data incident happened. Numbers were wrong for a full day. The wrong numbers were quoted by sales, by finance, and in one PR communication. The business is upset. Leadership has asked the data team to run a postmortem and "make sure this never happens again."

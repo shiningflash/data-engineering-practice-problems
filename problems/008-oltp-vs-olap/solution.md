@@ -52,17 +52,17 @@ So neither one is "better." They are tuned for opposite workloads.
 
 ### Side by side
 
-| Aspect                | OLTP                                | OLAP                                  |
+| Aspect | OLTP | OLAP |
 | --------------------- | ----------------------------------- | ------------------------------------- |
-| Typical user          | The application                     | Analysts, BI tools, ML pipelines      |
-| Typical query         | Read or update one row              | Aggregate millions of rows            |
-| Storage layout        | Row-oriented                        | Column-oriented                       |
-| Indexes               | Many (primary key, foreign keys)    | Few or none (uses partition + cluster)|
-| Updates and deletes   | Frequent                            | Rare, often batch                     |
-| Concurrency           | Thousands of small transactions     | Few large queries                     |
-| ACID                  | Strict                              | Eventual or relaxed in many engines   |
-| Data freshness        | Real time                           | Minutes to hours behind               |
-| Examples              | Postgres, MySQL, SQL Server, DynamoDB | BigQuery, Snowflake, Redshift, ClickHouse |
+| Typical user | The application | Analysts, BI tools, ML pipelines |
+| Typical query | Read or update one row | Aggregate millions of rows |
+| Storage layout | Row-oriented | Column-oriented |
+| Indexes | Many (primary key, foreign keys) | Few or none (uses partition + cluster)|
+| Updates and deletes | Frequent | Rare, often batch |
+| Concurrency | Thousands of small transactions | Few large queries |
+| ACID | Strict | Eventual or relaxed in many engines |
+| Data freshness | Real time | Minutes to hours behind |
+| Examples | Postgres, MySQL, SQL Server, DynamoDB | BigQuery, Snowflake, Redshift, ClickHouse |
 
 ### Why we keep them separate
 

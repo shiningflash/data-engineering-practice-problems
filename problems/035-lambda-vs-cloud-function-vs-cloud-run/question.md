@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 35 — Lambda vs Cloud Function vs Cloud Run
+# Problem 35, Lambda vs Cloud Function vs Cloud Run
 
 **Scenario:**
 You need to deploy a small Python service. It reads a file from S3 (or GCS), validates and transforms it, and writes the result to BigQuery. It runs maybe 200 times a day. The team is on Google Cloud, but the file lands in an AWS bucket owned by a partner. The hiring manager wants to know if you can defend a cloud choice.
@@ -33,4 +33,4 @@ In the interview, the question is:
 * Container vs zip / image vs source bundle.
 * Cold starts and concurrency.
 * Cost shape (per invocation, per second).
-* Runtime limits (15 min Lambda, 60 min Cloud Function gen2, basically unbounded Cloud Run).
+* Runtime limits (15 min Lambda, 60 min Cloud Function gen2, unbounded Cloud Run).

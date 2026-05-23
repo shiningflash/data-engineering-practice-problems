@@ -178,6 +178,6 @@ The warehouse never sees a profile load. The warehouse is for analytics and offl
 Two ways:
 
 1. Add another key, `(user_id, day_id)`. Same approach. Reset at midnight local time.
-2. If they want hourly granularity, store a small dictionary in the row: `{ '14': 12, '15': 28, ... }`. Updated by the same stream processor.
+2. If they want hourly granularity, store a small dictionary in the row: `{ '14': 12, '15': 28,... }`. Updated by the same stream processor.
 
 The architecture does not change. The data model just gets a finer grain.

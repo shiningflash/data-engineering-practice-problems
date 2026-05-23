@@ -7,7 +7,7 @@ difficulty: Hard
 solution: solution.md
 ---
 
-# Problem 21 — Data Platform for an Electricity Retailer
+# Problem 21, Data Platform for an Electricity Retailer
 
 **Scenario:**
 A small electricity retailer has 200,000 residential customers. Every customer has a smart meter that sends one reading every 15 minutes. The business needs:

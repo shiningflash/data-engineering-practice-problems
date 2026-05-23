@@ -7,7 +7,7 @@ difficulty: Hard
 solution: solution.md
 ---
 
-# Problem 22 — Banking App Monthly Spending Widget
+# Problem 22, Banking App Monthly Spending Widget
 
 **Scenario:**
 A retail bank wants a "your spending this month" widget on the home screen of its mobile app. When the user opens the app, they should see their total spend so far this month, broken down into categories like groceries, transport, dining. It needs to feel instant. The bank has 5 million active customers and millions of transactions per day.

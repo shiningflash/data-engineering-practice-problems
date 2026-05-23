@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 39 — Managed Airflow vs Self Hosted
+# Problem 39, Managed Airflow vs Self Hosted
 
 **Scenario:**
 Your team is starting to run more than a handful of scheduled jobs and the cron-on-a-VM pattern is starting to crack. Someone proposes Airflow. The team can either self-host it on Kubernetes, or use a managed service like MWAA (AWS), Cloud Composer (GCP), or Astronomer. Some engineers say "managed is overkill, we know Kubernetes." Others say "let's not run database migrations in production." You are asked to call it.

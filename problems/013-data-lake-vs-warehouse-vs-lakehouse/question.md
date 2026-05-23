@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 13 — Data Lake vs Warehouse vs Lakehouse
+# Problem 13, Data Lake vs Warehouse vs Lakehouse
 
 **Scenario:**
 A product manager joins your team and asks why your stack has three different storage layers: raw files in S3, tables in BigQuery, and something the team calls "the lakehouse." They want to understand the point of each.

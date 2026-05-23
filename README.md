@@ -1,9 +1,9 @@
 # 🧩 Data Engineering Practice Problems
 
-> After solving 1,500+ problems on LeetCode and Codeforces, I realized —
+> After solving 1,500+ problems on LeetCode and Codeforces, I realized,
 > **none of them prepared me for broken CSVs, delayed Kafka messages, or JSONs that lie.**
 
-This repo is for engineers who’ve had enough of toy problems. It’s a collection of **real-world data engineering scenarios** — short, practical exercises inspired by what actually breaks in production.
+This repo is for engineers who’ve had enough of toy problems. It’s a collection of **real-world data engineering scenarios**. Short, practical exercises inspired by what actually breaks in production.
 
 ---
 
@@ -12,7 +12,7 @@ This repo is for engineers who’ve had enough of toy problems. It’s a collect
 Most practice problems test logic.
 Production tests resilience.
 
-In production, problems don’t come with test cases — they come with missing data, bad assumptions, and time pressure.
+In production, problems don’t come with test cases, they come with missing data, bad assumptions, and time pressure.
 
 So I started collecting real scenarios I’ve seen:
 
@@ -26,15 +26,15 @@ So I started collecting real scenarios I’ve seen:
 
 ## What’s Inside
 
-| Category                 | Scenario                                         | What You’ll Practice                         |
-| :----------------------- | :----------------------------------------------- | :------------------------------------------- |
-|  **Late Data**           | 10 GB of IoT logs arriving out of order          | Handle streaming delays without duplication  |
-|  **Schema Drift**        | JSON events adding new fields mid-release        | Validate and evolve safely                   |
-|  **ETL Reliability**     | Long-running jobs silently skipping records      | Detect silent corruptions before they spread |
-|  **Data Hygiene**        | Partner CSVs with missing headers and fake nulls | Clean data in one pass and log every fix     |
-|  **Rolling Analytics**   | Continuous sensor feeds with infinite rows       | Keep rolling metrics in memory without dying |
+| Category | Scenario | What You’ll Practice |
+|:----------------------- |:----------------------------------------------- |:------------------------------------------- |
+| **Late Data** | 10 GB of IoT logs arriving out of order | Handle streaming delays without duplication |
+| **Schema Drift** | JSON events adding new fields mid-release | Validate and evolve safely |
+| **ETL Reliability** | Long-running jobs silently skipping records | Detect silent corruptions before they spread |
+| **Data Hygiene** | Partner CSVs with missing headers and fake nulls | Clean data in one pass and log every fix |
+| **Rolling Analytics** | Continuous sensor feeds with infinite rows | Keep rolling metrics in memory without dying |
 
-And many more coming ...
+And many more coming...
 
 > Each problem is small enough to solve in hours, but real enough to prepare you for production.
 
@@ -76,7 +76,7 @@ PROBLEMS.md          # generated index — do not edit by hand
 If you’ve debugged a broken pipeline,
 caught a silent bug before it spread,
 built a clever patch that saved a release
-or found a way to clean a 5 GB CSV in one pass —
+or found a way to clean a 5 GB CSV in one pass,
 your story belongs here.
 
 Add a new scenario, or improve an existing one.
@@ -85,6 +85,6 @@ See the [Contribution Guide](CONTRIBUTION.md) for details.
 ---
 
 > **The goal isn’t to practice coding.**
-> It’s to practice *judgment* — the kind that keeps systems running when logic alone isn’t enough.
+> It’s to practice *judgment*, the kind that keeps systems running when logic alone isn’t enough.
 
 ⭐ Star the repo if you’ve ever learned more from production than from tutorials.

@@ -7,7 +7,7 @@ difficulty: Easy
 solution: solution.md
 ---
 
-# Problem 55 — Partitioning Clustering Materialized Views
+# Problem 55, Partitioning Clustering Materialized Views
 
 **Scenario:**
 A junior engineer asks you to explain the three main BigQuery cost levers and when to use each. They have heard the words, used them inconsistently, and want a clear picture.

@@ -33,13 +33,13 @@ The rule: **no `user:` bindings in IAM**. Only `group:` and `serviceAccount:`.
 
 For each dataset, the standard roles in BigQuery cover most cases:
 
-| Role                               | What it does                                |
+| Role | What it does |
 | ---------------------------------- | ------------------------------------------- |
-| `bigquery.dataViewer`              | Read tables                                 |
-| `bigquery.dataEditor`              | Read + write tables                         |
-| `bigquery.dataOwner`               | All of the above + manage permissions       |
-| `bigquery.jobUser` (project-level) | Run queries (separate from data access)     |
-| `bigquery.user` (project-level)    | Run queries + create datasets               |
+| `bigquery.dataViewer` | Read tables |
+| `bigquery.dataEditor` | Read + write tables |
+| `bigquery.dataOwner` | All of the above + manage permissions |
+| `bigquery.jobUser` (project-level) | Run queries (separate from data access) |
+| `bigquery.user` (project-level) | Run queries + create datasets |
 
 A typical analyst gets:
 
@@ -107,9 +107,9 @@ Use these sparingly. Coarse-grained dataset access is easier to reason about and
 
 Every production pipeline runs as a service account, never as a person. A few patterns:
 
-* `sa-etl-prod@` — production ETL service account.
-* `sa-ml-training@` — for model training.
-* `sa-bi-tool@` — for the BI tool's queries.
+* `sa-etl-prod@`, production ETL service account.
+* `sa-ml-training@`, for model training.
+* `sa-bi-tool@`, for the BI tool's queries.
 
 Service accounts are members of relevant groups, just like users. The principle of least privilege still applies. The ETL service account does not need access to HR.
 

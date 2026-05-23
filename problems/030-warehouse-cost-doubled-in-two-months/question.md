@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 30 — Warehouse Cost Doubled in Two Months
+# Problem 30, Warehouse Cost Doubled in Two Months
 
 **Scenario:**
 Your finance team forwards a bill. The Snowflake or BigQuery bill is up 100% over two months, from $14,000/month to $28,000/month. They want an explanation by Friday, and they want it not to grow further. The engineering manager wants no breaking changes for the existing analytics team.

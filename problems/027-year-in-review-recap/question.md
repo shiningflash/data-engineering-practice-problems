@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 27 — Year in Review Recap
+# Problem 27, Year in Review Recap
 
 **Scenario:**
 Every December, almost every consumer app sends out a "your year in review" recap: top songs, favorite artists, total kilometers driven, money saved, hours focused. They roll out to hundreds of millions of users in a short window and need to feel personal and beautiful, but be cheap to generate at scale.

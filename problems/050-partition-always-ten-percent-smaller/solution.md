@@ -2,7 +2,7 @@
 
 ### Short version you can say out loud
 
-> The first question is "is this a pattern that maps to reality?" If the small partition is always a Sunday, that is probably just user behavior. If it's a random-looking Tuesday, that is suspicious. The second question is "what is missing — a category of events, a region, a producer?" If you can identify a missing slice, you have a bug. If the loss is even across all dimensions, you are probably looking at noise. Ten percent is large enough to be worth one hour of investigation.
+> First question: does this pattern map to reality? If the small partition is always a Sunday, that's probably just user behavior. If it's a random-looking Tuesday, that's suspicious. Second question: what's missing, a category of events, a region, a producer? If you can name a missing slice, you have a bug. If the loss is even across all dimensions, you're probably looking at noise. Ten percent is large enough to be worth an hour of investigation.
 
 ### Step 1: confirm the pattern is real
 
@@ -21,9 +21,9 @@ ORDER BY 1;
 
 Plot it. Three possible shapes:
 
-* **A clean weekly dip on a specific day.** Day-of-week effect. Likely real user behavior.
-* **A dip that wanders across days.** Suspicious. Patterns that move tell a different story.
-* **A consistent percentage off, every day of the week.** Noise; not a single-partition issue at all.
+* A clean weekly dip on a specific day. Day-of-week effect, likely real user behavior.
+* A dip that wanders across days. Suspicious. Patterns that move tell a different story.
+* A consistent percentage off every day of the week. Noise, not a single-partition issue at all.
 
 The "always 10% smaller" framing suggests a fixed cadence. Confirm: is it always the same day?
 
@@ -31,12 +31,12 @@ The "always 10% smaller" framing suggests a fixed cadence. Confirm: is it always
 
 Things to rule out:
 
-* **Day of week.** Many businesses have lower activity on weekends. A Sunday partition being 30% smaller is normal.
-* **Public holidays.** Specific dates have lower volume. Map the dip dates to holiday calendars.
-* **Time zone effect.** "Day" in the warehouse may not align with "day" at the source. If the source closes at 8 PM local, "their day" ends earlier than UTC midnight.
-* **Recurring maintenance.** Some sources do scheduled maintenance windows on a specific weekday.
+* Day of week. Many businesses have lower activity on weekends. A Sunday partition being 30% smaller is normal.
+* Public holidays. Specific dates have lower volume. Map the dip dates to holiday calendars.
+* Time zone effect. "Day" in the warehouse may not align with "day" at the source. If the source closes at 8 PM local, "their day" ends earlier than UTC midnight.
+* Recurring maintenance. Some sources have scheduled maintenance windows on a specific weekday.
 
-If the dip aligns with any of these, it is not a bug. Document it ("Sunday partitions average 30% lower due to weekend traffic patterns") so the next person does not chase it.
+If the dip aligns with any of these, it's not a bug. Document it ("Sunday partitions average 30% lower due to weekend traffic patterns") so the next person doesn't chase it.
 
 ### Step 3: find what is missing
 
@@ -58,25 +58,25 @@ Same exercise across other dimensions: by region, by app version, by source, by 
 
 ### Common real causes
 
-When the dip turns out to be a bug, it is usually one of:
+When the dip turns out to be a bug, it's usually one of:
 
-1. **A weekly job at the source pauses ingestion** for a maintenance window. Their "data missing for 4 hours" shows up as your "10% smaller partition."
-2. **A specific service has a weekly deploy** that takes minutes, during which events drop.
-3. **A scheduled batch in the source is competing for the same Kafka topic**, causing brief backpressure.
-4. **A weekly partner upload runs late**, beyond your partition boundary, and lands the following day's partition instead.
-5. **A daylight-saving-time edge** that shifts an hour out of one partition into the next, twice a year.
+1. A weekly job at the source pauses ingestion for a maintenance window. Their "data missing for 4 hours" shows up as your "10% smaller partition."
+2. A specific service has a weekly deploy that takes minutes, during which events drop.
+3. A scheduled batch in the source is competing for the same Kafka topic, causing brief backpressure.
+4. A weekly partner upload runs late, beyond your partition boundary, and lands in the following day's partition instead.
+5. A daylight-saving-time edge that shifts an hour out of one partition into the next, twice a year.
 
-Each of these is fixable, but the fix is on a different team than yours.
+Each is fixable, but the fix usually lives on a different team than yours.
 
 ### Step 4: judge if it matters
 
 Even if it is a bug, you have to decide whether to spend time on it. The honest test:
 
-* Does the missing 10% impact any downstream business decision?
+* Does the missing 10% affect any downstream business decision?
 * Does the smaller partition cause downstream errors (failed joins, broken counts)?
 * Does the pattern hide a worse failure that could grow?
 
-If the answer is "no, no, no," document it and move on. If the answer is "the missing rows are a category that finance cares about," investigate properly.
+If the answer is "no, no, no," document it and move on. If the missing rows are a category that finance cares about, investigate properly.
 
 ### A useful statistical anchor
 

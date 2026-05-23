@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 64 — Breaking Change in dbt Model 200 Consumers
+# Problem 64, Breaking Change in dbt Model 200 Consumers
 
 **Scenario:**
 A column in a core dbt model needs to be renamed. The model has 200 downstream consumers: other dbt models, dashboards, scheduled queries, Reverse ETL jobs. Changing the column directly will break all of them at once. The team has done this before and it was a disaster. You are asked to plan the rollout.

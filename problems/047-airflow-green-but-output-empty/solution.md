@@ -41,7 +41,7 @@ If empty, the pipeline cheerfully overwrote yesterday's partition with zero rows
 
 ### Why "green" lies
 
-Airflow's task success is binary on the exit code. A Python script that does `print("done")` and exits successfully is green. A SQL job that runs `INSERT INTO ... SELECT WHERE 1=0` is green. A `bq load` of an empty file is green.
+Airflow's task success is binary on the exit code. A Python script that does `print("done")` and exits successfully is green. A SQL job that runs `INSERT INTO... SELECT WHERE 1=0` is green. A `bq load` of an empty file is green.
 
 The orchestrator does not know what "right" looks like. It is your job to tell it.
 

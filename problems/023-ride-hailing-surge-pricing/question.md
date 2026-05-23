@@ -7,7 +7,7 @@ difficulty: Hard
 solution: solution.md
 ---
 
-# Problem 23 — Ride Hailing Surge Pricing
+# Problem 23, Ride Hailing Surge Pricing
 
 **Scenario:**
 A ride hailing company wants to set a surge multiplier (1.0x, 1.5x, 2x and so on) for each small geographic area, in real time. The multiplier should rise when there are many more ride requests than available drivers in that area, and fall when supply catches up. The product team wants prices to update at most every 30 seconds, and the area should be roughly a neighborhood.

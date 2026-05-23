@@ -2,7 +2,7 @@
 
 ### Short version you can say out loud
 
-> Keep one source of truth: the events table. Derive the current state as a view or a small materialized view on top. You never duplicate the data, you just have one base and one derived. Storage is not doubled. The events table is the history; the view is the latest snapshot. If the view is too slow to compute on the fly, materialize it — but the materialization is much smaller than the events table, so storage cost is barely affected.
+> Keep one source of truth: the events table. Derive the current state as a view or a small materialized view on top. You never duplicate the data, you just have one base and one derived. Storage is not doubled. The events table is the history; the view is the latest snapshot. If the view is too slow to compute on the fly, materialize it, but the materialization is much smaller than the events table, so storage cost is barely affected.
 
 ### The shape
 

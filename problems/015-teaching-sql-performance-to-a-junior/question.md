@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 15 — Teaching SQL Performance to a Junior
+# Problem 15, Teaching SQL Performance to a Junior
 
 **Scenario:**
 A junior engineer on your team writes a query that joins three tables and uses a window function. The query is correct. The result is right. But it takes 8 minutes to run on a table the rest of the team queries in 4 seconds. They ask you for help, and the manager asks you to mentor them.

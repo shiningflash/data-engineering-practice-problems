@@ -7,7 +7,7 @@ difficulty: Easy
 solution: solution.md
 ---
 
-# Problem 53 — Hourly Scan on Daily Data
+# Problem 53, Hourly Scan on Daily Data
 
 **Scenario:**
 A dashboard refreshes every hour. The underlying data only changes once a day, at 6 AM. The query scans 5 TB each hour, so 120 TB per day, ~$750 a month at on-demand rates. The team built it that way "because the dashboard tool's default is hourly." They do not want to break the dashboard.

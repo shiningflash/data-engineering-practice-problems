@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 29 — Daily Report Quietly Wrong for Two Weeks
+# Problem 29, Daily Report Quietly Wrong for Two Weeks
 
 **Scenario:**
 The daily revenue report has been wrong for the last two weeks. Nobody noticed because the numbers looked plausible. The finance team caught it during a month-end reconciliation when their hand-computed total did not match what the dashboard had been claiming. By the time you find out, decisions have already been made on the wrong data, including an exec presentation last Wednesday.

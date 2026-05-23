@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 20 — Window Functions vs GROUP BY
+# Problem 20, Window Functions vs GROUP BY
 
 **Scenario:**
 A teammate is writing a query for a marketing dashboard. They want each row to show the order along with "this customer's total spend so far." They keep getting stuck because `GROUP BY` collapses the rows. They ask why their query keeps disappearing the order detail.

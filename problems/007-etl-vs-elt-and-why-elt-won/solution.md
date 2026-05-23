@@ -41,13 +41,13 @@ That made it cheaper and simpler to dump raw data in and transform with SQL. dbt
 
 ### Why teams prefer ELT today
 
-| Reason                          | What it means in practice                                          |
+| Reason | What it means in practice |
 | ------------------------------- | ------------------------------------------------------------------ |
-| Raw data is preserved           | You can always rebuild a transform if the business logic changes   |
-| Transforms are just SQL         | Analysts can read and change them, not just engineers              |
-| One platform, one bill          | No separate Spark cluster to babysit                               |
-| Easy to version with dbt        | Tests, lineage and docs out of the box                             |
-| Faster iteration                | A new column is a pull request, not a deploy                       |
+| Raw data is preserved | You can always rebuild a transform if the business logic changes |
+| Transforms are just SQL | Analysts can read and change them, not just engineers |
+| One platform, one bill | No separate Spark cluster to babysit |
+| Easy to version with dbt | Tests, lineage and docs out of the box |
+| Faster iteration | A new column is a pull request, not a deploy |
 
 ### When ETL is still the right call
 

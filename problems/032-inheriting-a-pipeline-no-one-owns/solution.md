@@ -86,7 +86,7 @@ Three months from now, the next person inheriting this will thank me. So will I,
 
 ### What I would NOT do in the first month
 
-* **Rewrite the pipeline.** It works. The new owner is the worst rewriter — I have least context.
+* **Rewrite the pipeline.** It works. The new owner is the worst rewriter, I have least context.
 * **Migrate it to a new orchestrator.** Even if Airflow is "old," the migration is the wrong first move.
 * **Add 20 new dbt tests.** Add 2, on the things I touched. More can come later.
 * **Remove the strange CASE WHEN.** Chesterton.

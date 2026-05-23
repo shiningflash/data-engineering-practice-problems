@@ -7,7 +7,7 @@ difficulty: Easy
 solution: solution.md
 ---
 
-# Problem 8 — OLTP vs OLAP
+# Problem 8, OLTP vs OLAP
 
 **Scenario:**
 An analyst on your team writes a SQL query against the production Postgres database. The query is simple: count orders by day for the last year. It takes 90 seconds and the on-call engineer pings you because it briefly slowed down the checkout API. You explain that this kind of query does not belong on the production database. They ask you why.

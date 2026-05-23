@@ -7,11 +7,11 @@ difficulty: Medium
 solution: solution.py
 ---
 
-# Problem 4 — Schema Evolution and Validation for Streaming Events
+# Problem 4, Schema Evolution and Validation for Streaming Events
 
 **Scenario:**
-You’re building a streaming pipeline that ingests **user event data** from multiple microservices.
-The data comes in JSON format like this:
+You are building a streaming pipeline that ingests user event data from many microservices.
+The data comes in as JSON, like this:
 
 ```json
 {"user_id": 101, "event_type": "login", "timestamp": "2025-10-14T12:00:00Z"}
@@ -20,14 +20,14 @@ The data comes in JSON format like this:
 {"event_type": "login", "timestamp": "2025-10-14T12:07:00Z"}
 ```
 
-But because these events come from **different teams and versions**, they are often **incomplete, inconsistent, or evolve over time**:
+Because these events come from different teams and versions, they are often incomplete, inconsistent, or change over time:
 
 * `user_id` might be a string or int
 * `amount` may appear only for purchase events
 * Some fields may be missing
-* Future versions may include new fields (like `device` or `location`)
+* Future versions may add new fields (like `device` or `location`)
 
-Your goal: **Validate and normalize** these events before they are published to your downstream system (e.g., BigQuery, Kafka, or Pub/Sub).
+Your goal: validate and normalize these events before they go to a downstream system (BigQuery, Kafka, Pub/Sub).
 
 ---
 
@@ -35,19 +35,19 @@ Your goal: **Validate and normalize** these events before they are published to 
 
 Write a Python program that:
 
-1. Reads a JSON lines file (`events.jsonl`) line by line (treat it as streaming input).
-2. Validates and normalizes each event based on this **expected schema**:
+1. Reads a JSON lines file (`events.jsonl`) line by line. Treat it as streaming input.
+2. Validates and normalizes each event against this expected schema:
 
-| Field      | Type  | Required | Notes                                                            |
+| Field | Type | Required | Notes |
 | ---------- | ----- | -------- | ---------------------------------------------------------------- |
-| user_id    | int   | ✅ Yes    | Convert to int if possible; skip event if missing or invalid     |
-| event_type | str   | ✅ Yes    | Must be one of `"login"`, `"logout"`, `"purchase"`               |
-| timestamp  | str   | ✅ Yes    | Must be valid ISO8601                                            |
-| amount     | float | ❌ No     | Only required for `"purchase"` events; default to 0.0 if missing |
-| device     | str   | ❌ No     | Optional new field (can be present or not)                       |
+| user_id | int | Yes | Convert to int if possible. Skip event if missing or invalid. |
+| event_type | str | Yes | Must be one of `"login"`, `"logout"`, `"purchase"` |
+| timestamp | str | Yes | Must be valid ISO8601 |
+| amount | float | No | Only required for `"purchase"` events. Default to 0.0 if missing. |
+| device | str | No | Optional new field. Can be present or not. |
 
-3. Writes **valid normalized events** to `cleaned_events.jsonl`.
-4. Writes **invalid events** to `invalid_events.jsonl` with an extra field `"error_reason"` describing why it failed validation.
+3. Writes valid normalized events to `cleaned_events.jsonl`.
+4. Writes invalid events to `invalid_events.jsonl` with an extra `"error_reason"` field describing why they failed.
 
 ---
 
@@ -70,17 +70,17 @@ Write a Python program that:
 
 ### Bonus Challenges (Highly Recommended):
 
-* Make your schema **evolution-proof** – gracefully ignore unknown fields instead of failing.
+* Make your schema evolution-proof. Ignore unknown fields instead of failing.
 * Keep counters: total events processed, valid, invalid.
-* Use `pydantic` (optional but very powerful) for validation.
+* Use `pydantic` for validation (optional, very handy).
 
 ---
 
-💡 **Hints:**
+**Hints:**
 
-* Use `json.loads()` for streaming line-by-line.
+* Use `json.loads()` for line-by-line streaming.
 * Use `try/except` for type conversions.
-* Keep validation and normalization logic inside a single clean function.
-* Think about how you’d handle new fields without code changes — this is key for schema evolution.
+* Keep validation and normalization in one clean function.
+* Think about how you would handle new fields without code changes. That is the heart of schema evolution.
 
 ---

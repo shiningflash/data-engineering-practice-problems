@@ -79,7 +79,7 @@ This finds users who:
 * Are inside their local 9-7 PM window.
 * Have not yet received the notification today.
 
-The `LEFT JOIN ... IS NULL` is the dedup gate at query time. It is fast and avoids sending to anyone we already sent.
+The `LEFT JOIN... IS NULL` is the dedup gate at query time. It is fast and avoids sending to anyone we already sent.
 
 ### The unique constraint is the real safety
 

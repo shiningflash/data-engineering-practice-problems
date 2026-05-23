@@ -7,14 +7,14 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 41 — Tables for an Airbnb Like App
+# Problem 41, Tables for an Airbnb Like App
 
 **Scenario:**
-You are designing the data model for an app like Airbnb. Hosts list properties. Guests search, book, pay and review. There are calendars, prices that change by date, cancellations, refunds, and multiple guests per booking. The interviewer wants to see you reason about which tables exist, what is a fact and what is a dimension, and where the trade-offs hide.
+You're designing the data model for an app like Airbnb. Hosts list properties. Guests search, book, pay, and review. There are calendars, prices that change by date, cancellations, refunds, and multiple guests per booking. The interviewer wants to see you reason about which tables exist, what's a fact and what's a dimension, and where the trade-offs hide.
 
-In the interview, the question is:
+The question:
 
-> Walk me through how you would design tables for an app like Airbnb. Start from the obvious entities and tell me where the trade offs hide.
+> Walk me through how you'd design tables for an app like Airbnb. Start from the obvious entities and tell me where the trade-offs hide.
 
 ---
 
@@ -30,7 +30,7 @@ In the interview, the question is:
 ### What a Good Answer Covers:
 
 * Users, listings, calendars, bookings, payments, reviews.
-* OLTP shape vs warehouse star schema.
+* OLTP shape vs. warehouse star schema.
 * Pricing as a separate, time-varying table.
 * Booking as the central fact.
 * Slowly changing dimensions (listing details, host details).

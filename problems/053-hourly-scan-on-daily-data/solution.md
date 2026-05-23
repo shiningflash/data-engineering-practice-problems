@@ -48,7 +48,7 @@ Less control than option 1, but you do not have to maintain the refresh job your
 
 **3. BI tool extract / cache.**
 
-Tools like Looker, Tableau, Power BI can build their own extract — basically option 1 but inside the BI tool. Refreshed daily, served from cache.
+Tools like Looker, Tableau, Power BI can build their own extract, option 1 but inside the BI tool. Refreshed daily, served from cache.
 
 Less portable, less SQL-visible, but no warehouse-side change.
 

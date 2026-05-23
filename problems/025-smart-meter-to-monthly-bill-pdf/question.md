@@ -7,10 +7,10 @@ difficulty: Hard
 solution: solution.md
 ---
 
-# Problem 25 — Smart Meter to Monthly Bill PDF
+# Problem 25, Smart Meter to Monthly Bill PDF
 
 **Scenario:**
-You work for an energy retailer. Every month, you need to produce a bill PDF for each of 200,000 customers. The bill must reflect the customer's actual consumption (every 15 minutes), the tariff in effect for each period (which can change mid-month), taxes, fees, and any account adjustments. Regulators require the bill to be reproducible and auditable: if a customer disputes their bill, you must be able to show how each number was calculated.
+You work for an energy retailer. Every month you produce a bill PDF for each of 200,000 customers. The bill has to reflect actual consumption (one reading every 15 minutes), the tariff in effect for each period (which can change mid-month), taxes, fees, and any account adjustments. Regulators want the bill to be reproducible and auditable. If a customer disputes their bill, you need to show exactly how each number was computed.
 
 In the interview, the question is:
 
@@ -21,17 +21,17 @@ In the interview, the question is:
 ### Your Task:
 
 1. Sketch the end-to-end flow.
-2. Cover billing correctness in the presence of late, missing or corrected readings.
+2. Cover billing correctness when readings arrive late, are missing, or get corrected.
 3. Show how mid-month tariff changes are handled.
 4. Explain the audit trail.
 5. Cover what happens when generation goes wrong.
 
 ---
 
-### What a Good Answer Covers:
+### What a good answer covers:
 
-* The fact and dimension shape (Problem 10 SCD2 plays into this).
-* Idempotent monthly job, by billing period.
-* The "estimated reading" handling.
+* The fact and dimension shape (Problem 10 SCD2 feeds into this).
+* An idempotent monthly job, keyed by billing period.
+* How estimated readings are handled.
 * PDF rendering as a separate, deterministic step.
 * Sealed bills and adjustments.

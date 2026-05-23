@@ -4,10 +4,10 @@ Thanks for helping expand the Data Engineering Practice Problems collection. Thi
 
 ## Ways to Contribute
 
-- **New practice problems** – add interview-style prompts, sample datasets, and reference solutions.
-- **Enhance existing solutions** – improve performance, readability, resilience, or validation coverage.
-- **Improve documentation** – clarify instructions, add diagrams or walkthroughs, fix typos.
-- **Quality assurance** – add tests, linting, or automation that strengthens the developer experience.
+- **New practice problems**, add interview-style prompts, sample datasets, and reference solutions.
+- **Enhance existing solutions**, improve performance, readability, resilience, or validation coverage.
+- **Improve documentation**, clarify instructions, add diagrams or walkthroughs, fix typos.
+- **Quality assurance**, add tests, linting, or automation that strengthens the developer experience.
 
 ## Contribution Workflow
 
@@ -19,16 +19,16 @@ Thanks for helping expand the Data Engineering Practice Problems collection. Thi
 
 ## Repository Structure Standards
 
-- Every problem lives in `problems/NNN-kebab-case-title/` where `NNN` is a zero-padded id (`001`, `065`, ...). Pick the next free id.
+- Every problem lives in `problems/NNN-kebab-case-title/` where `NNN` is a zero-padded id (`001`, `065`,...). Pick the next free id.
 - Inside each problem directory:
-  - `question.md` – the problem prompt. **Must start with YAML frontmatter** (see below), followed by a single H1 `# Problem N — Title`, then the body.
-  - `solution.md` – written walkthrough (preferred for design / discussion problems), **or** `solution.py` for runnable code problems. Pick one; the frontmatter declares which.
-  - Optional subdirectories (`data/`, `tests/`) if the problem demands bespoke assets. Keep paths relative (e.g., `../../data/` for shared sample data).
+ - `question.md`, the problem prompt. **Must start with YAML frontmatter** (see below), followed by a single H1 `# Problem N, Title`, then the body.
+ - `solution.md`, written walkthrough (preferred for design / discussion problems), **or** `solution.py` for runnable code problems. Pick one; the frontmatter declares which.
+ - Optional subdirectories (`data/`, `tests/`) if the problem demands bespoke assets. Keep paths relative (e.g., `../../data/` for shared sample data).
 - Shared datasets belong in the top-level `data/` directory. Provide a `README` snippet or inline comments describing their provenance if they are newly added.
 
 ### Required frontmatter
 
-Every `question.md` begins with this block — `PROBLEMS.md` is generated from it:
+Every `question.md` begins with this block, `PROBLEMS.md` is generated from it:
 
 ```yaml
 ---

@@ -7,7 +7,7 @@ difficulty: Easy
 solution: solution.md
 ---
 
-# Problem 6 — Partitioning vs Clustering in BigQuery
+# Problem 6, Partitioning vs Clustering in BigQuery
 
 **Scenario:**
 You join a small analytics team and notice every important query runs against one giant `events` table with about 8 billion rows. The team has heard about partitioning and clustering, but they are not sure which one to use, or whether to use both.
@@ -30,7 +30,7 @@ In the interview, the question is short:
 ### What a Good Answer Covers:
 
 * The physical difference between partitions (separate storage units) and clustering (sort order inside a partition).
-* How partitioning helps **pruning** at scan time.
-* How clustering helps **filtering** and **joins** on high cardinality columns.
+* How partitioning helps pruning at scan time.
+* How clustering helps filtering and joins on high cardinality columns.
 * The "partition first, cluster second" rule of thumb.
-* Cost implications, since BigQuery charges by bytes scanned.
+* Cost. BigQuery charges by bytes scanned.

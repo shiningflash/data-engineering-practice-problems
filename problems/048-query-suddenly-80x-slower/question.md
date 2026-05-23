@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 48 — Query Suddenly 80x Slower
+# Problem 48, Query Suddenly 80x Slower
 
 **Scenario:**
 A SQL query that the team has run daily for a year used to finish in 30 seconds. Today, on identical-looking data and the same warehouse, it takes 40 minutes. Nothing about the query has changed. Nothing about the destination has changed. Someone wants to "throw more compute at it."
