@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 16 — SELECT DISTINCT Hiding Join Bugs
+# Problem 16, SELECT DISTINCT Hiding Join Bugs
 
 **Scenario:**
 An analyst on the team writes `SELECT DISTINCT` on almost every query. When you ask why, they say "because the joins keep duplicating rows, and DISTINCT cleans it up." The numbers in their dashboards mostly look right, but every few weeks something is off by a small amount and nobody can explain why.

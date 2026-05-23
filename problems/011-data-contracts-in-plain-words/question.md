@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 11 — Data Contracts in Plain Words
+# Problem 11, Data Contracts in Plain Words
 
 **Scenario:**
 A producer team renames a column from `user_id` to `userId` in their event stream as part of a refactor. They do not tell anyone. Three downstream pipelines break overnight, including the daily revenue report. After the postmortem, leadership asks: how do we stop this from happening every quarter?

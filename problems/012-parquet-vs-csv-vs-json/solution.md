@@ -18,7 +18,6 @@ id,name,country,amount
 A query "SELECT SUM(amount) WHERE country='SG'"
 must read every column of every row.
 
-
 JSON (row by row, with structure)
 ──────────────────────────────────
 {"id":1,"name":"Alice","country":"SG","amount":100.00,"tags":["new"]}
@@ -27,7 +26,6 @@ JSON (row by row, with structure)
 
 Same problem as CSV for analytics, plus parsing overhead.
 Good for nested fields and schema that wiggles.
-
 
 Parquet (column by column, binary, compressed)
 ───────────────────────────────────────────────
@@ -54,17 +52,17 @@ Skips reading `id`, `name`, and everything else.
 
 ### Side by side comparison
 
-| Aspect                | CSV               | JSON                | Parquet                  |
+| Aspect | CSV | JSON | Parquet |
 | --------------------- | ----------------- | ------------------- | ------------------------ |
-| Format                | Text, row-based   | Text, row-based     | Binary, column-based     |
-| Schema                | None (all string) | Implicit per row    | Strict, embedded         |
-| Compression           | None by default   | None by default     | Built in (snappy, zstd)  |
-| Size on disk          | Largest           | Larger than CSV     | 5 to 10x smaller         |
-| Query 1 column out of 50 | Reads all     | Reads all           | Reads ~2%                |
-| Nested data           | Awkward           | Native              | Native (structs, arrays) |
-| Human readable        | Yes               | Yes                 | No                       |
-| Streaming friendly    | Yes (append)      | Yes (append)        | Not really (block based) |
-| Best for              | Exchange, small files | Streaming events with changing shape | Analytics archive |
+| Format | Text, row-based | Text, row-based | Binary, column-based |
+| Schema | None (all string) | Implicit per row | Strict, embedded |
+| Compression | None by default | None by default | Built in (snappy, zstd) |
+| Size on disk | Largest | Larger than CSV | 5 to 10x smaller |
+| Query 1 column out of 50 | Reads all | Reads all | Reads ~2% |
+| Nested data | Awkward | Native | Native (structs, arrays) |
+| Human readable | Yes | Yes | No |
+| Streaming friendly | Yes (append) | Yes (append) | Not really (block based) |
+| Best for | Exchange, small files | Streaming events with changing shape | Analytics archive |
 
 ### Real numbers (typical)
 

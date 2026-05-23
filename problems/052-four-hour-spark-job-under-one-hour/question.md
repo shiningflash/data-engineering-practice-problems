@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 52 — Four Hour Spark Job Under One Hour
+# Problem 52, Four Hour Spark Job Under One Hour
 
 **Scenario:**
 A nightly Spark job takes 4 hours. The team wants it under 1 hour without rewriting the business logic. The job reads several large tables, joins them, aggregates, and writes results. You are asked what you would check first.

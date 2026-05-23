@@ -7,7 +7,7 @@ difficulty: Hard
 solution: solution.md
 ---
 
-# Problem 34 — Three Days of Data Lost
+# Problem 34, Three Days of Data Lost
 
 **Scenario:**
 Three days of production data has been lost. A Kafka topic was misconfigured during a deploy: the retention was set to 1 hour instead of 7 days, and the consumer group that lands events into the data lake fell behind. By the time anyone noticed, the missing events had aged out of Kafka. They are gone from there. The source systems may still have them, but only some do.

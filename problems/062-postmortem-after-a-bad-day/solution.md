@@ -2,7 +2,7 @@
 
 ### Short version you can say out loud
 
-> A postmortem has two goals: learn from what happened, and rebuild trust. The structure is timeline, root cause, what went well, what went badly, and action items with owners. The cultural rule is blameless: we never name a person as the cause. The deliverable is a short document, three to five pages, that anyone in the company can read in 15 minutes. The promise we make at the end is not "this will never happen again" — it is "we will detect faster and respond better."
+> A postmortem has two goals: learn from what happened, and rebuild trust. The structure is timeline, root cause, what went well, what went badly, and action items with owners. The cultural rule is blameless: we never name a person as the cause. The deliverable is a short document, three to five pages, that anyone in the company can read in 15 minutes. The promise we make at the end is not "this will never happen again", it is "we will detect faster and respond better."
 
 ### The structure I would use
 

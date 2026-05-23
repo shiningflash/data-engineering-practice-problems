@@ -7,7 +7,7 @@ difficulty: Easy
 solution: solution.md
 ---
 
-# Problem 31 — The Dashboard is Wrong
+# Problem 31, The Dashboard is Wrong
 
 **Scenario:**
 A senior analyst pings you on Slack: "the dashboard is wrong." When you ask which number, they cannot say exactly, just that "it doesn't feel right." This is a real thing that happens a lot. You have to handle it without making them feel dismissed, and without spending two days chasing a ghost.

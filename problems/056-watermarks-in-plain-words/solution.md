@@ -2,7 +2,7 @@
 
 ### Short version you can say out loud
 
-> A watermark is the system saying "I am willing to bet that no events older than this timestamp will arrive from now on." It tells windowed aggregations when they are allowed to close and emit a result. Set it too tight and you close windows before late events arrive — those events get dropped. Set it too loose and the output is correct but late, because you keep waiting for stragglers that may never come. The right value is a guess based on how late events realistically arrive.
+> A watermark is the system saying "I am willing to bet that no events older than this timestamp will arrive from now on." It tells windowed aggregations when they are allowed to close and emit a result. Set it too tight and you close windows before late events arrive, those events get dropped. Set it too loose and the output is correct but late, because you keep waiting for stragglers that may never come. The right value is a guess based on how late events realistically arrive.
 
 ### Picture event time vs processing time
 

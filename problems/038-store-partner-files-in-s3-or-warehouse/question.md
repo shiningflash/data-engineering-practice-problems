@@ -7,7 +7,7 @@ difficulty: Easy
 solution: solution.md
 ---
 
-# Problem 38 — Store Partner Files in S3 or Warehouse
+# Problem 38, Store Partner Files in S3 or Warehouse
 
 **Scenario:**
 A partner sends 50 large CSV files every day, totaling about 30 GB. They arrive on SFTP. A team member is pushing to load all of them straight into the warehouse. Another team member says "keep them in S3, load only what we need." You are asked to mediate.

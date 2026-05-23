@@ -76,17 +76,17 @@ The processor's keyed state per driver holds: `state`, `last_lat`, `last_lng`, `
 
 You could have the app write directly to Postgres. Don't.
 
-* 30,000 drivers × 1 write per 5 sec = 6,000 writes/sec. That's hot.
+* 30,000 drivers at one write every 5 seconds is 6,000 writes/sec. That's hot.
 * Trips happen continuously. Writes amplify.
-* Locking and ACID overhead destroys throughput.
+* Locking and ACID overhead destroy throughput.
 
-A stream + an in-memory store handles this comfortably.
+A stream plus an in-memory store handles this comfortably.
 
 ### The location index
 
 For "drivers within 1.5 km of point X," we need a spatial index. Two practical choices:
 
-**H3 hex grid (recommended).** Resolution 9 (~0.10 km² hexes) or 8 (~0.74 km²). Each driver's location maps to a hex. A query for "within 1.5 km" expands to "this hex and its neighbors up to N rings."
+H3 hex grid (recommended). Resolution 9 (~0.10 km² hexes) or 8 (~0.74 km²). Each driver's location maps to a hex. A query for "within 1.5 km" expands to "this hex plus its neighbors out to N rings."
 
 ```python
 import h3
@@ -96,7 +96,7 @@ nearby = h3.k_ring(center, 3)   # this hex and rings 1..3
 
 Then we read all drivers whose stored hex is in `nearby` and filter by exact distance.
 
-**Geohash.** Same idea with rectangular cells. Works fine for moderate scale. H3 wins on neighbor math.
+Geohash. Same idea with rectangular cells. Works fine at moderate scale. H3 wins on neighbor math.
 
 ### The store layout
 
@@ -112,15 +112,15 @@ SADD idle_drivers:h3:89...3fff 42 91 132
 EXPIRE idle_drivers:h3:89...3fff 60
 ```
 
-The TTL is the key safety. If a driver disappears (app crash, dead battery), their entries expire within 60 seconds. We do not need a separate cleanup job.
+The TTL is the key safety net. If a driver disappears (app crash, dead battery), their entries expire within 60 seconds. No separate cleanup job needed.
 
 When the stream processor updates a driver:
 
 * Move them out of the old hex set if they moved.
-* Add them to the new hex set if they are still idle.
+* Add them to the new hex set if they're still idle.
 * Refresh the per-driver hash.
 
-If the driver starts a trip, remove them from any hex set. They are no longer idle.
+If the driver starts a trip, remove them from any hex set. They're no longer idle.
 
 ### Query path for dispatch
 

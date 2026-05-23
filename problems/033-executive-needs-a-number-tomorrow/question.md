@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 33 — Executive Needs a Number Tomorrow
+# Problem 33, Executive Needs a Number Tomorrow
 
 **Scenario:**
 The CFO calls at 4 PM. They are preparing a board update for tomorrow morning. They need "total customer acquisition cost by channel for the last quarter." You know the data has quality issues: there were ingestion gaps in marketing data last month, and the cost attribution model has a known disagreement with finance. You have a few hours. They want a number.
@@ -29,8 +29,8 @@ In the interview, the question is:
 
 ### What a Good Answer Covers:
 
-* You ship a number. "We don't have data" is not an answer.
-* You make the caveats clear and short.
+* You ship a number. "We don't have data" isn't an answer.
+* You keep the caveats clear and short.
 * You decide what to caveat and what to silently fix.
 * You document the source so it can be reproduced.
 * You ask one question to scope the answer.

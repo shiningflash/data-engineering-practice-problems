@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 47 — Airflow Green but Output Empty
+# Problem 47, Airflow Green but Output Empty
 
 **Scenario:**
 The pipeline ran. Airflow shows all tasks green. The downstream dashboard says yesterday's data is missing. The on-call engineer is confused: "everything succeeded, but the output table didn't update."

@@ -8,7 +8,7 @@
 
 Before I open a query editor, I post in the team channel and the analytics channel:
 
-> "Heads up — finance found a mismatch on the daily revenue numbers, possibly going back two weeks. I am investigating. Please pause any decisions based on the daily revenue dashboard while I confirm what's going on. I will post an update by 2 PM."
+> "Heads up, finance found a mismatch on the daily revenue numbers, possibly going back two weeks. I am investigating. Please pause any decisions based on the daily revenue dashboard while I confirm what's going on. I will post an update by 2 PM."
 
 Three reasons:
 
@@ -59,7 +59,7 @@ I want to be able to say "the divergence is N% per day and is caused by X." If I
 
 A second message, this time concrete:
 
-> "Update: the daily revenue dashboard has been undercounting by about 4.2% since May 1. Cause: on April 30 we added a new product line whose events come through a different topic, and the transform that builds the revenue fact was not updated to include them. The amount is real revenue, not lost — it just was not showing in the dashboard. I have a fix in PR review and will backfill the last 14 days by tomorrow morning. Decisions made on this data should be revisited; I am compiling a list of which dashboards were affected."
+> "Update: the daily revenue dashboard has been undercounting by about 4.2% since May 1. Cause: on April 30 we added a new product line whose events come through a different topic, and the transform that builds the revenue fact was not updated to include them. The amount is real revenue, not lost, it just was not showing in the dashboard. I have a fix in PR review and will backfill the last 14 days by tomorrow morning. Decisions made on this data should be revisited; I am compiling a list of which dashboards were affected."
 
 The tone matters. Specific. Not blaming a person. Names the impact.
 

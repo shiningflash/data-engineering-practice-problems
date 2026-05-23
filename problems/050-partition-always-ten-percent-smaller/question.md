@@ -7,16 +7,16 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 50 — Partition Always Ten Percent Smaller
+# Problem 50, Partition Always Ten Percent Smaller
 
 **Scenario:**
-You notice that one of the 200 daily partitions of an event table consistently has about 10% fewer rows than the others. The pattern repeats every week. Some teammates say "that's just normal variation, ignore it." You are not sure.
+You notice that one of the 200 daily partitions of an event table consistently has about 10% fewer rows than the others. The pattern repeats every week. Some teammates say "that's just normal variation, ignore it." You're not sure.
 
 In the interview, the question is:
 
-> One out of 200 daily partitions is always 10 percent smaller than the rest. How do you decide if it is a bug?
+> One out of 200 daily partitions is always 10 percent smaller than the rest. How do you decide if it's a bug?
 
-This is a "do not chase ghosts, but do not ignore patterns" question. The interviewer is testing your sense of when to investigate vs when to let it be.
+This is a "don't chase ghosts, but don't ignore patterns" question. The interviewer is testing your sense of when to investigate and when to leave it alone.
 
 ---
 

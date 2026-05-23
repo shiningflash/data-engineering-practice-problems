@@ -29,7 +29,7 @@ FROM ...
 
 A single dbt run, no consumer breaks. Consumers can use the new name when ready.
 
-If the change is more than a rename — say, a units change from dollars to cents — the alias is more complex but still possible:
+If the change is more than a rename, say, a units change from dollars to cents, the alias is more complex but still possible:
 
 ```sql
 SELECT
@@ -97,10 +97,10 @@ dbt's `exposures` and the column-level lineage tools (dbt's `--select` with colu
 
 For 200 consumers, this list will probably reveal:
 
-* 30 dbt models — easy to migrate, possibly one PR.
-* 80 dashboards — usually a quick rename per dashboard.
-* 30 reverse ETL jobs — straightforward config update.
-* 60 ad-hoc reports / scheduled queries / one-off bookmarks — the long tail.
+* 30 dbt models, easy to migrate, possibly one PR.
+* 80 dashboards, usually a quick rename per dashboard.
+* 30 reverse ETL jobs, straightforward config update.
+* 60 ad-hoc reports / scheduled queries / one-off bookmarks, the long tail.
 
 The first three groups migrate in week one. The long tail is what the deprecation window protects.
 
@@ -151,7 +151,7 @@ For consumers, the protection is theirs to add. Encourage them to add explicit c
 
 Then you do not break the dashboard. The deprecation window exists for a reason. If after 6 weeks they still cannot migrate, you negotiate: maybe a quick PR you write for them, maybe a 2-week extension, maybe they accept a brief outage if not.
 
-The leverage is the deadline. Without one, consumers never migrate.
+The use is the deadline. Without one, consumers never migrate.
 
 ### Why "rename and remove in the same release" fails
 

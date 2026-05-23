@@ -24,7 +24,7 @@ Exactly once    │ Each message effects the consumer exactly one time.
 
 ### Why it is hard
 
-Networks fail in a specific way: when you call "did the other side receive my message?", you can get three answers — yes, no, or *I don't know*. The "I don't know" case is the whole problem. If the producer sent a message and never got an ack, two things could have happened:
+Networks fail in a specific way: when you call "did the other side receive my message?", you can get three answers, yes, no, or *I don't know*. The "I don't know" case is the whole problem. If the producer sent a message and never got an ack, two things could have happened:
 
 1. The broker never received it.
 2. The broker received it, but the ack got lost.

@@ -7,7 +7,7 @@ difficulty: Easy
 solution: solution.md
 ---
 
-# Problem 7 — ETL vs ELT and Why ELT Won
+# Problem 7, ETL vs ELT and Why ELT Won
 
 **Scenario:**
 You walk into a team that still runs every nightly transform on a separate ETL server before loading the cleaned data into the warehouse. The server is creaking, scaling it up is expensive, and adding a new transform requires a release. Someone asks the obvious question:

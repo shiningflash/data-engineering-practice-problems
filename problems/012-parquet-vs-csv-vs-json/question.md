@@ -7,7 +7,7 @@ difficulty: Easy
 solution: solution.md
 ---
 
-# Problem 12 — Parquet vs CSV vs JSON
+# Problem 12, Parquet vs CSV vs JSON
 
 **Scenario:**
 Your team is choosing the storage format for a 5 TB events archive in S3. One engineer wants CSV "because everything reads it." Another wants JSON "because that's how the events arrive." You suggest Parquet. The team has not used it before and asks you to explain.

@@ -77,11 +77,11 @@ A compacted topic keeps only the latest message per key. Older messages disappea
 
 **6. Consumer reprocessing.**
 
-If a consumer resets and re-reads from an earlier offset, it sees the same messages again in order — but downstream side effects (database writes) may already exist from the first pass. Order is preserved on the wire; the downstream effect order depends on idempotency.
+If a consumer resets and re-reads from an earlier offset, it sees the same messages again in order, but downstream side effects (database writes) may already exist from the first pass. Order is preserved on the wire; the downstream effect order depends on idempotency.
 
 ### When you need global ordering
 
-If you truly need global ordering — every event in the topic seen in one true order:
+If you truly need global ordering, every event in the topic seen in one true order:
 
 * Use a single-partition topic. Throughput is bounded by one broker.
 * Or, route through a sequencer (a single service that assigns monotonic ids before producing).

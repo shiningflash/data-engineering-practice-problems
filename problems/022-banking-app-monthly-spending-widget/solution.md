@@ -89,9 +89,9 @@ One record per user per month. Reading it is a single point lookup. ~5 KB per us
 1. Customer pays at a merchant. The core banking system writes the transaction row. This is the moment of truth.
 2. CDC (Debezium reading the Postgres WAL, or its mainframe equivalent) emits the row to Kafka within a second or two.
 3. A stream processor reads the Kafka topic. For each transaction:
-   * Look up the merchant category from a small in-memory map (categories rarely change, refreshed every hour).
-   * Compute the signed amount: positive for purchases, negative for refunds.
-   * Update the (user, year-month, category) total.
+ * Look up the merchant category from a small in-memory map (categories rarely change, refreshed every hour).
+ * Compute the signed amount: positive for purchases, negative for refunds.
+ * Update the (user, year-month, category) total.
 4. The new total is written to the fast serving store.
 5. Next time the user opens the app, the widget reads the row in one call.
 

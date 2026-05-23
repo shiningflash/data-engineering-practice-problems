@@ -2,11 +2,11 @@
 
 ### Short version you can say out loud
 
-> A data contract is an explicit agreement between the team that produces data and the teams that consume it. It says what fields will be there, what types they will be, what they mean, how fresh they will be, and who owns them. It is the same idea as an API contract between two services, just applied to data. People are talking about it now because data has become a product, and treating it like a side effect of the app keeps breaking downstream systems.
+> A data contract is an explicit agreement between the team that produces data and the teams that consume it. It says what fields will be there, what types they will be, what they mean, how fresh they will be, and who owns them. Same idea as an API contract between two services, just applied to data. People are talking about it now because data has become a product, and treating it as a side effect of the app keeps breaking downstream systems.
 
 ### Why now
 
-For most of the last 20 years, data was a by-product of the application. Engineers built features and the data team scraped whatever ended up in the database. When the app team changed a column, the data team found out by the dashboard breaking the next morning. That worked when there were two analysts and one report. It does not work now, because data feeds machine learning models, billing, regulators, and live customer features. The cost of a breaking change is much higher.
+For most of the last 20 years, data was a by-product of the application. Engineers built features and the data team scraped whatever ended up in the database. When the app team changed a column, the data team found out when the dashboard broke the next morning. That worked when there were two analysts and one report. It does not work now, because data feeds machine learning models, billing, regulators, and live customer features. The cost of a breaking change is much higher.
 
 Data contracts are the industry trying to apply software engineering discipline (interfaces, versioning, tests, ownership) to data the same way we did to microservice APIs ten years ago.
 
@@ -66,17 +66,17 @@ quality:
 breaking_changes_policy: 6 months deprecation window
 ```
 
-It is the same shape as a Protobuf schema, an OpenAPI spec, or an Avro schema, plus extra metadata about ownership and SLA.
+Same shape as a Protobuf schema, an OpenAPI spec, or an Avro schema, plus extra metadata about ownership and SLA.
 
 ### What a contract is NOT
 
-* It is **not** just a document on Confluence. A document does not catch a renamed column at 3 AM.
-* It is **not** the same as a schema. A schema only describes shape. A contract also covers meaning, ownership and freshness.
-* It is **not** a one-way wish list from the consumer. Both sides have to agree, because the producer takes on the cost of stability.
+* Not just a document on Confluence. A document does not catch a renamed column at 3 AM.
+* Not the same as a schema. A schema only describes shape. A contract also covers meaning, ownership and freshness.
+* Not a one-way wish list from the consumer. Both sides have to agree, because the producer takes on the cost of stability.
 
 ### Where it gets enforced
 
-The whole point is that the contract is **machine readable** and **checked automatically**. Three common enforcement points:
+The whole point is that the contract is machine readable and checked automatically. Three common enforcement points:
 
 ```
 ┌─────────┐   1   ┌──────────┐   2   ┌──────────┐   3   ┌──────────┐
@@ -94,9 +94,9 @@ The whole point is that the contract is **machine readable** and **checked autom
                          schema)
 ```
 
-* **Producer side.** A CI test fails the build if a code change would break the contract. This is the most valuable spot, because it catches the issue before it leaves the producer team.
-* **Ingest side.** A schema registry (Confluent, Apicurio, Glue Schema Registry) rejects events that don't match the registered schema. This catches drift between code and reality.
-* **Consumer side.** dbt tests or Great Expectations checks validate the data on arrival. Last line of defence.
+* Producer side. A CI test fails the build if a code change would break the contract. This is the most valuable spot, because it catches the issue before it leaves the producer team.
+* Ingest side. A schema registry (Confluent, Apicurio, Glue Schema Registry) rejects events that don't match the registered schema. Catches drift between code and reality.
+* Consumer side. dbt tests or Great Expectations checks validate the data on arrival. Last line of defence.
 
 ### How a real change happens with contracts
 

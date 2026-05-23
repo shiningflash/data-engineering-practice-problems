@@ -42,7 +42,7 @@ Sometimes the optimizer cannot figure out a path. Materialize the intermediate r
 
 **4. Re-cluster the table.**
 
-In Snowflake, run `ALTER TABLE ... RECLUSTER`. In BigQuery, recreate with proper clustering. Slow queries due to clustering drift get a big win.
+In Snowflake, run `ALTER TABLE... RECLUSTER`. In BigQuery, recreate with proper clustering. Slow queries due to clustering drift get a big win.
 
 **5. Update statistics.**
 

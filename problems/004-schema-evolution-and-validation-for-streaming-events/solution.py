@@ -6,8 +6,8 @@ Description:
     Streams JSON events line-by-line, validates and normalizes them
     against an evolving schema, and separates valid and invalid events.
 Complexity:
-    Time: O(n) — one pass over events.
-    Space: O(1) — processes line by line.
+    Time: O(n), one pass over events.
+    Space: O(1), processes line by line.
 """
 
 import json

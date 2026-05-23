@@ -7,10 +7,10 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 46 — Region Suddenly Shows Zero Revenue
+# Problem 46, Region Suddenly Shows Zero Revenue
 
 **Scenario:**
-The daily revenue dashboard shows total revenue across regions. Today, one region — say, Indonesia — shows zero. The other regions look normal. Yesterday Indonesia showed $X. The business hasn't shut down operations there.
+The daily revenue dashboard shows total revenue across regions. Today, one region, say, Indonesia, shows zero. The other regions look normal. Yesterday Indonesia showed $X. The business hasn't shut down operations there.
 
 In the interview, the question is:
 

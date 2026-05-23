@@ -171,12 +171,12 @@ After the immediate fixes:
 
 ### Reservation vs on-demand: a quick decision
 
-| Usage shape                                | Better choice          |
+| Usage shape | Better choice |
 | ------------------------------------------ | ---------------------- |
-| Spiky, unpredictable, occasional heavy day | On-demand              |
-| Steady-state, high daily usage             | Slot commitment        |
-| Multiple teams sharing a workload          | Slots with reservations|
-| Just starting out, no idea yet             | On-demand              |
+| Spiky, unpredictable, occasional heavy day | On-demand |
+| Steady-state, high daily usage | Slot commitment |
+| Multiple teams sharing a workload | Slots with reservations|
+| Just starting out, no idea yet | On-demand |
 
 For this scenario, $4k/month is still small. I would keep on-demand and just fix the queries. At $20k/month, the slot reservation conversation becomes worth having.
 

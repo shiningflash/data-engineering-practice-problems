@@ -7,10 +7,10 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 18 — CTE vs Subquery
+# Problem 18, CTE vs Subquery
 
 **Scenario:**
-A teammate refactors a long query, replacing every subquery with a CTE (`WITH ... AS`) "for readability." The next day, the query is 4x slower in production. They are confused, because in older databases CTEs were always at least as fast as subqueries. You explain that this is a Postgres-specific (and historically common) gotcha that newer versions changed.
+A teammate refactors a long query, replacing every subquery with a CTE (`WITH... AS`) "for readability." The next day, the query is 4x slower in production. They're confused, because in older databases CTEs were always at least as fast as subqueries. You explain that this is a Postgres-specific (and historically common) gotcha that newer versions changed.
 
 In the interview, the question is:
 

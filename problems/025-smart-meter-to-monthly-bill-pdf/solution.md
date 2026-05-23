@@ -46,7 +46,7 @@
    └──────────────────────────┘
 ```
 
-The principle: each step is a function of the layer beneath it. Re-running the same step on the same inputs always gives the same output. The PDF is the last and least interesting step.
+The principle: each step is a function of the layer beneath it. Re-run the same step on the same inputs and you get the same output. The PDF is the last and least interesting step.
 
 ### The data model
 
@@ -100,7 +100,7 @@ Expect 4 × 24 × 30 = 2880 rows for a 30-day month.
 
 **2. Fill gaps.**
 
-If any interval has no reading or a `missing` flag, fill with an estimate. The estimation rule is regulator-defined, usually "average of the same interval in the previous N days." Mark each filled row with `quality_flag = 'estimated'`.
+If any interval has no reading or a `missing` flag, fill with an estimate. The estimation rule is usually defined by the regulator: typically "average of the same interval over the previous N days." Mark each filled row with `quality_flag = 'estimated'`.
 
 **3. Join to the tariff in effect at each interval.**
 
@@ -113,7 +113,7 @@ JOIN tariffs t
   AND r.read_at <  t.valid_to;
 ```
 
-Notice: this is the SCD2 "as-of" join from Problem 10. If the tariff changed mid-month, half the rows match the old rate and half match the new rate, automatically.
+This is the SCD2 "as-of" join from Problem 10. If the tariff changed mid-month, half the rows match the old rate and half match the new one, automatically.
 
 **4. Compute the energy charge.**
 
@@ -137,15 +137,15 @@ WHERE customer_id = @cust
   AND applied_on BETWEEN @period_start AND @period_end;
 ```
 
-Examples: refunds, goodwill credits, late fee.
+Examples: refunds, goodwill credits, late fees.
 
 **7. Apply tax.**
 
-Usually a flat percentage of subtotal. Some markets have different rates for residential vs commercial.
+Usually a flat percentage of the subtotal. Some markets have different rates for residential vs commercial.
 
 **8. Write bill and bill_lines, sealed.**
 
-A `bills` row plus one `bill_lines` row per category (energy, fixed, each adjustment, tax). After this, the bill is **frozen**. Any later correction is a new adjustment in the next billing period, not an edit.
+One `bills` row plus one `bill_lines` row per category (energy, fixed, each adjustment, tax). After this, the bill is frozen. Any later correction is a new adjustment in the next billing period, not an edit.
 
 ### Idempotency
 
@@ -172,35 +172,35 @@ def compute_bill(customer_id, period_start, period_end):
 
 ### Late and corrected readings
 
-This is where the system pays off.
+This is where the design pays off.
 
 * If readings for May 10 arrive late on May 14, the curated layer rebuilds the May 10 partition.
-* If the bill for May has not been issued yet, the next run of the billing job picks up the new numbers naturally. No special code.
-* If the bill was already issued, the change creates an `account_adjustment` row to be applied in the next billing cycle. The regulator sees a clear audit trail: "your May bill was X. On June 5 we received corrected readings for May 10. We credited Y dollars on your June bill."
+* If May's bill has not been issued yet, the next run of the billing job picks up the new numbers naturally. No special code.
+* If the bill was already issued, the change creates an `account_adjustment` row to apply in the next billing cycle. The regulator sees a clean trail: "your May bill was X. On June 5 we received corrected readings for May 10. We credited Y dollars on your June bill."
 
-This is much cleaner than editing a sealed bill, which would break audits.
+Much cleaner than editing a sealed bill, which would break audits.
 
 ### Mid-month tariff changes
 
-These happen often (price reviews, plan switches by the customer). Handled by:
+These happen often (price reviews, customer plan switches). Handled by:
 
-* `tariffs` table is SCD Type 2.
+* The `tariffs` table is SCD Type 2.
 * The as-of join in step 3 matches each 15-minute reading to the rate that was in force at that exact moment.
 * Bill lines show "Energy 1-15 May at 0.18/kWh" and "Energy 16-31 May at 0.22/kWh" separately, so the customer can see what changed.
 
 ### Auditability
 
-The audit trail is the `bill_lines` table plus the snapshot of inputs. Three pieces:
+The audit trail is the `bill_lines` table plus a snapshot of the inputs. Three pieces:
 
-1. **The bill itself** (issued, sealed).
-2. **bill_lines** showing every component.
-3. **Reading snapshot** — at bill time, we record a `reads_snapshot_id` pointing to which version of the curated reads were used. If a later correction changes the readings, the snapshot still shows what we billed on.
+1. The bill itself (issued, sealed).
+2. `bill_lines` showing every component.
+3. A reading snapshot. At bill time we record a `reads_snapshot_id` pointing to the version of the curated reads we used. If a later correction changes the readings, the snapshot still shows what we billed on.
 
 A dispute conversation looks like: "Your May energy charge of $XX comes from these 2,880 readings, totaling YYY kWh, at the rates shown in lines 1 and 2. The estimated readings are flagged on line 3."
 
 ### PDF rendering
 
-Important: the PDF service is a **pure function of the bill_id**. It reads the bill and bill_lines and renders. It does not compute anything. If we change the PDF template, every old bill can be re-rendered to the new look without changing any numbers.
+The PDF service is a pure function of the `bill_id`. It reads the bill and `bill_lines` and renders. It computes nothing. If we change the PDF template, every old bill can be re-rendered to the new look without changing any numbers.
 
 Two practical patterns:
 
@@ -209,29 +209,29 @@ Two practical patterns:
 
 ### What happens when generation fails
 
-Failure modes I would design for:
+Failure modes I'd design for:
 
-* **Missing readings for the period.** Job pauses, alerts ops. Bill is not generated.
-* **PDF rendering crashes.** Bill row exists, but no PDF. PDF service retries; if it never works, ops gets paged.
-* **Wrong tariff applied** (config error). All bills for the period must be re-generated. Since they are not yet `issued`, the job can do this idempotently.
-* **Adjustment job double-fires.** Each adjustment has a unique id; the bill query SUMs DISTINCT ids.
+* Missing readings for the period. Job pauses, alerts ops, no bill is generated.
+* PDF rendering crashes. Bill row exists, no PDF. The PDF service retries; if it never works, ops gets paged.
+* Wrong tariff applied (config error). All bills for the period get re-generated. Since they are not yet `issued`, the job can do this idempotently.
+* Adjustment job double-fires. Each adjustment has a unique id; the bill query SUMs over DISTINCT ids.
 
 ### Why split the job per customer
 
 Two reasons:
 
-* **Parallelism.** 200,000 customers × ~1 second per bill = 56 hours sequentially. In parallel with 200 workers, ~17 minutes.
-* **Isolation.** One customer's bug does not poison the rest. The bill job for customer 12345 fails, the other 199,999 still go out.
+* Parallelism. 200,000 customers at ~1 second per bill is 56 hours sequentially. With 200 workers in parallel, ~17 minutes.
+* Isolation. One customer's bug doesn't poison the rest. If the bill job for customer 12345 fails, the other 199,999 still go out.
 
 A simple orchestrator (Airflow with dynamic task mapping, or a queue of customer ids) is enough.
 
 ### Common mistakes interviewers want you to name
 
-1. **Editing a sealed bill** when correction arrives. Use adjustments.
-2. **Not handling SCD2 tariffs.** Tariff changes mid-month get billed wrong.
-3. **Computing during PDF rendering.** A template change later silently changes old totals.
-4. **No quality flag for estimates.** Auditors require "what was measured vs estimated."
-5. **Per-customer time zones** ignored when defining "billing period."
+1. Editing a sealed bill when a correction arrives. Use adjustments.
+2. Not handling SCD2 tariffs. Mid-month tariff changes get billed wrong.
+3. Computing during PDF rendering. A template change later silently changes old totals.
+4. No quality flag for estimates. Auditors require "what was measured vs estimated."
+5. Ignoring per-customer time zones when defining the billing period.
 
 ### Bonus follow-up the interviewer might throw
 
@@ -239,7 +239,7 @@ A simple orchestrator (Airflow with dynamic task mapping, or a queue of customer
 
 Same architecture, more parallelism. Two changes worth mentioning:
 
-* Run the billing job on Spark or BigQuery rather than Python-per-customer. The "per customer" loop becomes a SQL with GROUP BY customer.
+* Run the billing job on Spark or BigQuery instead of Python-per-customer. The "per customer" loop becomes SQL with `GROUP BY customer`.
 * The PDF render service stays per-customer but moves behind a queue with a thousand workers.
 
-Five million bills at ~0.5 seconds each, 1,000 workers, is roughly 40 minutes wall clock.
+Five million bills at ~0.5 seconds each, 1,000 workers, is roughly 40 minutes of wall clock.

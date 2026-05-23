@@ -2,7 +2,7 @@
 
 ### Short version you can say out loud
 
-> I take it seriously and I do not argue with the gut feeling. I ask one open question to find the specific number, then I show my work as I check. Usually the analyst has noticed a real thing — they just have not localized it yet. If it turns out the data is right, the conversation ends with "thanks for catching this" and a small change so the next person trusts the dashboard faster.
+> I take it seriously and I do not argue with the gut feeling. I ask one open question to find the specific number, then I show my work as I check. Usually the analyst has noticed a real thing, they just have not localized it yet. If it turns out the data is right, the conversation ends with "thanks for catching this" and a small change so the next person trusts the dashboard faster.
 
 ### The first reply
 
@@ -12,7 +12,7 @@ Don't say: "The pipeline is healthy, no errors."
 Don't say: "Which exact number?"  (too blunt)
 
 Do say:
-"I'll take a look. To help me find it fast — what were you
+"I'll take a look. To help me find it fast, what were you
 expecting to see, and what looks off? Even rough numbers are fine."
 ```
 
@@ -28,7 +28,7 @@ Senior analysts almost always have a number in mind. A few questions that get th
 
 * "Roughly when did it look off? Today, this week?"
 * "Is one chart wrong, or does it ripple through several?"
-* "Compared to what — last week, last quarter, your forecast?"
+* "Compared to what, last week, last quarter, your forecast?"
 
 Within two messages, you usually have something concrete: "Revenue for last Thursday showed $182k, I expected closer to $220k."
 
@@ -73,7 +73,7 @@ Now treat it like Problem 29. Communicate to the wider team, find the size of th
 
 This is the delicate one. Don't say "the data is fine, you were wrong." Instead:
 
-> "Confirmed against the payments source: Thursday was $182,144. The dip was a Singapore public holiday — the same drop appears in last year's data. I will add a holiday flag to the dashboard so this is obvious next time."
+> "Confirmed against the payments source: Thursday was $182,144. The dip was a Singapore public holiday, the same drop appears in last year's data. I will add a holiday flag to the dashboard so this is obvious next time."
 
 The analyst's instinct was good. They saw an unusual number. The data is correct, but the dashboard could have made it easier to read. The fix on our side is a small UX improvement.
 
@@ -87,7 +87,7 @@ Common case: "revenue" includes refunds, or excludes them, and the analyst assum
 
 The hardest part of this conversation is not the SQL. It is that an analyst who flags a "wrong dashboard" is risking their reputation. If I argue back, they will stop telling me. The next time something is actually broken, I will not hear about it.
 
-So the rule is: never make them feel small. Even when the data is right, their instinct caught something — usually a clarity gap.
+So the rule is: never make them feel small. Even when the data is right, their instinct caught something, usually a clarity gap.
 
 Equally, the rule for them: I will not let them fix it for themselves with side queries that diverge from the dashboard. We will fix the dashboard. That keeps a single source of truth.
 

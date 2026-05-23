@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 40 — BigQuery Access Control for 50 Person Company
+# Problem 40, BigQuery Access Control for 50 Person Company
 
 **Scenario:**
 A 50-person company has been giving everyone "BigQuery Data Viewer" on the entire project. Some data is sensitive (HR, finance, customer PII). The CTO asks you to fix the permissions before the next audit, without breaking anyone's daily work.

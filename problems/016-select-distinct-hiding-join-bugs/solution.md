@@ -16,7 +16,6 @@ id │ customer_id             order_id │ product
                              3        │ apple
                              3        │ apple
 
-
 SELECT o.id, o.customer_id
 FROM orders o
 JOIN order_items i ON i.order_id = o.id;

@@ -7,16 +7,16 @@ difficulty: Easy
 solution: solution.md
 ---
 
-# Problem 49 — User Says Data Is Wrong
+# Problem 49, User Says Data Is Wrong
 
 **Scenario:**
-A user reports "the data is wrong" through a generic support form. There is no screenshot, no specific number, no filter context. Just the words. You have to turn this complaint into an actual bug report you can act on.
+A user reports "the data is wrong" through a generic support form. No screenshot, no specific number, no filter context. Just the words. You have to turn this into an actual bug report you can act on.
 
 In the interview, the question is:
 
 > A user says "the data is wrong." How do you turn that vague complaint into a real bug report?
 
-This is the cousin of Problem 31 (analyst case), but from a user-support angle, often with less context to work with.
+This is the cousin of Problem 31 (analyst case), but from a user-support angle, usually with less context to work with.
 
 ---
 

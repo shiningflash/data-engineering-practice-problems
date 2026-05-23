@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 10 — Slowly Changing Dimensions
+# Problem 10, Slowly Changing Dimensions
 
 **Scenario:**
 A billing team runs a report that says "total revenue per region per month." A customer who lived in Singapore last year moved to Malaysia in March. The report now shows all of their historical revenue under Malaysia, including invoices from when they were still in Singapore. The finance lead is upset because the regional numbers for 2024 just silently changed.

@@ -17,7 +17,6 @@ order_id │ customer_id │ amount │ created_at
 3        │ B           │ 200    │ Jan 3
 4        │ A           │ 70     │ Jan 10
 
-
 GROUP BY                          WINDOW
 ────────────────                  ──────────────────────────────────
 SELECT                            SELECT
@@ -45,15 +44,15 @@ Notice: GROUP BY returned 2 rows. WINDOW returned 4 rows. Same SUM, different re
 
 ### When to reach for each
 
-| Need                                                | Use         |
+| Need | Use |
 | --------------------------------------------------- | ----------- |
-| Total revenue per customer (one row per customer)   | GROUP BY    |
-| Count of orders per country                         | GROUP BY    |
-| For each order, show running total per customer     | Window      |
-| Rank customers by spend within each country         | Window      |
-| Find each customer's previous order date            | Window (LAG)|
-| For each row, compare the value to the group avg    | Window      |
-| Pick the top 1 row per group                        | Window (ROW_NUMBER)|
+| Total revenue per customer (one row per customer) | GROUP BY |
+| Count of orders per country | GROUP BY |
+| For each order, show running total per customer | Window |
+| Rank customers by spend within each country | Window |
+| Find each customer's previous order date | Window (LAG)|
+| For each row, compare the value to the group avg | Window |
+| Pick the top 1 row per group | Window (ROW_NUMBER)|
 
 The shortcut: if the answer should have **more rows than the number of groups**, you need a window.
 
@@ -130,7 +129,7 @@ Window functions are not free. They typically require a sort by the `PARTITION B
 Two practical things:
 
 1. **Filter early.** Run the window only on the rows you need.
-2. **Use the right window.** `ROWS BETWEEN ... AND CURRENT ROW` is much cheaper than `RANGE` for time-based windows on some engines.
+2. **Use the right window.** `ROWS BETWEEN... AND CURRENT ROW` is much cheaper than `RANGE` for time-based windows on some engines.
 
 ### Common mistakes interviewers want you to name
 

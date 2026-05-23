@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 54 — Just Throw More Memory At It
+# Problem 54, Just Throw More Memory At It
 
 **Scenario:**
 A senior engineer hits a slow query in Snowflake (or a Spark job that's running out of memory) and proposes "let's just throw more memory at it. Upsize the warehouse to a 2X-Large, or bump the executor memory to 32 GB." The fix is real and works. But it triples the cost.

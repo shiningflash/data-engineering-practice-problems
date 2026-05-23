@@ -97,7 +97,7 @@ Engineering does not want a number; they want options and impact.
 >
 > 1. Partition-prune the `daily_metrics_rollup` scheduled query (5 lines change). Save ~$3k/mo. Zero downstream impact.
 > 2. Cap the dashboard auto-refresh to once per hour (dashboard config). Save ~$1.5k/mo. Users will notice "last refreshed an hour ago" but data is daily anyway.
-> 3. Replace the abandoned notebook's nightly run by stopping the schedule. Save ~$1k/mo. Confirmed with the owner — they forgot it existed.
+> 3. Replace the abandoned notebook's nightly run by stopping the schedule. Save ~$1k/mo. Confirmed with the owner, they forgot it existed.
 > 4. Materialize the heaviest dashboard query into a daily table (~$0.5k/mo savings, modest dbt work).
 > 5. (Longer term) Adopt a query-tagging convention and per-team budgets.
 >
@@ -107,7 +107,7 @@ Note that I'm not asking for permission. I am proposing changes with their impac
 
 ### The 80/20 list of fixes I would always check
 
-1. **Unpartitioned scans on partitioned tables.** `WHERE date >= ...` is missing or wraps the date in a function.
+1. **Unpartitioned scans on partitioned tables.** `WHERE date >=...` is missing or wraps the date in a function.
 2. **`SELECT *` from wide tables.** Especially in dashboards and notebooks. Costs you bytes-billed for every column.
 3. **Dashboard auto-refresh** at higher frequency than the data changes.
 4. **No materialised views or summary tables** for queries that run every hour and re-aggregate the same data.

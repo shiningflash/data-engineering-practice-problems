@@ -38,7 +38,7 @@ CREATE TABLE analytics.events (
 PARTITION BY event_date;
 ```
 
-After partitioning, queries that include `WHERE event_date = ...` prune to one partition. Queries that omit the partition filter still scan the whole table.
+After partitioning, queries that include `WHERE event_date =...` prune to one partition. Queries that omit the partition filter still scan the whole table.
 
 ### When to use clustering
 

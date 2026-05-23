@@ -7,10 +7,10 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 19 — Same Query Different Answers
+# Problem 19, Same Query Different Answers
 
 **Scenario:**
-You have one SQL query. You run it in development against a copy of yesterday's production data. It returns 142,500 rows. You run the exact same SQL in production. It returns 138,920 rows. The team is told "the data is the same." Something is off, and it is not obvious where.
+You have one SQL query. You run it in development against a copy of yesterday's production data. It returns 142,500 rows. You run the exact same SQL in production. It returns 138,920 rows. The team's been told "the data is the same." Something's off, and it's not obvious where.
 
 In the interview, the question is:
 

@@ -7,7 +7,7 @@ difficulty: Easy
 solution: solution.md
 ---
 
-# Problem 44 — Explaining Fact Table Grain
+# Problem 44, Explaining Fact Table Grain
 
 **Scenario:**
 You are mentoring an analyst who keeps producing dashboards that don't quite match. The cause is the same every time: they don't have a clear sense of what each row in the fact table represents. They ask you to explain "grain" in a way they can use the next time they build a model.

@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 65 — 4000 DAG Airflow at 90 Percent CPU
+# Problem 65, 4000 DAG Airflow at 90 Percent CPU
 
 **Scenario:**
 Your team's Airflow has grown to 4,000 DAGs over time. The scheduler is running at 90% CPU and missing schedules occasionally. Adding a bigger machine is the obvious fix, but the team has done that twice already and it always grows back.

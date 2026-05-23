@@ -7,7 +7,7 @@ difficulty: Hard
 solution: solution.md
 ---
 
-# Problem 24 — Spotify Minutes Listened This Week
+# Problem 24, Spotify Minutes Listened This Week
 
 **Scenario:**
 A music streaming app shows "minutes listened this week" on every user's profile. Hundreds of millions of users open the app each day. Scanning the full play event history every time someone opens their profile would be impossibly expensive. The product team wants the number to be at most 5 minutes stale.

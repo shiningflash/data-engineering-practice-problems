@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 57 — Kafka Ordering Guarantee
+# Problem 57, Kafka Ordering Guarantee
 
 **Scenario:**
 A teammate says Kafka "guarantees message ordering," and your pipeline depends on that. You have noticed messages occasionally appearing out of order downstream. The teammate is sure Kafka could not be at fault.

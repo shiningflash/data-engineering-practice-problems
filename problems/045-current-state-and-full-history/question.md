@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 45 — Current State and Full History
+# Problem 45, Current State and Full History
 
 **Scenario:**
 The reporting team has a hot debate. Some queries want "the current state of every order" (latest status, shipped or cancelled, current refund amount). Other queries want "the full history" (every state change, when, who, why). Right now the team is duplicating the data: one table with current state, a parallel table with events. Storage is doubled. It is the wrong shape.

@@ -7,7 +7,7 @@ difficulty: Medium
 solution: solution.md
 ---
 
-# Problem 32 — Inheriting a Pipeline No One Owns
+# Problem 32, Inheriting a Pipeline No One Owns
 
 **Scenario:**
 You inherit a pipeline that has been running for two years. The engineer who built it has left. The team has shrunk. A new requirement comes in that touches a transform deep inside the pipeline, and you realise no one alive understands how it works. The schedule says it runs daily, and most days it succeeds. Sometimes it fails and someone restarts it. Now you need to change something and you do not know what you will break.

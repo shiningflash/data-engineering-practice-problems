@@ -7,7 +7,7 @@ difficulty: Easy
 solution: solution.md
 ---
 
-# Problem 36 — Scheduled Pipeline Pay Only When Run
+# Problem 36, Scheduled Pipeline Pay Only When Run
 
 **Scenario:**
 A small team has a daily Python ETL that takes about 15 minutes to run. They want it on a schedule (daily at 4 AM), but they want to pay only when it runs. They are price-sensitive and the script today runs on a small VM that sits idle 23 hours a day.
