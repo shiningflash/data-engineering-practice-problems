@@ -1,4 +1,13 @@
-## Problem 75: SQL vs NoSQL
+---
+id: 75
+title: SQL vs NoSQL
+category: Databases
+topics: [SQL, NoSQL, KV, document, wide column, graph]
+difficulty: Medium
+solution: solution.md
+---
+
+# Problem 75, SQL vs NoSQL
 
 **Scenario:**
 A team is starting a new service. Half want Postgres because "we know it." Half want DynamoDB because "we need scale." Both arguments are weak. They ask you to help them choose for real reasons.

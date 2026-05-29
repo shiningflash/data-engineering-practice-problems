@@ -1,4 +1,13 @@
-## Problem 66: Indexes: When to Add and When They Hurt
+---
+id: 66
+title: Indexes When to Add and When They Hurt
+category: Databases
+topics: [indexes, B-tree, write cost, EXPLAIN]
+difficulty: Easy
+solution: solution.md
+---
+
+# Problem 66, Indexes When to Add and When They Hurt
 
 **Scenario:**
 A junior teammate just learned what indexes are and is enthusiastically adding them to every column on every table. The writes on the production database are getting slower, but most reads now look fine. You are asked to mentor them on when to add an index and when not to.

@@ -1,4 +1,13 @@
-## Problem 74: Deadlocks and Lock Escalation
+---
+id: 74
+title: Deadlocks and Lock Escalation
+category: Databases
+topics: [deadlocks, locks, retries, lock escalation]
+difficulty: Medium
+solution: solution.md
+---
+
+# Problem 74, Deadlocks and Lock Escalation
 
 **Scenario:**
 The application logs are showing "deadlock detected" messages a few times an hour. Customers occasionally see failed actions. Nobody on the team has a clear sense of how to investigate or whether the deadlocks are dangerous. You are asked to explain.

@@ -1,4 +1,13 @@
-## Problem 70: B-Tree vs Hash vs LSM Tree
+---
+id: 70
+title: B-Tree vs Hash vs LSM Tree
+category: Databases
+topics: [B-tree, hash, LSM, storage engines]
+difficulty: Medium
+solution: solution.md
+---
+
+# Problem 70, B-Tree vs Hash vs LSM Tree
 
 **Scenario:**
 A teammate is choosing a database for a new high-write service and is reading marketing pages comparing different storage engines. They keep seeing "B-tree" in the Postgres/MySQL docs and "LSM tree" in Cassandra/RocksDB. They ask you what these actually are and why one is used here and one there.
