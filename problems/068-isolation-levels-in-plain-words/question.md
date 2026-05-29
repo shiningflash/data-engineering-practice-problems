@@ -1,4 +1,13 @@
-## Problem 68: Isolation Levels in Plain Words
+---
+id: 68
+title: Isolation Levels in Plain Words
+category: Databases
+topics: [isolation, snapshot, anomalies, MVCC]
+difficulty: Medium
+solution: solution.md
+---
+
+# Problem 68, Isolation Levels in Plain Words
 
 **Scenario:**
 A team is debugging an intermittent bug where a report sometimes shows a customer's balance as $0 right after a deposit. The deposit clearly went through. The report runs a long SELECT across many tables. Someone suspects an isolation issue. You are asked to explain the isolation levels and which one this team should be on.

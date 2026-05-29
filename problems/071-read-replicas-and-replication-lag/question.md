@@ -1,4 +1,13 @@
-## Problem 71: Read Replicas and Replication Lag
+---
+id: 71
+title: Read Replicas and Replication Lag
+category: Databases
+topics: [replicas, replication lag, read after write]
+difficulty: Medium
+solution: solution.md
+---
+
+# Problem 71, Read Replicas and Replication Lag
 
 **Scenario:**
 A team added a Postgres read replica to take pressure off the primary. Most queries got faster. But a new bug appeared: users update their profile, then refresh the page, and see their old profile for a few seconds. The team blames a frontend cache, but the cache is fine. You suspect replication lag.

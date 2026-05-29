@@ -1,4 +1,13 @@
-## Problem 69: Normalization and When to Denormalize
+---
+id: 69
+title: Normalization and When to Denormalize
+category: Databases
+topics: [normalization, 3NF, denormalization, star schema]
+difficulty: Medium
+solution: solution.md
+---
+
+# Problem 69, Normalization and When to Denormalize
 
 **Scenario:**
 A team is designing tables for a new ordering system. One engineer wants to put the customer name and address directly on every order row "to make the queries simpler." Another wants strict normalization with foreign keys to a customer table. Both are partly right.

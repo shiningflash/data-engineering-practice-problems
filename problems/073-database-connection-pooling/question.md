@@ -1,4 +1,13 @@
-## Problem 73: Database Connection Pooling
+---
+id: 73
+title: Database Connection Pooling
+category: Databases
+topics: [connection pool, PgBouncer, sizing, Postgres]
+difficulty: Medium
+solution: solution.md
+---
+
+# Problem 73, Database Connection Pooling
 
 **Scenario:**
 A team's Postgres database keeps hitting "too many connections" errors during traffic spikes. The error is intermittent; under normal load the app is fine. Someone proposes "raising max_connections from 100 to 1000." You suspect that is the wrong fix.

@@ -1,4 +1,13 @@
-## Problem 67: Transactions and ACID
+---
+id: 67
+title: Transactions and ACID
+category: Databases
+topics: [transactions, ACID, durability, atomicity]
+difficulty: Easy
+solution: solution.md
+---
+
+# Problem 67, Transactions and ACID
 
 **Scenario:**
 A new engineer asks why their bank transfer code sometimes leaves $100 missing. Their code does two updates: subtract from one account, add to another. If the second update fails, the money is gone. You explain that they need a transaction. They ask what a transaction actually gives them and what each letter of ACID means.

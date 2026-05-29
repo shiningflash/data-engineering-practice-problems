@@ -1,4 +1,13 @@
-## Problem 72: Sharding and Picking a Shard Key
+---
+id: 72
+title: Sharding and Picking a Shard Key
+category: Databases
+topics: [sharding, shard key, hot shards, hash]
+difficulty: Hard
+solution: solution.md
+---
+
+# Problem 72, Sharding and Picking a Shard Key
 
 **Scenario:**
 A company's main user table has grown to 2 billion rows. A single Postgres primary cannot keep up with writes. The team is planning to shard. They need to pick a shard key, and the team is split: some want `user_id`, some want `country`, some want `created_at`. You are asked to mediate.
