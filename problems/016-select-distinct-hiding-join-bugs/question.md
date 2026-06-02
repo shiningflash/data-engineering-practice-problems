@@ -1,7 +1,7 @@
 ---
 id: 16
 title: SELECT DISTINCT Hiding Join Bugs
-category: SQL Thinking
+category: SQL & Querying
 topics: [DISTINCT, joins, grain, semi-join]
 difficulty: Medium
 solution: solution.md

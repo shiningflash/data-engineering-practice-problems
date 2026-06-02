@@ -1,7 +1,7 @@
 ---
 id: 5
 title: Merging Messy CSVs from Multiple Partners
-category: Data Integration
+category: Batch Pipelines
 topics: [CSV, column mapping, date parsing, file walk]
 difficulty: Medium
 solution: solution.py

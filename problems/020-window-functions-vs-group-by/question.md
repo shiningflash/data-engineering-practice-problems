@@ -1,7 +1,7 @@
 ---
 id: 20
 title: Window Functions vs GROUP BY
-category: SQL Thinking
+category: SQL & Querying
 topics: [window functions, GROUP BY, running totals, ranking]
 difficulty: Medium
 solution: solution.md

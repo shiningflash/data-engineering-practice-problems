@@ -1,7 +1,7 @@
 ---
 id: 3
 title: Transform and Clean Raw Data for Analytics
-category: Data Cleaning
+category: Batch Pipelines
 topics: [CSV, validation, regex, date checks]
 difficulty: Medium
 solution: solution.py

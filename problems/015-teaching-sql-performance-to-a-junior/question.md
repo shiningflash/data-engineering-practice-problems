@@ -1,7 +1,7 @@
 ---
 id: 15
 title: Teaching SQL Performance to a Junior
-category: SQL Thinking
+category: SQL & Querying
 topics: [EXPLAIN, performance, mentoring, optimization]
 difficulty: Medium
 solution: solution.md

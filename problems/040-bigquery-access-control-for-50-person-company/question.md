@@ -1,7 +1,7 @@
 ---
 id: 40
 title: BigQuery Access Control for 50 Person Company
-category: Cloud Decisions
+category: Cloud & Cost
 topics: [IAM, datasets, groups, RLS, audit]
 difficulty: Medium
 solution: solution.md

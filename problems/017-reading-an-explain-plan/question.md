@@ -1,7 +1,7 @@
 ---
 id: 17
 title: Reading an EXPLAIN Plan
-category: SQL Thinking
+category: SQL & Querying
 topics: [EXPLAIN, query plan, joins, sort spill]
 difficulty: Medium
 solution: solution.md

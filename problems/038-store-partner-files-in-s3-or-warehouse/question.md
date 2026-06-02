@@ -1,7 +1,7 @@
 ---
 id: 38
 title: Store Partner Files in S3 or Warehouse
-category: Cloud Decisions
+category: Cloud & Cost
 topics: [S3, raw layer, audit, schema evolution]
 difficulty: Easy
 solution: solution.md

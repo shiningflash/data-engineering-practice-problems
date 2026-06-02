@@ -1,7 +1,7 @@
 ---
 id: 29
 title: Daily Report Quietly Wrong for Two Weeks
-category: Scenarios
+category: Debugging & Reliability
 topics: [incident, postmortem, comms, data quality]
 difficulty: Medium
 solution: solution.md

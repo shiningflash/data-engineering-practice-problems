@@ -27,20 +27,16 @@ PROBLEMS_DIR = REPO / "problems"
 INDEX = REPO / "PROBLEMS.md"
 
 CATEGORY_LEGEND = [
-    ("Logs and Monitoring", "Parsing and analyzing large log files, counting events, ranking"),
-    ("Streaming",           "Continuous data, rolling stats, watermarks, ordering, lag"),
-    ("Data Cleaning",       "Validating, normalizing and rejecting bad rows from raw files"),
-    ("Schema Validation",   "Handling evolving JSON or Avro schemas without breaking consumers"),
-    ("Data Integration",    "Combining data from many sources with different shapes and conventions"),
-    ("Fundamentals",        "Core concepts every data engineer should be able to explain plainly"),
-    ("SQL Thinking",        "Writing, reading and reasoning about SQL like a senior engineer"),
-    ("System Design",       "End-to-end pipelines for real consumer and energy-sector products"),
-    ("Scenarios",           "Tricky real-life situations that test judgement and communication"),
-    ("Cloud Decisions",     "Picking between AWS / GCP services with clear trade-offs"),
-    ("Data Modeling",       "Star schemas, history tracking, grain, dimensions"),
-    ("Debugging",           "Step-by-step investigation of \"the number is wrong\" style problems"),
-    ("Cost & Performance",  "Finding waste in queries, jobs, and infrastructure"),
-    ("People & Process",    "Mentoring, comms, postmortems, ownership, rollouts"),
+    ("SQL & Querying",          "Writing, reading and reasoning about SQL like a senior engineer"),
+    ("Data Modeling",           "Star schemas, history tracking, grain, dimensions, SCDs"),
+    ("Databases",               "Engines, ACID, isolation, indexes, replication, sharding"),
+    ("Batch Pipelines",         "ETL/ELT, idempotency, data cleaning, contracts, orchestration"),
+    ("Streaming",               "Kafka, watermarks, exactly-once, ordering, consumer lag"),
+    ("Storage & Formats",       "Parquet, lakehouse, partitioning, clustering, materialized views"),
+    ("System Design",           "End-to-end pipelines for real consumer and energy-sector products"),
+    ("Cloud & Cost",            "Picking between AWS / GCP services, finding waste, controlling spend"),
+    ("Debugging & Reliability", "Step-by-step investigation when the number is wrong or the job died"),
+    ("People & Process",        "Mentoring, comms, postmortems, ownership, rollouts"),
 ]
 
 

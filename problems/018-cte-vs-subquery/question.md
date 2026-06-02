@@ -1,7 +1,7 @@
 ---
 id: 18
 title: CTE vs Subquery
-category: SQL Thinking
+category: SQL & Querying
 topics: [CTE, subquery, materialization, recursion]
 difficulty: Medium
 solution: solution.md

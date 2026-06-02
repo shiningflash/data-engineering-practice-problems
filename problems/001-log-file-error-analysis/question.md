@@ -1,7 +1,7 @@
 ---
 id: 1
 title: Log File Error Analysis
-category: Logs and Monitoring
+category: Batch Pipelines
 topics: [file streaming, counters, top-N, IoT logs]
 difficulty: Easy
 solution: solution.py

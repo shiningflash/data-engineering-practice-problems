@@ -1,7 +1,7 @@
 ---
 id: 47
 title: Airflow Green but Output Empty
-category: Debugging
+category: Debugging & Reliability
 topics: [silent success, idempotency, anomaly checks]
 difficulty: Medium
 solution: solution.md

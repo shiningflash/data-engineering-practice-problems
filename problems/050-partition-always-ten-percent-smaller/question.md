@@ -1,7 +1,7 @@
 ---
 id: 50
 title: Partition Always Ten Percent Smaller
-category: Debugging
+category: Debugging & Reliability
 topics: [anomaly, baselines, patterns, judgement]
 difficulty: Medium
 solution: solution.md

@@ -1,7 +1,7 @@
 ---
 id: 48
 title: Query Suddenly 80x Slower
-category: Debugging
+category: Debugging & Reliability
 topics: [EXPLAIN, statistics, plan flip, join strategy]
 difficulty: Medium
 solution: solution.md

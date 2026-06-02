@@ -1,7 +1,7 @@
 ---
 id: 52
 title: Four Hour Spark Job Under One Hour
-category: Cost & Performance
+category: Cloud & Cost
 topics: [Spark UI, skew, AQE, broadcast joins]
 difficulty: Medium
 solution: solution.md

@@ -1,7 +1,7 @@
 ---
 id: 55
 title: Partitioning Clustering Materialized Views
-category: Cost & Performance
+category: Storage & Formats
 topics: [partitioning, clustering, MV, BigQuery]
 difficulty: Easy
 solution: solution.md

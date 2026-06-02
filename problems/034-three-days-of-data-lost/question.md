@@ -1,7 +1,7 @@
 ---
 id: 34
 title: Three Days of Data Lost
-category: Scenarios
+category: Debugging & Reliability
 topics: [Kafka retention, replay, recovery, postmortem]
 difficulty: Hard
 solution: solution.md

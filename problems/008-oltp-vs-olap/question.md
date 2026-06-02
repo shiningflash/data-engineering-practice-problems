@@ -1,7 +1,7 @@
 ---
 id: 8
 title: OLTP vs OLAP
-category: Fundamentals
+category: Databases
 topics: [OLTP, OLAP, column store, row store]
 difficulty: Easy
 solution: solution.md

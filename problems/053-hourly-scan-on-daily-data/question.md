@@ -1,7 +1,7 @@
 ---
 id: 53
 title: Hourly Scan on Daily Data
-category: Cost & Performance
+category: Cloud & Cost
 topics: [summary tables, MV, refresh, BI tool]
 difficulty: Easy
 solution: solution.md

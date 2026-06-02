@@ -1,7 +1,7 @@
 ---
 id: 19
 title: Same Query Different Answers
-category: SQL Thinking
+category: SQL & Querying
 topics: [time zones, RLS, session settings, debugging]
 difficulty: Medium
 solution: solution.md

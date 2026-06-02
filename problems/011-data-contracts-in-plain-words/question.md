@@ -1,7 +1,7 @@
 ---
 id: 11
 title: Data Contracts in Plain Words
-category: Fundamentals
+category: Batch Pipelines
 topics: [data contracts, schema registry, ownership]
 difficulty: Medium
 solution: solution.md

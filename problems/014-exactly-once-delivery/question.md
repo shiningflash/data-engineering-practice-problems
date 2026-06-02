@@ -1,7 +1,7 @@
 ---
 id: 14
 title: Exactly Once Delivery
-category: Fundamentals
+category: Streaming
 topics: [exactly once, idempotency, Kafka, streaming]
 difficulty: Medium
 solution: solution.md

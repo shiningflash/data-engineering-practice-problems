@@ -1,7 +1,7 @@
 ---
 id: 13
 title: Data Lake vs Warehouse vs Lakehouse
-category: Fundamentals
+category: Storage & Formats
 topics: [lake, warehouse, lakehouse, Iceberg, Delta]
 difficulty: Medium
 solution: solution.md

@@ -1,7 +1,7 @@
 ---
 id: 49
 title: User Says Data Is Wrong
-category: Debugging
+category: Debugging & Reliability
 topics: [comms, vague reports, triage]
 difficulty: Easy
 solution: solution.md

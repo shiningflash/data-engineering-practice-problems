@@ -1,7 +1,7 @@
 ---
 id: 30
 title: Warehouse Cost Doubled in Two Months
-category: Scenarios
+category: Cloud & Cost
 topics: [cost, governance, comms, INFORMATION_SCHEMA]
 difficulty: Medium
 solution: solution.md

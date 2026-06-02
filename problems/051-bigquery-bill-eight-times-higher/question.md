@@ -1,7 +1,7 @@
 ---
 id: 51
 title: BigQuery Bill Eight Times Higher
-category: Cost & Performance
+category: Cloud & Cost
 topics: [INFORMATION_SCHEMA, top queries, slot reservation]
 difficulty: Medium
 solution: solution.md

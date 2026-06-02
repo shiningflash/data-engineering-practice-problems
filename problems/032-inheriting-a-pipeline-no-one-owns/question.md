@@ -1,7 +1,7 @@
 ---
 id: 32
 title: Inheriting a Pipeline No One Owns
-category: Scenarios
+category: People & Process
 topics: [ownership, judgement, rewrite-or-not]
 difficulty: Medium
 solution: solution.md

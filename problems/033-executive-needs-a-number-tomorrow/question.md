@@ -1,7 +1,7 @@
 ---
 id: 33
 title: Executive Needs a Number Tomorrow
-category: Scenarios
+category: People & Process
 topics: [comms, exec, caveats, prioritization]
 difficulty: Medium
 solution: solution.md

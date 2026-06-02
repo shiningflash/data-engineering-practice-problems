@@ -1,7 +1,7 @@
 ---
 id: 10
 title: Slowly Changing Dimensions
-category: Fundamentals
+category: Data Modeling
 topics: [SCD, dimensions, history, dbt snapshot]
 difficulty: Medium
 solution: solution.md

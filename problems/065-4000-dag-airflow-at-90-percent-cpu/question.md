@@ -1,7 +1,7 @@
 ---
 id: 65
 title: 4000 DAG Airflow at 90 Percent CPU
-category: People & Process
+category: Debugging & Reliability
 topics: [Airflow, scheduler, parsing, scale-out]
 difficulty: Medium
 solution: solution.md

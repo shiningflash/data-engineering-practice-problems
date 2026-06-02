@@ -1,7 +1,7 @@
 ---
 id: 31
 title: The Dashboard is Wrong
-category: Scenarios
+category: Debugging & Reliability
 topics: [trust, comms, vague reports]
 difficulty: Easy
 solution: solution.md

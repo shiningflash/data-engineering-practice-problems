@@ -1,7 +1,7 @@
 ---
 id: 7
 title: ETL vs ELT and Why ELT Won
-category: Fundamentals
+category: Batch Pipelines
 topics: [ETL, ELT, dbt, warehouse]
 difficulty: Easy
 solution: solution.md
