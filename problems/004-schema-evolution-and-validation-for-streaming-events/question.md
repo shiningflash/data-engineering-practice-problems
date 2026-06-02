@@ -4,6 +4,8 @@ title: Schema Evolution and Validation for Streaming Events
 category: Streaming
 topics: [JSON, schema evolution, type coercion, pydantic]
 difficulty: Medium
+interview_value: strong
+learn_order: 41
 solution: solution.py
 ---
 

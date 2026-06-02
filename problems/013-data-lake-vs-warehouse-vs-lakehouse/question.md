@@ -4,6 +4,8 @@ title: Data Lake vs Warehouse vs Lakehouse
 category: Storage & Formats
 topics: [lake, warehouse, lakehouse, Iceberg, Delta]
 difficulty: Medium
+interview_value: must-have
+learn_order: 31
 solution: solution.md
 ---
 

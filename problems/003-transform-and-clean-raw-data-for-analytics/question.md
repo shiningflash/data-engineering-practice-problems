@@ -4,6 +4,8 @@ title: Transform and Clean Raw Data for Analytics
 category: Batch Pipelines
 topics: [CSV, validation, regex, date checks]
 difficulty: Medium
+interview_value: optional
+learn_order: 28
 solution: solution.py
 ---
 

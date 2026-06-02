@@ -4,6 +4,8 @@ title: Banking App Monthly Spending Widget
 category: System Design
 topics: [streaming, CDC, serving store, low latency]
 difficulty: Hard
+interview_value: must-have
+learn_order: 46
 solution: solution.md
 ---
 

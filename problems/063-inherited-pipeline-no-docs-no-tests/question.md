@@ -4,6 +4,8 @@ title: Inherited Pipeline No Docs No Tests
 category: People & Process
 topics: [ownership, docs, tests, expectations]
 difficulty: Medium
+interview_value: optional
+learn_order: 73
 solution: solution.md
 ---
 

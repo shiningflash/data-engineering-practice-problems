@@ -4,6 +4,8 @@ title: Teaching SQL Performance to a Junior
 category: SQL & Querying
 topics: [EXPLAIN, performance, mentoring, optimization]
 difficulty: Medium
+interview_value: strong
+learn_order: 1
 solution: solution.md
 ---
 

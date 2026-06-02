@@ -4,6 +4,8 @@ title: Kafka Ordering Guarantee
 category: Streaming
 topics: [Kafka, partition key, ordering, idempotent producer]
 difficulty: Medium
+interview_value: must-have
+learn_order: 43
 solution: solution.md
 ---
 

@@ -4,6 +4,8 @@ title: Low Balance Notification Pipeline
 category: System Design
 topics: [batch, idempotency, time zones, notifications]
 difficulty: Medium
+interview_value: strong
+learn_order: 51
 solution: solution.md
 ---
 

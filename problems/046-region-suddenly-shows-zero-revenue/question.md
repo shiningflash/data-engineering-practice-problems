@@ -4,6 +4,8 @@ title: Region Suddenly Shows Zero Revenue
 category: Debugging & Reliability
 topics: [dashboard, joins, SCD, time zones]
 difficulty: Medium
+interview_value: must-have
+learn_order: 56
 solution: solution.md
 ---
 

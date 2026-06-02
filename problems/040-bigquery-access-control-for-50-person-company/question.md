@@ -4,6 +4,8 @@ title: BigQuery Access Control for 50 Person Company
 category: Cloud & Cost
 topics: [IAM, datasets, groups, RLS, audit]
 difficulty: Medium
+interview_value: optional
+learn_order: 39
 solution: solution.md
 ---
 

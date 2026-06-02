@@ -4,6 +4,8 @@ title: Executive Needs a Number Tomorrow
 category: People & Process
 topics: [comms, exec, caveats, prioritization]
 difficulty: Medium
+interview_value: optional
+learn_order: 70
 solution: solution.md
 ---
 

@@ -4,6 +4,8 @@ title: Deadlocks and Lock Escalation
 category: Databases
 topics: [deadlocks, locks, retries, lock escalation]
 difficulty: Medium
+interview_value: strong
+learn_order: 15
 solution: solution.md
 ---
 

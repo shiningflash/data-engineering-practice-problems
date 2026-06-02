@@ -4,6 +4,8 @@ title: Breaking Change in dbt Model 200 Consumers
 category: People & Process
 topics: [dbt, deprecation, comms, rollout]
 difficulty: Medium
+interview_value: strong
+learn_order: 74
 solution: solution.md
 ---
 

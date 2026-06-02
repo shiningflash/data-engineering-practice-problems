@@ -4,6 +4,8 @@ title: Window Functions vs GROUP BY
 category: SQL & Querying
 topics: [window functions, GROUP BY, running totals, ranking]
 difficulty: Medium
+interview_value: must-have
+learn_order: 3
 solution: solution.md
 ---
 

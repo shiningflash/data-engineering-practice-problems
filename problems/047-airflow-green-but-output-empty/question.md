@@ -4,6 +4,8 @@ title: Airflow Green but Output Empty
 category: Debugging & Reliability
 topics: [silent success, idempotency, anomaly checks]
 difficulty: Medium
+interview_value: must-have
+learn_order: 57
 solution: solution.md
 ---
 

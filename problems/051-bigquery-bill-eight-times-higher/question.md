@@ -4,6 +4,8 @@ title: BigQuery Bill Eight Times Higher
 category: Cloud & Cost
 topics: [INFORMATION_SCHEMA, top queries, slot reservation]
 difficulty: Medium
+interview_value: must-have
+learn_order: 65
 solution: solution.md
 ---
 

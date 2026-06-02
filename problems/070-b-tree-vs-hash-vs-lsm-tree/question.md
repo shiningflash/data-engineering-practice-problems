@@ -4,6 +4,8 @@ title: B-Tree vs Hash vs LSM Tree
 category: Databases
 topics: [B-tree, hash, LSM, storage engines]
 difficulty: Medium
+interview_value: must-have
+learn_order: 13
 solution: solution.md
 ---
 

@@ -4,6 +4,8 @@ title: Hourly Scan on Daily Data
 category: Cloud & Cost
 topics: [summary tables, MV, refresh, BI tool]
 difficulty: Easy
+interview_value: strong
+learn_order: 64
 solution: solution.md
 ---
 

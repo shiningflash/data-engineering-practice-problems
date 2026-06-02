@@ -4,6 +4,8 @@ title: Sharding and Picking a Shard Key
 category: Databases
 topics: [sharding, shard key, hot shards, hash]
 difficulty: Hard
+interview_value: must-have
+learn_order: 17
 solution: solution.md
 ---
 

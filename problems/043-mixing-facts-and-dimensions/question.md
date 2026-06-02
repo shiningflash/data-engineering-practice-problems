@@ -4,6 +4,8 @@ title: Mixing Facts and Dimensions
 category: Data Modeling
 topics: [star schema, SCD2, views, history]
 difficulty: Medium
+interview_value: strong
+learn_order: 19
 solution: solution.md
 ---
 

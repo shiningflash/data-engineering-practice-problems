@@ -4,6 +4,8 @@ title: Onboarding a New Analyst
 category: People & Process
 topics: [onboarding, mentoring, pairing]
 difficulty: Easy
+interview_value: optional
+learn_order: 68
 solution: solution.md
 ---
 

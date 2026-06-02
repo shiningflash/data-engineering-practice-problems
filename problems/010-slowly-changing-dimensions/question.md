@@ -4,6 +4,8 @@ title: Slowly Changing Dimensions
 category: Data Modeling
 topics: [SCD, dimensions, history, dbt snapshot]
 difficulty: Medium
+interview_value: must-have
+learn_order: 20
 solution: solution.md
 ---
 

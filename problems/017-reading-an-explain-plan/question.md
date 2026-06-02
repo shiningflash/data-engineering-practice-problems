@@ -4,6 +4,8 @@ title: Reading an EXPLAIN Plan
 category: SQL & Querying
 topics: [EXPLAIN, query plan, joins, sort spill]
 difficulty: Medium
+interview_value: must-have
+learn_order: 5
 solution: solution.md
 ---
 

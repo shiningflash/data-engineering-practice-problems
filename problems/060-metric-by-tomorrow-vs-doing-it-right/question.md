@@ -4,6 +4,8 @@ title: Metric by Tomorrow vs Doing It Right
 category: People & Process
 topics: [comms, prioritization, metrics]
 difficulty: Easy
+interview_value: optional
+learn_order: 69
 solution: solution.md
 ---
 

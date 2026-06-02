@@ -4,6 +4,8 @@ title: Managed Airflow vs Self Hosted
 category: Cloud & Cost
 topics: [Airflow, MWAA, Composer, Astronomer, Dagster]
 difficulty: Medium
+interview_value: strong
+learn_order: 38
 solution: solution.md
 ---
 

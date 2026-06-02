@@ -4,6 +4,8 @@ title: Data Contracts in Plain Words
 category: Batch Pipelines
 topics: [data contracts, schema registry, ownership]
 difficulty: Medium
+interview_value: strong
+learn_order: 26
 solution: solution.md
 ---
 

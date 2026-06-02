@@ -4,6 +4,8 @@ title: Rolling Average of Sensor Readings
 category: Streaming
 topics: [rolling window, deque, IoT sensors, real-time]
 difficulty: Easy
+interview_value: optional
+learn_order: 40
 solution: solution.py
 ---
 

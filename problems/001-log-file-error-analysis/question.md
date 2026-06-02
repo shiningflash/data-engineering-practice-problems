@@ -4,6 +4,8 @@ title: Log File Error Analysis
 category: Batch Pipelines
 topics: [file streaming, counters, top-N, IoT logs]
 difficulty: Easy
+interview_value: strong
+learn_order: 27
 solution: solution.py
 ---
 

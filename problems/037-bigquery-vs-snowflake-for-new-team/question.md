@@ -4,6 +4,8 @@ title: BigQuery vs Snowflake for New Team
 category: Cloud & Cost
 topics: [BigQuery, Snowflake, pricing model]
 difficulty: Medium
+interview_value: strong
+learn_order: 37
 solution: solution.md
 ---
 

@@ -4,6 +4,8 @@ title: Spotify Minutes Listened This Week
 category: System Design
 topics: [streaming aggregation, KV store, watermarks]
 difficulty: Hard
+interview_value: must-have
+learn_order: 47
 solution: solution.md
 ---
 

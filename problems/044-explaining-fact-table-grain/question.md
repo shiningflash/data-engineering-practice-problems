@@ -4,6 +4,8 @@ title: Explaining Fact Table Grain
 category: Data Modeling
 topics: [grain, facts, dimensions, aggregations]
 difficulty: Easy
+interview_value: must-have
+learn_order: 18
 solution: solution.md
 ---
 

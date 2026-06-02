@@ -4,6 +4,8 @@ title: Exactly Once Delivery
 category: Streaming
 topics: [exactly once, idempotency, Kafka, streaming]
 difficulty: Medium
+interview_value: must-have
+learn_order: 44
 solution: solution.md
 ---
 

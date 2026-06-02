@@ -4,6 +4,8 @@ title: SQL vs NoSQL
 category: Databases
 topics: [SQL, NoSQL, KV, document, wide column, graph]
 difficulty: Medium
+interview_value: strong
+learn_order: 8
 solution: solution.md
 ---
 

@@ -4,6 +4,8 @@ title: ETL vs ELT and Why ELT Won
 category: Batch Pipelines
 topics: [ETL, ELT, dbt, warehouse]
 difficulty: Easy
+interview_value: must-have
+learn_order: 24
 solution: solution.md
 ---
 

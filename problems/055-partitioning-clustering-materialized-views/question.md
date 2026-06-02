@@ -4,6 +4,8 @@ title: Partitioning Clustering Materialized Views
 category: Storage & Formats
 topics: [partitioning, clustering, MV, BigQuery]
 difficulty: Easy
+interview_value: strong
+learn_order: 33
 solution: solution.md
 ---
 

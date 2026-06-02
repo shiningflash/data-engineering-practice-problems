@@ -4,6 +4,8 @@ title: Watermarks in Plain Words
 category: Streaming
 topics: [watermarks, event time, allowed lateness]
 difficulty: Medium
+interview_value: must-have
+learn_order: 42
 solution: solution.md
 ---
 

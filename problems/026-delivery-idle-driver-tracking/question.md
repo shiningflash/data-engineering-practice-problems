@@ -4,6 +4,8 @@ title: Delivery Idle Driver Tracking
 category: System Design
 topics: [streaming, H3, TTL, geospatial]
 difficulty: Hard
+interview_value: optional
+learn_order: 49
 solution: solution.md
 ---
 

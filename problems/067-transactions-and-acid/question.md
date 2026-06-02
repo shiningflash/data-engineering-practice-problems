@@ -4,6 +4,8 @@ title: Transactions and ACID
 category: Databases
 topics: [transactions, ACID, durability, atomicity]
 difficulty: Easy
+interview_value: must-have
+learn_order: 9
 solution: solution.md
 ---
 

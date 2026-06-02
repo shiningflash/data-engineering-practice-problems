@@ -4,6 +4,8 @@ title: CTE vs Subquery
 category: SQL & Querying
 topics: [CTE, subquery, materialization, recursion]
 difficulty: Medium
+interview_value: strong
+learn_order: 2
 solution: solution.md
 ---
 

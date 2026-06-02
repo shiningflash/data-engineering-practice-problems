@@ -4,6 +4,8 @@ title: Tables for an Airbnb Like App
 category: Data Modeling
 topics: [star schema, SCD2, multi-currency, reviews]
 difficulty: Medium
+interview_value: must-have
+learn_order: 21
 solution: solution.md
 ---
 

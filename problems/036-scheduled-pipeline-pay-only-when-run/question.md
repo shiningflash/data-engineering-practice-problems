@@ -4,6 +4,8 @@ title: Scheduled Pipeline Pay Only When Run
 category: Cloud & Cost
 topics: [scheduled jobs, Cloud Run Jobs, AWS Batch]
 difficulty: Easy
+interview_value: optional
+learn_order: 36
 solution: solution.md
 ---
 

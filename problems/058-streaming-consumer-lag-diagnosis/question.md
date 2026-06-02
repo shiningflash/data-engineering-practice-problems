@@ -4,6 +4,8 @@ title: Streaming Consumer Lag Diagnosis
 category: Streaming
 topics: [lag, back-pressure, skew, Flink UI]
 difficulty: Medium
+interview_value: must-have
+learn_order: 45
 solution: solution.md
 ---
 

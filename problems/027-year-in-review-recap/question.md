@@ -4,6 +4,8 @@ title: Year in Review Recap
 category: System Design
 topics: [batch, KV store, CDN, image render]
 difficulty: Medium
+interview_value: strong
+learn_order: 50
 solution: solution.md
 ---
 

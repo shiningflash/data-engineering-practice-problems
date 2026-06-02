@@ -4,6 +4,8 @@ title: The Dashboard is Wrong
 category: Debugging & Reliability
 topics: [trust, comms, vague reports]
 difficulty: Easy
+interview_value: strong
+learn_order: 55
 solution: solution.md
 ---
 

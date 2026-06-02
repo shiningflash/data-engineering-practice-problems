@@ -4,6 +4,8 @@ title: Ride Hailing Surge Pricing
 category: System Design
 topics: [streaming, H3, real-time, pricing]
 difficulty: Hard
+interview_value: strong
+learn_order: 48
 solution: solution.md
 ---
 

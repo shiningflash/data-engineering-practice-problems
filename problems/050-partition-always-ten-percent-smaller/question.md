@@ -4,6 +4,8 @@ title: Partition Always Ten Percent Smaller
 category: Debugging & Reliability
 topics: [anomaly, baselines, patterns, judgement]
 difficulty: Medium
+interview_value: strong
+learn_order: 59
 solution: solution.md
 ---
 

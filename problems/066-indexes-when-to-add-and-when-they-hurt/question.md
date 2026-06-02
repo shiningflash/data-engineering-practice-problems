@@ -4,6 +4,8 @@ title: Indexes When to Add and When They Hurt
 category: Databases
 topics: [indexes, B-tree, write cost, EXPLAIN]
 difficulty: Easy
+interview_value: must-have
+learn_order: 12
 solution: solution.md
 ---
 

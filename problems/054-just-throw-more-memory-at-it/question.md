@@ -4,6 +4,8 @@ title: Just Throw More Memory At It
 category: Cloud & Cost
 topics: [upsize, plan inspection, optimization]
 difficulty: Medium
+interview_value: strong
+learn_order: 63
 solution: solution.md
 ---
 

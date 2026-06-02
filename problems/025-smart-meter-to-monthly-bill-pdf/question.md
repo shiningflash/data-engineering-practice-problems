@@ -4,6 +4,8 @@ title: Smart Meter to Monthly Bill PDF
 category: System Design
 topics: [billing, SCD2, idempotency, audit]
 difficulty: Hard
+interview_value: optional
+learn_order: 52
 solution: solution.md
 ---
 

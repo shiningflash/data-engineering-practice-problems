@@ -4,6 +4,8 @@ title: Current State and Full History
 category: Data Modeling
 topics: [event sourcing, projections, MV, audit]
 difficulty: Medium
+interview_value: optional
+learn_order: 23
 solution: solution.md
 ---
 

@@ -4,6 +4,8 @@ title: Two Teams Disagree on Active User
 category: People & Process
 topics: [metric ownership, comms, metrics layer]
 difficulty: Medium
+interview_value: strong
+learn_order: 71
 solution: solution.md
 ---
 

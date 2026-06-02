@@ -4,6 +4,8 @@ title: Daily Report Quietly Wrong for Two Weeks
 category: Debugging & Reliability
 topics: [incident, postmortem, comms, data quality]
 difficulty: Medium
+interview_value: must-have
+learn_order: 58
 solution: solution.md
 ---
 

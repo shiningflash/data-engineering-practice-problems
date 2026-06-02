@@ -4,6 +4,8 @@ title: Normalization and When to Denormalize
 category: Databases
 topics: [normalization, 3NF, denormalization, star schema]
 difficulty: Medium
+interview_value: strong
+learn_order: 11
 solution: solution.md
 ---
 

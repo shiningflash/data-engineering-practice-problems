@@ -4,6 +4,8 @@ title: Lambda vs Cloud Function vs Cloud Run
 category: Cloud & Cost
 topics: [serverless, AWS, GCP, runtime limits]
 difficulty: Medium
+interview_value: strong
+learn_order: 35
 solution: solution.md
 ---
 

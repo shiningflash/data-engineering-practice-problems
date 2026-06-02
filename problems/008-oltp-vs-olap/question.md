@@ -4,6 +4,8 @@ title: OLTP vs OLAP
 category: Databases
 topics: [OLTP, OLAP, column store, row store]
 difficulty: Easy
+interview_value: must-have
+learn_order: 7
 solution: solution.md
 ---
 

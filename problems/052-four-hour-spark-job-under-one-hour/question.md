@@ -4,6 +4,8 @@ title: Four Hour Spark Job Under One Hour
 category: Cloud & Cost
 topics: [Spark UI, skew, AQE, broadcast joins]
 difficulty: Medium
+interview_value: strong
+learn_order: 67
 solution: solution.md
 ---
 

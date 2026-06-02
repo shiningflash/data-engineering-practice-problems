@@ -4,6 +4,8 @@ title: Database Connection Pooling
 category: Databases
 topics: [connection pool, PgBouncer, sizing, Postgres]
 difficulty: Medium
+interview_value: strong
+learn_order: 14
 solution: solution.md
 ---
 

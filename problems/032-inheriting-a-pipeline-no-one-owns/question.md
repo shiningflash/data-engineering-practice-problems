@@ -4,6 +4,8 @@ title: Inheriting a Pipeline No One Owns
 category: People & Process
 topics: [ownership, judgement, rewrite-or-not]
 difficulty: Medium
+interview_value: optional
+learn_order: 72
 solution: solution.md
 ---
 

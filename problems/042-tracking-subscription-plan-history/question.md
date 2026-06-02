@@ -4,6 +4,8 @@ title: Tracking Subscription Plan History
 category: Data Modeling
 topics: [history, valid_from/to, billing, SCD2]
 difficulty: Medium
+interview_value: strong
+learn_order: 22
 solution: solution.md
 ---
 

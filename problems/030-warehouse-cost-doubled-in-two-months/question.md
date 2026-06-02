@@ -4,6 +4,8 @@ title: Warehouse Cost Doubled in Two Months
 category: Cloud & Cost
 topics: [cost, governance, comms, INFORMATION_SCHEMA]
 difficulty: Medium
+interview_value: must-have
+learn_order: 66
 solution: solution.md
 ---
 

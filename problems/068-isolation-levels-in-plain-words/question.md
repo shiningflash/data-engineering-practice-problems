@@ -4,6 +4,8 @@ title: Isolation Levels in Plain Words
 category: Databases
 topics: [isolation, snapshot, anomalies, MVCC]
 difficulty: Medium
+interview_value: must-have
+learn_order: 10
 solution: solution.md
 ---
 

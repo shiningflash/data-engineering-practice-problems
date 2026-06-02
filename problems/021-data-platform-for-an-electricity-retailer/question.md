@@ -4,6 +4,8 @@ title: Data Platform for an Electricity Retailer
 category: System Design
 topics: [smart meter, IoT, warehouse, batch]
 difficulty: Hard
+interview_value: optional
+learn_order: 53
 solution: solution.md
 ---
 

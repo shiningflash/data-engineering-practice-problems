@@ -4,6 +4,8 @@ title: Read Replicas and Replication Lag
 category: Databases
 topics: [replicas, replication lag, read after write]
 difficulty: Medium
+interview_value: strong
+learn_order: 16
 solution: solution.md
 ---
 

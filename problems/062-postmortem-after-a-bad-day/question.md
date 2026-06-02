@@ -4,6 +4,8 @@ title: Postmortem After a Bad Day
 category: People & Process
 topics: [postmortem, blameless, action items]
 difficulty: Medium
+interview_value: must-have
+learn_order: 75
 solution: solution.md
 ---
 

@@ -4,6 +4,8 @@ title: Same Query Different Answers
 category: SQL & Querying
 topics: [time zones, RLS, session settings, debugging]
 difficulty: Medium
+interview_value: strong
+learn_order: 6
 solution: solution.md
 ---
 

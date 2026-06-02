@@ -4,6 +4,8 @@ title: Three Days of Data Lost
 category: Debugging & Reliability
 topics: [Kafka retention, replay, recovery, postmortem]
 difficulty: Hard
+interview_value: must-have
+learn_order: 61
 solution: solution.md
 ---
 
