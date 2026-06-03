@@ -81,6 +81,21 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 | 73 | Database Connection Pooling | Databases & Operations | Medium | strong | [Question](problems/073-database-connection-pooling/question.md) | [Solution](problems/073-database-connection-pooling/solution.md) |
 | 74 | Deadlocks and Lock Escalation | Databases & Operations | Medium | strong | [Question](problems/074-deadlocks-and-lock-escalation/question.md) | [Solution](problems/074-deadlocks-and-lock-escalation/solution.md) |
 | 75 | SQL vs NoSQL | Databases & Operations | Medium | strong | [Question](problems/075-sql-vs-nosql/question.md) | [Solution](problems/075-sql-vs-nosql/solution.md) |
+| 76 | Change Data Capture, Log-Based vs Query-Based | Batch Pipelines & Orchestration | Medium | ⭐ must | [Question](problems/076-change-data-capture-log-vs-query-based/question.md) | [Solution](problems/076-change-data-capture-log-vs-query-based/solution.md) |
+| 77 | dbt Incremental vs Full Refresh | Batch Pipelines & Orchestration | Medium | strong | [Question](problems/077-dbt-incremental-vs-full-refresh/question.md) | [Solution](problems/077-dbt-incremental-vs-full-refresh/solution.md) |
+| 78 | dbt Snapshots for Slowly Changing Dimensions | Data Modeling | Medium | strong | [Question](problems/078-dbt-snapshots-for-scd/question.md) | [Solution](problems/078-dbt-snapshots-for-scd/solution.md) |
+| 79 | Spark Shuffle, Skew, and the Small File Problem | Cloud & Cost | Hard | ⭐ must | [Question](problems/079-spark-shuffle-skew-and-small-files/question.md) | [Solution](problems/079-spark-shuffle-skew-and-small-files/solution.md) |
+| 80 | Iceberg, Schema Evolution and Time Travel | Storage & Lakehouse | Medium | ⭐ must | [Question](problems/080-iceberg-schema-evolution-and-time-travel/question.md) | [Solution](problems/080-iceberg-schema-evolution-and-time-travel/solution.md) |
+| 81 | Delta vs Iceberg vs Hudi | Storage & Lakehouse | Medium | strong | [Question](problems/081-delta-vs-iceberg-vs-hudi/question.md) | [Solution](problems/081-delta-vs-iceberg-vs-hudi/solution.md) |
+| 82 | Column-Level Lineage in Practice | Batch Pipelines & Orchestration | Medium | strong | [Question](problems/082-column-level-lineage/question.md) | [Solution](problems/082-column-level-lineage/solution.md) |
+| 83 | PII, Masking, and Right-to-be-Forgotten | Data Modeling | Medium | ⭐ must | [Question](problems/083-pii-masking-and-right-to-be-forgotten/question.md) | [Solution](problems/083-pii-masking-and-right-to-be-forgotten/solution.md) |
+| 84 | Data Observability, Freshness, Volume, and Drift | System Design | Medium | ⭐ must | [Question](problems/084-data-observability-freshness-volume-drift/question.md) | [Solution](problems/084-data-observability-freshness-volume-drift/solution.md) |
+| 85 | Feature Store, Online vs Offline | System Design | Hard | strong | [Question](problems/085-feature-store-online-vs-offline/question.md) | [Solution](problems/085-feature-store-online-vs-offline/solution.md) |
+| 86 | Event Tracking Schema Design | Streaming | Medium | strong | [Question](problems/086-event-tracking-schema-design/question.md) | [Solution](problems/086-event-tracking-schema-design/solution.md) |
+| 87 | DuckDB for Single-Machine Analytics | SQL & Querying | Easy | strong | [Question](problems/087-duckdb-for-single-machine-analytics/question.md) | [Solution](problems/087-duckdb-for-single-machine-analytics/solution.md) |
+| 88 | Polars vs Pandas for ETL | SQL & Querying | Easy | optional | [Question](problems/088-polars-vs-pandas-for-etl/question.md) | [Solution](problems/088-polars-vs-pandas-for-etl/solution.md) |
+| 89 | Great Expectations vs dbt Tests | Batch Pipelines & Orchestration | Medium | strong | [Question](problems/089-great-expectations-vs-dbt-tests/question.md) | [Solution](problems/089-great-expectations-vs-dbt-tests/solution.md) |
+| 90 | OpenLineage and Data Discovery | System Design | Medium | optional | [Question](problems/090-openlineage-and-data-discovery/question.md) | [Solution](problems/090-openlineage-and-data-discovery/solution.md) |
 
 ---
 
@@ -114,7 +129,7 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 
 ### ⭐ Interview Must-Haves
 
-Twenty-nine problems that cover the questions you cannot dodge in a senior data engineer loop. Read them in the order shown, top to bottom.
+34 problems that cover the questions you cannot dodge in a senior data engineer loop. Read them in the order shown, top to bottom.
 
 3. [Window Functions vs GROUP BY](problems/020-window-functions-vs-group-by/question.md) — *SQL & Querying*
 5. [Reading an EXPLAIN Plan](problems/017-reading-an-explain-plan/question.md) — *SQL & Querying*
@@ -145,12 +160,17 @@ Twenty-nine problems that cover the questions you cannot dodge in a senior data 
 65. [BigQuery Bill Eight Times Higher](problems/051-bigquery-bill-eight-times-higher/question.md) — *Cloud & Cost*
 66. [Warehouse Cost Doubled in Two Months](problems/030-warehouse-cost-doubled-in-two-months/question.md) — *Cloud & Cost*
 75. [Postmortem After a Bad Day](problems/062-postmortem-after-a-bad-day/question.md) — *People & Process*
+80. [Change Data Capture, Log-Based vs Query-Based](problems/076-change-data-capture-log-vs-query-based/question.md) — *Batch Pipelines & Orchestration*
+81. [PII, Masking, and Right-to-be-Forgotten](problems/083-pii-masking-and-right-to-be-forgotten/question.md) — *Data Modeling*
+82. [Iceberg, Schema Evolution and Time Travel](problems/080-iceberg-schema-evolution-and-time-travel/question.md) — *Storage & Lakehouse*
+85. [Spark Shuffle, Skew, and the Small File Problem](problems/079-spark-shuffle-skew-and-small-files/question.md) — *Cloud & Cost*
+88. [Data Observability, Freshness, Volume, and Drift](problems/084-data-observability-freshness-volume-drift/question.md) — *System Design*
 
 ---
 
 ### Recommended Reading Order
 
-All 75 problems arranged as a pedagogical sequence. Read top to bottom for a complete path from SQL to senior-level data engineering.
+All 90 problems arranged as a pedagogical sequence. Read top to bottom for a complete path from SQL to senior-level data engineering.
 
 1. [Teaching SQL Performance to a Junior](problems/015-teaching-sql-performance-to-a-junior/question.md) — *SQL & Querying*, Medium
 2. [CTE vs Subquery](problems/018-cte-vs-subquery/question.md) — *SQL & Querying*, Medium
@@ -227,5 +247,20 @@ All 75 problems arranged as a pedagogical sequence. Read top to bottom for a com
 73. [Inherited Pipeline No Docs No Tests](problems/063-inherited-pipeline-no-docs-no-tests/question.md) — *People & Process*, Medium
 74. [Breaking Change in dbt Model 200 Consumers](problems/064-breaking-change-in-dbt-model-200-consumers/question.md) — *People & Process*, Medium
 75. [Postmortem After a Bad Day](problems/062-postmortem-after-a-bad-day/question.md) — *People & Process*, Medium
+76. [DuckDB for Single-Machine Analytics](problems/087-duckdb-for-single-machine-analytics/question.md) — *SQL & Querying*, Easy
+77. [Polars vs Pandas for ETL](problems/088-polars-vs-pandas-for-etl/question.md) — *SQL & Querying*, Easy
+78. [dbt Incremental vs Full Refresh](problems/077-dbt-incremental-vs-full-refresh/question.md) — *Batch Pipelines & Orchestration*, Medium
+79. [dbt Snapshots for Slowly Changing Dimensions](problems/078-dbt-snapshots-for-scd/question.md) — *Data Modeling*, Medium
+80. [Change Data Capture, Log-Based vs Query-Based](problems/076-change-data-capture-log-vs-query-based/question.md) — *Batch Pipelines & Orchestration*, Medium
+81. [PII, Masking, and Right-to-be-Forgotten](problems/083-pii-masking-and-right-to-be-forgotten/question.md) — *Data Modeling*, Medium
+82. [Iceberg, Schema Evolution and Time Travel](problems/080-iceberg-schema-evolution-and-time-travel/question.md) — *Storage & Lakehouse*, Medium
+83. [Delta vs Iceberg vs Hudi](problems/081-delta-vs-iceberg-vs-hudi/question.md) — *Storage & Lakehouse*, Medium
+84. [Event Tracking Schema Design](problems/086-event-tracking-schema-design/question.md) — *Streaming*, Medium
+85. [Spark Shuffle, Skew, and the Small File Problem](problems/079-spark-shuffle-skew-and-small-files/question.md) — *Cloud & Cost*, Hard
+86. [Great Expectations vs dbt Tests](problems/089-great-expectations-vs-dbt-tests/question.md) — *Batch Pipelines & Orchestration*, Medium
+87. [Column-Level Lineage in Practice](problems/082-column-level-lineage/question.md) — *Batch Pipelines & Orchestration*, Medium
+88. [Data Observability, Freshness, Volume, and Drift](problems/084-data-observability-freshness-volume-drift/question.md) — *System Design*, Medium
+89. [OpenLineage and Data Discovery](problems/090-openlineage-and-data-discovery/question.md) — *System Design*, Medium
+90. [Feature Store, Online vs Offline](problems/085-feature-store-online-vs-offline/question.md) — *System Design*, Hard
 
 > New problems are added regularly. If you want to contribute, see the [Contribution Guide](CONTRIBUTION.md).

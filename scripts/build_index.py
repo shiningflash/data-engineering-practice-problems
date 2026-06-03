@@ -139,7 +139,7 @@ def render(rows: list[dict]) -> str:
             "",
             "### ⭐ Interview Must-Haves",
             "",
-            "Twenty-nine problems that cover the questions you cannot dodge in a senior data engineer loop. Read them in the order shown, top to bottom.",
+            f"{len(must_haves)} problems that cover the questions you cannot dodge in a senior data engineer loop. Read them in the order shown, top to bottom.",
             "",
         ]
         for r in must_haves:
@@ -159,7 +159,7 @@ def render(rows: list[dict]) -> str:
             "",
             "### Recommended Reading Order",
             "",
-            "All 75 problems arranged as a pedagogical sequence. Read top to bottom for a complete path from SQL to senior-level data engineering.",
+            f"All {len(ordered)} problems arranged as a pedagogical sequence. Read top to bottom for a complete path from SQL to senior-level data engineering.",
             "",
         ]
         for r in ordered:
