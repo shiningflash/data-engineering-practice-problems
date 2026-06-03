@@ -1,7 +1,7 @@
 ---
 id: 49
 title: User Says Data Is Wrong
-category: Debugging & Reliability
+category: Batch Pipelines & Orchestration
 topics: [comms, vague reports, triage]
 difficulty: Easy
 interview_value: optional

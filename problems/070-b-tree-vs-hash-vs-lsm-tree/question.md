@@ -1,7 +1,7 @@
 ---
 id: 70
 title: B-Tree vs Hash vs LSM Tree
-category: Database Internals
+category: Databases & Operations
 topics: [B-tree, hash, LSM, storage engines]
 difficulty: Medium
 interview_value: must-have

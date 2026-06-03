@@ -1,7 +1,7 @@
 ---
 id: 68
 title: Isolation Levels in Plain Words
-category: Database Internals
+category: Databases & Operations
 topics: [isolation, snapshot, anomalies, MVCC]
 difficulty: Medium
 interview_value: must-have

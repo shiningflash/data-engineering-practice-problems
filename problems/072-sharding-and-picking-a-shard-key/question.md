@@ -1,7 +1,7 @@
 ---
 id: 72
 title: Sharding and Picking a Shard Key
-category: Database Operations
+category: Databases & Operations
 topics: [sharding, shard key, hot shards, hash]
 difficulty: Hard
 interview_value: must-have

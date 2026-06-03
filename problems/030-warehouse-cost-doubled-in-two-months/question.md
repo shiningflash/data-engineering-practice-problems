@@ -1,7 +1,7 @@
 ---
 id: 30
 title: Warehouse Cost Doubled in Two Months
-category: Cost Optimization
+category: Cloud & Cost
 topics: [cost, governance, comms, INFORMATION_SCHEMA]
 difficulty: Medium
 interview_value: must-have

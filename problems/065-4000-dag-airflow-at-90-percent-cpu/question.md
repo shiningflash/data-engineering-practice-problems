@@ -1,7 +1,7 @@
 ---
 id: 65
 title: 4000 DAG Airflow at 90 Percent CPU
-category: Debugging & Reliability
+category: Batch Pipelines & Orchestration
 topics: [Airflow, scheduler, parsing, scale-out]
 difficulty: Medium
 interview_value: strong

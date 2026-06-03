@@ -1,7 +1,7 @@
 ---
 id: 47
 title: Airflow Green but Output Empty
-category: Debugging & Reliability
+category: Batch Pipelines & Orchestration
 topics: [silent success, idempotency, anomaly checks]
 difficulty: Medium
 interview_value: must-have

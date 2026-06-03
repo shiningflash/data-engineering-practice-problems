@@ -1,7 +1,7 @@
 ---
 id: 34
 title: Three Days of Data Lost
-category: Debugging & Reliability
+category: Batch Pipelines & Orchestration
 topics: [Kafka retention, replay, recovery, postmortem]
 difficulty: Hard
 interview_value: must-have

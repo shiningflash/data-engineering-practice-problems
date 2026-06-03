@@ -1,7 +1,7 @@
 ---
 id: 36
 title: Scheduled Pipeline Pay Only When Run
-category: Cloud Services
+category: Cloud & Cost
 topics: [scheduled jobs, Cloud Run Jobs, AWS Batch]
 difficulty: Easy
 interview_value: optional

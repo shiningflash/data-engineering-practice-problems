@@ -1,7 +1,7 @@
 ---
 id: 31
 title: The Dashboard is Wrong
-category: Debugging & Reliability
+category: Batch Pipelines & Orchestration
 topics: [trust, comms, vague reports]
 difficulty: Easy
 interview_value: strong

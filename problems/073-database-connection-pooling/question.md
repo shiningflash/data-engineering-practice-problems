@@ -1,7 +1,7 @@
 ---
 id: 73
 title: Database Connection Pooling
-category: Database Operations
+category: Databases & Operations
 topics: [connection pool, PgBouncer, sizing, Postgres]
 difficulty: Medium
 interview_value: strong

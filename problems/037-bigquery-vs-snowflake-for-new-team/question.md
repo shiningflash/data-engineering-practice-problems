@@ -1,7 +1,7 @@
 ---
 id: 37
 title: BigQuery vs Snowflake for New Team
-category: Cloud Services
+category: Cloud & Cost
 topics: [BigQuery, Snowflake, pricing model]
 difficulty: Medium
 interview_value: strong

@@ -27,18 +27,15 @@ PROBLEMS_DIR = REPO / "problems"
 INDEX = REPO / "PROBLEMS.md"
 
 CATEGORY_LEGEND = [
-    ("SQL & Querying",          "Writing, reading and reasoning about SQL like a senior engineer"),
-    ("Data Modeling",           "Star schemas, history tracking, grain, dimensions, SCDs"),
-    ("Database Internals",      "Engines, ACID, isolation levels, indexes, B-tree vs LSM, normalization"),
-    ("Database Operations",     "Running databases at scale: replicas, sharding, connection pools, deadlocks"),
-    ("Batch Pipelines",         "ETL/ELT, idempotency, data cleaning, contracts, orchestration"),
-    ("Streaming",               "Kafka, watermarks, exactly-once, ordering, consumer lag"),
-    ("Storage & Formats",       "Parquet, lakehouse, partitioning, clustering, materialized views"),
-    ("System Design",           "End-to-end pipelines for real consumer and energy-sector products"),
-    ("Cloud Services",          "Picking between AWS, GCP and Azure services with clear trade-offs"),
-    ("Cost Optimization",       "Finding waste in queries, jobs, and infrastructure when the bill spikes"),
-    ("Debugging & Reliability", "Step-by-step investigation when the number is wrong or the job died"),
-    ("People & Process",        "Mentoring, comms, postmortems, ownership, rollouts"),
+    ("SQL & Querying",                 "Writing, reading and reasoning about SQL like a senior engineer"),
+    ("Data Modeling",                  "Star schemas, history tracking, grain, dimensions, SCDs"),
+    ("Databases & Operations",         "Engines, ACID, indexes, replication, sharding, pools, deadlocks"),
+    ("Batch Pipelines & Orchestration","ETL/ELT, idempotency, contracts, Airflow ops, pipeline debugging"),
+    ("Streaming",                      "Kafka, watermarks, exactly-once, ordering, consumer lag"),
+    ("Storage & Lakehouse",            "Parquet, lakehouse formats, partitioning, clustering, materialized views"),
+    ("Cloud & Cost",                   "Picking AWS/GCP/Azure services and finding waste when bills spike"),
+    ("System Design",                  "End-to-end pipelines for real consumer and energy-sector products"),
+    ("People & Process",               "Mentoring, comms, postmortems, ownership, rollouts"),
 ]
 
 

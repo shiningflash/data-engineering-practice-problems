@@ -1,7 +1,7 @@
 ---
 id: 55
 title: Partitioning Clustering Materialized Views
-category: Storage & Formats
+category: Storage & Lakehouse
 topics: [partitioning, clustering, MV, BigQuery]
 difficulty: Easy
 interview_value: strong

@@ -1,7 +1,7 @@
 ---
 id: 8
 title: OLTP vs OLAP
-category: Database Internals
+category: Databases & Operations
 topics: [OLTP, OLAP, column store, row store]
 difficulty: Easy
 interview_value: must-have

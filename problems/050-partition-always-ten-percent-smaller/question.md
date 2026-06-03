@@ -1,7 +1,7 @@
 ---
 id: 50
 title: Partition Always Ten Percent Smaller
-category: Debugging & Reliability
+category: Batch Pipelines & Orchestration
 topics: [anomaly, baselines, patterns, judgement]
 difficulty: Medium
 interview_value: strong

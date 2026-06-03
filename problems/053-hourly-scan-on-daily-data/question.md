@@ -1,7 +1,7 @@
 ---
 id: 53
 title: Hourly Scan on Daily Data
-category: Cost Optimization
+category: Cloud & Cost
 topics: [summary tables, MV, refresh, BI tool]
 difficulty: Easy
 interview_value: strong

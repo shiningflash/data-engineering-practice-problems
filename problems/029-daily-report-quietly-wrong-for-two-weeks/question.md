@@ -1,7 +1,7 @@
 ---
 id: 29
 title: Daily Report Quietly Wrong for Two Weeks
-category: Debugging & Reliability
+category: Batch Pipelines & Orchestration
 topics: [incident, postmortem, comms, data quality]
 difficulty: Medium
 interview_value: must-have

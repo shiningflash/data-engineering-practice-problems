@@ -1,7 +1,7 @@
 ---
 id: 54
 title: Just Throw More Memory At It
-category: Cost Optimization
+category: Cloud & Cost
 topics: [upsize, plan inspection, optimization]
 difficulty: Medium
 interview_value: strong

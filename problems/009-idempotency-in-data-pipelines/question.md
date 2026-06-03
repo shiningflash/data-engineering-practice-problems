@@ -1,7 +1,7 @@
 ---
 id: 9
 title: Idempotency in Data Pipelines
-category: Batch Pipelines
+category: Batch Pipelines & Orchestration
 topics: [idempotency, retries, MERGE, partitions]
 difficulty: Medium
 interview_value: must-have

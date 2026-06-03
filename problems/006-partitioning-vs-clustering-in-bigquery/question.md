@@ -1,7 +1,7 @@
 ---
 id: 6
 title: Partitioning vs Clustering in BigQuery
-category: Storage & Formats
+category: Storage & Lakehouse
 topics: [BigQuery, partitioning, clustering, cost]
 difficulty: Easy
 interview_value: strong

@@ -1,7 +1,7 @@
 ---
 id: 1
 title: Log File Error Analysis
-category: Batch Pipelines
+category: Batch Pipelines & Orchestration
 topics: [file streaming, counters, top-N, IoT logs]
 difficulty: Easy
 interview_value: strong

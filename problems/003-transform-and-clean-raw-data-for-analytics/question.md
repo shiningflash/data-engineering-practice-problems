@@ -1,7 +1,7 @@
 ---
 id: 3
 title: Transform and Clean Raw Data for Analytics
-category: Batch Pipelines
+category: Batch Pipelines & Orchestration
 topics: [CSV, validation, regex, date checks]
 difficulty: Medium
 interview_value: optional

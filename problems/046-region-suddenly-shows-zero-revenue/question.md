@@ -1,7 +1,7 @@
 ---
 id: 46
 title: Region Suddenly Shows Zero Revenue
-category: Debugging & Reliability
+category: Batch Pipelines & Orchestration
 topics: [dashboard, joins, SCD, time zones]
 difficulty: Medium
 interview_value: must-have
