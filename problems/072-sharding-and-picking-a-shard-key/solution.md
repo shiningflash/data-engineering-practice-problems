@@ -6,19 +6,27 @@
 
 ### What sharding actually does
 
-```
-Before
-──────
-   ┌──────────────┐
-   │   PRIMARY    │   2 billion rows
-   └──────────────┘
+```mermaid
+flowchart TB
+    subgraph BEFORE["Before"]
+        P([Primary<br/>2 billion rows])
+    end
 
-After (4-way sharding)
-──────────────────────
-   ┌────────┐  ┌────────┐  ┌────────┐  ┌────────┐
-   │ Shard 1│  │ Shard 2│  │ Shard 3│  │ Shard 4│
-   │ ~500M  │  │ ~500M  │  │ ~500M  │  │ ~500M  │
-   └────────┘  └────────┘  └────────┘  └────────┘
+    subgraph AFTER["After, 4-way sharding"]
+        direction LR
+        S1([Shard 1<br/>~500M])
+        S2([Shard 2<br/>~500M])
+        S3([Shard 3<br/>~500M])
+        S4([Shard 4<br/>~500M])
+    end
+
+    BEFORE --> AFTER
+
+    style P fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style S1 fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style S2 fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style S3 fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style S4 fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
 ```
 
 Each shard is an independent primary (often with its own replicas). A router (your application or a proxy) decides which shard a query goes to, based on the shard key.

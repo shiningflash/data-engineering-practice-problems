@@ -6,23 +6,27 @@
 
 ### How replication works
 
-```
-        Application
-           │
-           │ writes
-           ▼
-   ┌──────────────┐
-   │   PRIMARY    │
-   └──────┬───────┘
-          │ stream of changes (WAL / binlog)
-          ▼
-   ┌──────────────┐       ┌──────────────┐
-   │  REPLICA 1   │  ...  │  REPLICA N   │
-   └──────────────┘       └──────────────┘
-          ▲                       ▲
-          │                       │
-          │ reads                 │ reads
-       Application             Application
+```mermaid
+flowchart TB
+    APPW([Application])
+    PRI([Primary database])
+    R1([Replica 1])
+    RN([Replica N])
+    APPR1([Application reads])
+    APPRN([Application reads])
+
+    APPW -->|writes| PRI
+    PRI -->|WAL / binlog stream| R1
+    PRI -->|WAL / binlog stream| RN
+    R1 --> APPR1
+    RN --> APPRN
+
+    style APPW fill:#dcfce7,stroke:#15803d,color:#14532d
+    style PRI fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style R1 fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style RN fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style APPR1 fill:#dcfce7,stroke:#15803d,color:#14532d
+    style APPRN fill:#dcfce7,stroke:#15803d,color:#14532d
 ```
 
 The primary writes a stream of changes (Postgres calls it WAL, MySQL calls it binlog). Each replica subscribes to this stream and replays the changes locally. Replicas are typically read-only.
@@ -49,12 +53,18 @@ You can measure it (`SELECT pg_last_wal_replay_lag()` in Postgres, `SHOW SLAVE S
 
 The scenario:
 
-```
-T0  Client: UPDATE profile SET name = 'Amirul' WHERE id = 42;
-T0+1ms  Primary commits.
-T0+2ms  Client: SELECT * FROM profile WHERE id = 42;
-        Router sends this to replica.
-T0+2ms  Replica still on the old version. Returns 'old name'.
+```mermaid
+sequenceDiagram
+    autonumber
+    participant C as Client
+    participant P as Primary
+    participant R as Replica
+
+    C->>P: UPDATE profile SET name='Amirul' WHERE id=42
+    P-->>C: commit ack (T0+1ms)
+    C->>R: SELECT * FROM profile WHERE id=42
+    Note over R: still on old version
+    R-->>C: returns 'old name'
 ```
 
 User: "I just saved! Why is it showing the old name?"

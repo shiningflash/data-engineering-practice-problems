@@ -6,19 +6,25 @@
 
 ### "NoSQL" is four different families
 
-```
-                       NoSQL umbrella
-                       ──────────────
-       ┌──────────────┬─────────────┬───────────────┬─────────┐
-       ▼              ▼             ▼               ▼
-   Key-Value     Document       Wide-Column      Graph
-   (Redis,       (MongoDB,      (Cassandra,      (Neo4j,
-   DynamoDB,     CouchDB,        Bigtable,        Neptune,
-   Memcached)    Firestore)      HBase,           ArangoDB)
-                                 ScyllaDB)
+```mermaid
+flowchart TB
+    NS([NoSQL umbrella])
 
-   Lookup by      Store JSON     Sparse columns,    Nodes and edges,
-   key, get value.docs by id.    huge row scale.    fast traversal.
+    KV([Key-Value<br/>Redis, DynamoDB, Memcached<br/>lookup by key, get value])
+    DOC([Document<br/>MongoDB, CouchDB, Firestore<br/>store JSON docs by id])
+    WC([Wide-Column<br/>Cassandra, Bigtable, HBase, ScyllaDB<br/>sparse columns, huge row scale])
+    GR([Graph<br/>Neo4j, Neptune, ArangoDB<br/>nodes + edges, fast traversal])
+
+    NS --> KV
+    NS --> DOC
+    NS --> WC
+    NS --> GR
+
+    style NS fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style KV fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style DOC fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style WC fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style GR fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
 ```
 
 Saying "we should use NoSQL" without saying which is meaningless.
@@ -113,19 +119,25 @@ Without these, the team is choosing on aesthetics, not problem.
 
 Most production systems end up using both:
 
-```
-┌───────────────────────────────────────────────────────────┐
-│  Application                                              │
-│                                                           │
-│   Postgres   ←  users, orders, payments, accounts         │
-│                  (transactions, joins, the source of truth)│
-│                                                           │
-│   Redis      ←  session cache, hot reads                  │
-│                                                           │
-│   DynamoDB   ←  user activity log, feature store          │
-│                                                           │
-│   Elasticsearch  ←  full-text search                      │
-└───────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    APP([Application])
+
+    PG([Postgres<br/>users, orders, payments, accounts<br/>source of truth, transactions, joins])
+    RD([Redis<br/>session cache, hot reads])
+    DD([DynamoDB<br/>user activity log, feature store])
+    ES([Elasticsearch<br/>full-text search])
+
+    APP --> PG
+    APP --> RD
+    APP --> DD
+    APP --> ES
+
+    style APP fill:#dcfce7,stroke:#15803d,color:#14532d
+    style PG fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style RD fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style DD fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style ES fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
 ```
 
 Each one does the job it is best at. Operationally heavier than one database, but much faster than forcing one database to do everything.

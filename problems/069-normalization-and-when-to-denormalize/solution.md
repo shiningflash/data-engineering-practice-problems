@@ -6,44 +6,53 @@
 
 ### The three normal forms, with a tiny example
 
-```
-Not normalized (a single sheet of paper)
-─────────────────────────────────────────
-order_id │ customer_name │ items_bought             │ phones
-1        │ Alice         │ apple, banana            │ 1234, 5678
-2        │ Bob           │ apple                    │ 9999
+**Not normalized** (a single wide sheet):
 
-Problems:
-- "items_bought" is a list in one cell. Cannot filter or count cleanly.
-- "phones" is a repeating group.
-- Customer info repeats per order.
-```
+| order_id | customer_name | items_bought  | phones     |
+| -------- | ------------- | ------------- | ---------- |
+| 1        | Alice         | apple, banana | 1234, 5678 |
+| 2        | Bob           | apple         | 9999       |
 
-**1NF — each column holds one atomic value.**
+Problems: `items_bought` is a list in one cell, `phones` is a repeating group, customer info repeats per order.
 
-```
-order_id │ customer_name │ item       │ phone
-1        │ Alice         │ apple      │ 1234
-1        │ Alice         │ apple      │ 5678
-1        │ Alice         │ banana     │ 1234
-1        │ Alice         │ banana     │ 5678
-2        │ Bob           │ apple      │ 9999
-```
+**1NF, each column holds one atomic value.**
 
-Now each cell is atomic. But notice the explosion: Alice's two items × two phones = four rows. That is the next problem.
+| order_id | customer_name | item   | phone |
+| -------- | ------------- | ------ | ----- |
+| 1        | Alice         | apple  | 1234  |
+| 1        | Alice         | apple  | 5678  |
+| 1        | Alice         | banana | 1234  |
+| 1        | Alice         | banana | 5678  |
+| 2        | Bob           | apple  | 9999  |
 
-**2NF — every non-key column depends on the entire primary key, not part of it.**
+Each cell is atomic. But notice the explosion: Alice's two items × two phones = four rows. That is the next problem.
 
-Imagine `(order_id, item)` is the composite key. `customer_name` does not depend on `item`, only on `order_id`. Same for `phone` (depends on customer, not on item). So we split:
+**2NF, every non-key column depends on the entire primary key, not part of it.**
 
-```
-orders                    order_items                customer_phones
-──────────────────        ────────────────────       ───────────────
-order_id │ customer       order_id │ item            customer │ phone
-1        │ Alice          1        │ apple           Alice    │ 1234
-2        │ Bob            1        │ banana          Alice    │ 5678
-                          2        │ apple           Bob      │ 9999
-```
+`(order_id, item)` is the composite key. `customer_name` depends on `order_id` only, not `item`. `phone` depends on the customer. Split into three tables:
+
+`orders`:
+
+| order_id | customer |
+| -------- | -------- |
+| 1        | Alice    |
+| 2        | Bob      |
+
+`order_items`:
+
+| order_id | item   |
+| -------- | ------ |
+| 1        | apple  |
+| 1        | banana |
+| 2        | apple  |
+
+`customer_phones`:
+
+| customer | phone |
+| -------- | ----- |
+| Alice    | 1234  |
+| Alice    | 5678  |
+| Bob      | 9999  |
 
 **3NF — non-key columns depend only on the key, not on other non-key columns.**
 
@@ -101,10 +110,10 @@ The engineer who wants customer name and address on every order row is partly ri
 
 The 3NF design:
 
-```
-customers (customer_id, name, current_address)
-orders    (order_id, customer_id, ship_address_at_order_time, ...)
-```
+| Table | Columns |
+| --- | --- |
+| `customers` | `customer_id`, `name`, `current_address` |
+| `orders` | `order_id`, `customer_id`, `ship_address_at_order_time`, ... |
 
 Best of both: customer's current info in one place, the order's snapshot frozen forever.
 

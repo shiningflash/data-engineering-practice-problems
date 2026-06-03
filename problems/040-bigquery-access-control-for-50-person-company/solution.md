@@ -8,15 +8,32 @@
 
 BigQuery's natural permission boundary is the **dataset**. You can grant `roles/bigquery.dataViewer` on `analytics_marts` without exposing `hr_raw`. This is the building block.
 
-```
-Project: company-data
-│
-├── Dataset: raw_events             ── group: data-engineering@
-├── Dataset: analytics_marts        ── group: analysts@
-├── Dataset: customer_pii           ── group: pii-cleared@
-├── Dataset: finance                ── group: finance-team@
-├── Dataset: hr                     ── group: hr-team@
-└── Dataset: sandbox                ── group: all-employees@ (read/write)
+```mermaid
+flowchart TB
+    P([Project: company-data])
+    D1([Dataset: raw_events]):::ds
+    D2([Dataset: analytics_marts]):::ds
+    D3([Dataset: customer_pii]):::ds
+    D4([Dataset: finance]):::ds
+    D5([Dataset: hr]):::ds
+    D6([Dataset: sandbox]):::ds
+
+    P --> D1
+    P --> D2
+    P --> D3
+    P --> D4
+    P --> D5
+    P --> D6
+
+    D1 -. group: data-engineering@ .-> D1
+    D2 -. group: analysts@ .-> D2
+    D3 -. group: pii-cleared@ .-> D3
+    D4 -. group: finance-team@ .-> D4
+    D5 -. group: hr-team@ .-> D5
+    D6 -. group: all-employees@ read/write .-> D6
+
+    classDef ds fill:#fef3c7,stroke:#a16207,color:#713f12
+    style P fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
 Each dataset gets a set of groups attached to it via IAM. Adding or removing a user is then a single change in the group.
