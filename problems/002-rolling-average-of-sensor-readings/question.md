@@ -11,9 +11,9 @@ solution: solution.py
 
 # Problem 2, Rolling Average of Sensor Readings
 
-**Scenario:**
-You are building a data pipeline for IoT sensors (like BESS, PV inverters, weather stations).
-Each sensor sends temperature data every few seconds in this format:
+## Scenario
+
+You are building a data pipeline for IoT sensors (battery storage, PV inverters, weather stations). Each sensor publishes a temperature reading every few seconds. The stream never ends.
 
 ```
 2025-10-11T13:45:20Z sensor_1 25.4
@@ -21,52 +21,50 @@ Each sensor sends temperature data every few seconds in this format:
 2025-10-11T13:45:30Z sensor_2 22.8
 2025-10-11T13:45:35Z sensor_1 27.0
 2025-10-11T13:45:40Z sensor_2 23.4
-...
 ```
 
-Each line has:
+```mermaid
+flowchart LR
+    SRC([Sensors<br/>continuous events])
+    BROKER([MQTT or Kafka<br/>or stdin in tests])
+    PROC([Python consumer<br/>rolling average per sensor])
+    OUT([emit: timestamp, sensor_id, rolling_avg])
 
-* timestamp (ISO8601)
-* sensor_id
-* temperature (float, degrees C)
+    SRC --> BROKER --> PROC --> OUT
 
-The stream never ends. Input could be a file, MQTT, or Kafka, but treat it as continuous input.
+    style SRC fill:#dcfce7,stroke:#15803d,color:#14532d
+    style BROKER fill:#fef3c7,stroke:#a16207,color:#713f12
+    style PROC fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style OUT fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+```
 
----
+The pipeline never stops. Memory budget is fixed per host. The number of unique sensors can grow over time.
 
-### Task:
+## Task
 
-Write a Python program that:
+For each incoming reading, emit a line of the form:
 
-1. Continuously reads incoming sensor data, line by line.
-2. For each sensor, keeps a rolling average temperature over the last 3 readings.
-3. Each time a new reading arrives, prints:
+```
+<timestamp> <sensor_id> <rolling_average>
+```
 
- ```
- <timestamp> <sensor_id> <rolling_average>
- ```
+where `rolling_average` is the mean of the **last 3 readings** for that sensor (including the current one).
 
- Example:
+## Constraints
 
- ```
- 2025-10-11T13:45:35Z sensor_1 26.17
- ```
+- Memory must not grow with stream length. It can only grow with the number of unique sensors.
+- The consumer must keep running even when an occasional line is malformed.
+- The code should be easy to drop into a Kafka or MQTT consumer.
 
----
+## Bonus
 
-### Bonus Challenges:
+- Cap memory even when the sensor cardinality is huge (millions of unique IDs). Mention what data structure or eviction policy you would use.
+- Make the window size configurable per sensor type.
+- Discuss what changes if you need **time-based** windows (last 60 seconds) instead of **count-based** (last 3 readings).
 
-* Make it memory efficient. Don't store all history.
-* Handle many sensors dynamically.
-* Handle malformed lines without crashing.
-* Make the code easy to extend to a real streaming consumer (Kafka, MQTT).
+## What a Good Answer Covers
 
----
-
-**Tips:**
-
-* Think about how to store only the last 3 values per sensor.
-* A `deque` works well here, or a list with slicing.
-* Aim for clean, production-like structure, not just working code.
-
----
+- A clear progression: naive list, deque-based sliding window, incremental sum maintained as we go.
+- Time and space complexity for each approach.
+- Awareness that the right answer changes if you switch from count windows to time windows.
+- Clean separation between the data structure and the I/O loop, so the same logic plugs into Kafka, MQTT, or a file.

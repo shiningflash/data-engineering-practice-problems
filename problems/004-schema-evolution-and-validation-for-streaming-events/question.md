@@ -11,9 +11,9 @@ solution: solution.py
 
 # Problem 4, Schema Evolution and Validation for Streaming Events
 
-**Scenario:**
-You are building a streaming pipeline that ingests user event data from many microservices.
-The data comes in as JSON, like this:
+## Scenario
+
+A streaming pipeline ingests user events from many microservices into Kafka. Producer teams move at different speeds: some send the v1 schema, some have already added a `device` field, some send `user_id` as a string when the contract says int. Downstream wants only clean, normalized events.
 
 ```json
 {"user_id": 101, "event_type": "login", "timestamp": "2025-10-14T12:00:00Z"}
@@ -22,67 +22,59 @@ The data comes in as JSON, like this:
 {"event_type": "login", "timestamp": "2025-10-14T12:07:00Z"}
 ```
 
-Because these events come from different teams and versions, they are often incomplete, inconsistent, or change over time:
+```mermaid
+flowchart LR
+    A([microservice v1])
+    B([microservice v2<br/>adds device])
+    C([microservice v1.5<br/>sends user_id as string])
 
-* `user_id` might be a string or int
-* `amount` may appear only for purchase events
-* Some fields may be missing
-* Future versions may add new fields (like `device` or `location`)
+    Q([Kafka topic<br/>raw events])
 
-Your goal: validate and normalize these events before they go to a downstream system (BigQuery, Kafka, Pub/Sub).
+    V([Validator<br/>coerce + validate])
 
----
+    OK([cleaned_events.jsonl])
+    BAD([invalid_events.jsonl<br/>with error_reason])
 
-### Task:
+    A --> Q
+    B --> Q
+    C --> Q
+    Q --> V
+    V --> OK
+    V --> BAD
 
-Write a Python program that:
+    style A fill:#dcfce7,stroke:#15803d,color:#14532d
+    style B fill:#dcfce7,stroke:#15803d,color:#14532d
+    style C fill:#dcfce7,stroke:#15803d,color:#14532d
+    style Q fill:#fef3c7,stroke:#a16207,color:#713f12
+    style V fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style OK fill:#dcfce7,stroke:#15803d,color:#14532d
+    style BAD fill:#fecaca,stroke:#b91c1c,color:#7f1d1d
+```
 
-1. Reads a JSON lines file (`events.jsonl`) line by line. Treat it as streaming input.
-2. Validates and normalizes each event against this expected schema:
+## Schema
 
 | Field | Type | Required | Notes |
-| ---------- | ----- | -------- | ---------------------------------------------------------------- |
-| user_id | int | Yes | Convert to int if possible. Skip event if missing or invalid. |
-| event_type | str | Yes | Must be one of `"login"`, `"logout"`, `"purchase"` |
-| timestamp | str | Yes | Must be valid ISO8601 |
-| amount | float | No | Only required for `"purchase"` events. Default to 0.0 if missing. |
-| device | str | No | Optional new field. Can be present or not. |
+| --- | --- | --- | --- |
+| `user_id` | int | yes | Coerce from string if possible. Reject if missing or not coercible. |
+| `event_type` | str | yes | One of `login`, `logout`, `purchase`. |
+| `timestamp` | str | yes | Valid ISO 8601. |
+| `amount` | float | no | Required for `purchase` only. Default to `0.0` if absent. |
+| `device` | str | no | New optional field. Pass through if present. |
+| any other field | - | no | Unknown fields are silently kept under `_extra`. |
 
-3. Writes valid normalized events to `cleaned_events.jsonl`.
-4. Writes invalid events to `invalid_events.jsonl` with an extra `"error_reason"` field describing why they failed.
+## Task
 
----
+Read `events.jsonl` line by line. Write valid normalized events to `cleaned_events.jsonl`. Write rejects to `invalid_events.jsonl` with an `error_reason`.
 
-### Example Output (cleaned_events.jsonl):
+## Bonus
 
-```json
-{"user_id": 101, "event_type": "login", "timestamp": "2025-10-14T12:00:00Z", "amount": 0.0}
-{"user_id": 102, "event_type": "purchase", "timestamp": "2025-10-14T12:02:15Z", "amount": 59.99}
-{"user_id": 103, "event_type": "logout", "timestamp": "2025-10-14T12:05:20Z", "amount": 0.0}
-```
+- Support schema **versioning** so a `schema_version` field on the event picks the right validator.
+- Log per-error reject counts at the end.
+- Discuss how this hooks into a real schema registry (Confluent, Glue) and the trade-offs versus Pydantic-only validation.
 
-### Example Output (invalid_events.jsonl):
+## What a Good Answer Covers
 
-```json
-{"event_type": "login", "timestamp": "2025-10-14T12:07:00Z", "error_reason": "missing user_id"}
-{"user_id": "abc", "event_type": "purchase", "timestamp": "2025-10-14T12:09:00Z", "amount": "NaN", "error_reason": "user_id not convertible to int"}
-```
-
----
-
-### Bonus Challenges (Highly Recommended):
-
-* Make your schema evolution-proof. Ignore unknown fields instead of failing.
-* Keep counters: total events processed, valid, invalid.
-* Use `pydantic` for validation (optional, very handy).
-
----
-
-**Hints:**
-
-* Use `json.loads()` for line-by-line streaming.
-* Use `try/except` for type conversions.
-* Keep validation and normalization in one clean function.
-* Think about how you would handle new fields without code changes. That is the heart of schema evolution.
-
----
+- An incremental progression: manual `try/except`, dataclass with coercion, Pydantic model with strict and lax variants.
+- Awareness that unknown fields are *not* errors; they are a future-compatibility signal.
+- The reject sink with reasons, because downstream owners will need it.
+- Time and space complexity per approach (mostly trivial here; the interview signal is the design).

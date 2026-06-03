@@ -11,10 +11,9 @@ solution: solution.py
 
 # Problem 5, Merging Messy CSVs from Multiple Partners
 
-**Scenario:**
-Every Monday morning, your team gets a folder of CSV files from different partners. Each file has the same kind of data (customer signups), but every partner names columns differently. Some files have extra columns you don't care about, some have missing values, and the date format is never consistent.
+## Scenario
 
-Here is what three example files might look like:
+Every Monday morning, a folder of CSV files from different partners lands in your bucket. Same domain (customer signups) but every partner names columns differently, uses a different date format, and adds extra columns nobody downstream wants.
 
 ```
 # partner_a.csv
@@ -37,66 +36,48 @@ cust_id,name,email_addr,joined_on
 402,Frank Wu,frank@c.com,02/10/2025
 ```
 
-Typical issues you will see:
+```mermaid
+flowchart LR
+    A([partner_a.csv])
+    B([partner_b.csv])
+    C([partner_c.csv])
 
-* Same field has different names (`customer_id`, `CustomerID`, `cust_id`)
-* Date formats differ (`2025-10-01` vs `01/10/2025`)
-* Some files have extra columns (like `Country`) you don't need
-* Some rows have missing values
-* The folder may have hundreds of files
+    M([Column mapper<br/>per-partner config])
+    P([Date parser<br/>tries multiple formats])
+    W([Single normalized CSV<br/>for BigQuery load])
 
-The warehouse team wants a single clean CSV they can load straight into BigQuery.
+    A --> M
+    B --> M
+    C --> M
+    M --> P --> W
 
----
-
-### Your Task:
-
-Write a Python program that:
-
-1. Reads every CSV file inside a folder called `partner_csvs/`.
-2. Maps the different column names into one standard schema:
-
-| Standard column | Possible source names |
-| --------------- | ---------------------------------- |
-| customer_id | customer_id, CustomerID, cust_id |
-| name | name, Name, full_name |
-| email | email, Email, email_addr |
-| signup_date | signup_date, SignupDate, joined_on |
-
-3. Converts `signup_date` to `YYYY-MM-DD`.
-4. Skips rows that are missing `email` or `customer_id`.
-5. Replaces a missing `name` with `"Unknown"`.
-6. Adds a `source_file` column so you can trace which file each row came from.
-7. Writes everything into a single output file called `all_customers.csv`.
-
-**Example Output (all_customers.csv):**
-
-```
-customer_id,name,email,signup_date,source_file
-201,Alice Lee,alice@a.com,2025-10-01,partner_a.csv
-202,Bob Khan,bob@a.com,2025-10-02,partner_a.csv
-301,Carol Tan,carol@b.com,2025-10-01,partner_b.csv
-302,Unknown,daniel@b.com,2025-10-04,partner_b.csv
-401,Eve Patel,eve@c.com,2025-10-01,partner_c.csv
-402,Frank Wu,frank@c.com,2025-10-02,partner_c.csv
+    style A fill:#fef3c7,stroke:#a16207,color:#713f12
+    style B fill:#fef3c7,stroke:#a16207,color:#713f12
+    style C fill:#fef3c7,stroke:#a16207,color:#713f12
+    style M fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style P fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style W fill:#dcfce7,stroke:#15803d,color:#14532d
 ```
 
----
+## Output
 
-### Bonus Challenges:
+A single `customers_merged.csv` with exactly four columns: `customer_id, name, email, signup_date`. Dates normalized to ISO `YYYY-MM-DD`. Missing names replaced by `"Unknown"`. Source partner traceable on every row.
 
-* Print a small summary at the end: files read, total rows in, rows written, rows skipped.
-* Move the column mapping into a config dict (or YAML file) so a new partner can be added without touching code.
-* Handle GZIP compressed files (`.csv.gz`) too.
-* Stream the writing so that even with 500 files you never hold everything in memory.
+## Constraints
 
----
+- The folder can contain hundreds of files. Process them as a stream, do not load all of them into memory at once.
+- Column names should be matched **case-insensitively** and via aliases per partner.
+- Unknown columns are silently dropped (not an error).
 
-**Hints:**
+## Bonus
 
-* Use `pathlib.Path.glob` to walk the folder.
-* `csv.DictReader` and `csv.DictWriter` make column renaming much easier than positional indexes.
-* Build a reverse lookup from partner column name to standard column name once, then reuse it.
-* Keep date parsing in its own small function so adding a new format later is easy.
+- Add a `source_file` column so analysts can trace any row back to its partner CSV.
+- Add a per-file row count to the run summary at the end.
+- Discuss what changes if a partner's schema drifts mid-week (new column shows up).
 
----
+## What a Good Answer Covers
+
+- A clear progression from naive read-and-merge to a config-driven mapping table.
+- A date parser that tries a list of formats rather than guessing.
+- A reject sink for rows that fail (you cannot just lose data quietly).
+- Time and space complexity for each approach.
