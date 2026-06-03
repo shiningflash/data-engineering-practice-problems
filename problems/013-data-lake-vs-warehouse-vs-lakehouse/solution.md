@@ -6,35 +6,20 @@
 
 ### Picture it
 
-```
-DATA LAKE                       DATA WAREHOUSE
-(S3, GCS, ADLS)                 (BigQuery, Snowflake, Redshift)
+```mermaid
+flowchart TB
+    LAKE([Data lake<br/>S3, GCS, ADLS<br/>any files, cheap, no schema])
+    WH([Data warehouse<br/>BigQuery, Snowflake, Redshift<br/>managed tables, SQL, ACID, RBAC])
+    LH([Lakehouse<br/>Delta, Iceberg, Hudi on top of S3<br/>warehouse behaviour, lake files])
 
-s3://bucket/raw/                ┌─────────────────────────────┐
-  events/                       │ orders   customers   prices │
-    year=2025/                  │ ─────    ─────────   ────── │
-      month=05/                 │ ...      ...         ...    │
-        day=14/                 │                             │
-          part-001.parquet      │ managed tables, SQL,        │
-          part-002.parquet      │ governance, ACID,           │
-  logs/                         │ time travel, RBAC           │
-  invoices/                     └─────────────────────────────┘
-  random_csv_someone_uploaded/
-                                Fast for analytics.
-Anything goes.                  Costs more.
-Cheap. Hard to govern.
+    LAKE -.->|tradeoff: cheap but ungoverned| LH
+    WH -.->|tradeoff: governed but expensive| LH
+    LH -->|target| WAVE([same Parquet files<br/>queried by Spark, Trino,<br/>Snowflake, BigQuery external])
 
-                  LAKEHOUSE
-                  (Delta Lake, Iceberg, Hudi on top of S3/GCS)
-
-                  s3://bucket/curated/
-                    orders/  ── managed by Iceberg/Delta
-                      data/*.parquet
-                      _metadata/  ── transactions, schema, snapshots
-
-                  Warehouse-like behaviour (ACID, schema, time travel)
-                  on top of cheap lake files. Query with Spark,
-                  Trino, Databricks, Snowflake, BigQuery external.
+    style LAKE fill:#fef3c7,stroke:#a16207,color:#713f12
+    style WH fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style LH fill:#dcfce7,stroke:#15803d,color:#14532d
+    style WAVE fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
 ```
 
 ### One paragraph each
@@ -60,23 +45,19 @@ Cheap. Hard to govern.
 
 ### Where each fits in a real pipeline
 
-```
-              Raw events / files
-                       │
-                       ▼
-                ┌───────────┐
-                │  LAKE     │  raw, unprocessed, "everything that ever happened"
-                └─────┬─────┘
-                      │
-                      ▼
-                ┌───────────┐
-                │ LAKEHOUSE │  cleaned, conformed, queryable, transactional
-                └─────┬─────┘
-                      │
-                      ▼
-                ┌───────────┐
-                │ WAREHOUSE │  business marts, dashboards, BI
-                └───────────┘
+```mermaid
+flowchart TB
+    EV([Raw events and files])
+    L([Lake / bronze<br/>raw, unprocessed<br/>everything that ever happened])
+    LH([Lakehouse / silver<br/>cleaned, conformed<br/>queryable, transactional])
+    W([Warehouse / gold<br/>business marts<br/>dashboards, BI])
+
+    EV --> L --> LH --> W
+
+    style EV fill:#fef3c7,stroke:#a16207,color:#713f12
+    style L fill:#fef3c7,stroke:#a16207,color:#713f12
+    style LH fill:#dcfce7,stroke:#15803d,color:#14532d
+    style W fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
 This three-layer setup is so common it has names: bronze (lake), silver (lakehouse), gold (warehouse), or just raw / staging / marts.

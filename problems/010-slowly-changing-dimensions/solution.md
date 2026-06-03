@@ -8,26 +8,22 @@
 
 The story above is a real failure mode. If you store only the current address, every historical query silently rewrites the past. Yesterday's report no longer matches today's, even though you only loaded new data, you did not touch the old data. That kills trust in the warehouse.
 
-```
-Without history (broken)
-─────────────────────────
-customer_id │ name  │ country
-1001        │ Alice │ MY        ← changed from SG in March
+**Without history (broken)** — `customers` table holds only the current value.
 
-Old invoice from January says customer 1001.
-Report joins to dimension, gets MY.
-The January invoice now appears under MY.
-Finance: "Why did SG's January number drop?"
+| customer_id | name  | country |
+| ----------- | ----- | ------- |
+| 1001        | Alice | MY      |
 
-With history (SCD Type 2)
-─────────────────────────
-customer_id │ name  │ country │ valid_from │ valid_to   │ is_current
-1001        │ Alice │ SG      │ 2023-01-01 │ 2025-03-15 │ false
-1001        │ Alice │ MY      │ 2025-03-15 │ 9999-12-31 │ true
+Alice moved from SG to MY in March. The January invoice (from when she was in SG) now joins to the row that says MY. The January report silently changes. Finance asks why SG's number dropped.
 
-January invoice (date = 2025-01-20) joins to the row valid that day.
-It correctly appears under SG.
-```
+**With history (SCD Type 2)** — `customers_history` keeps every version with valid dates.
+
+| customer_id | name  | country | valid_from | valid_to   | is_current |
+| ----------- | ----- | ------- | ---------- | ---------- | ---------- |
+| 1001        | Alice | SG      | 2023-01-01 | 2025-03-15 | false      |
+| 1001        | Alice | MY      | 2025-03-15 | 9999-12-31 | true       |
+
+The January invoice (`invoice_date = 2025-01-20`) joins to the SG row, which was valid that day. The historical report is correct.
 
 ### The classic SCD types in plain words
 
@@ -43,42 +39,33 @@ There are higher types (Type 4 with mini-dimensions, Type 6 hybrid) but for inte
 
 ### Concrete shapes
 
-Type 1 (overwrite):
+**Type 1 (overwrite).** Replace the old value in place.
 
-```
-customers
-─────────────────────────────────────
-customer_id │ name      │ country
-1001        │ Alice Lee │ MY        ← overwritten
-1002        │ Bob Khan  │ SG
-```
+| customer_id | name      | country |
+| ----------- | --------- | ------- |
+| 1001        | Alice Lee | MY      |
+| 1002        | Bob Khan  | SG      |
 
 After Alice moves, the old `SG` value is gone. Cheap to store. History lost.
 
-Type 2 (add row, version with dates):
+**Type 2 (add a row, version with dates).** Every change adds a new row.
 
-```
-customers_history
-──────────────────────────────────────────────────────────────────────
-customer_id │ name      │ country │ valid_from │ valid_to   │ is_current
-1001        │ Alice Lee │ SG      │ 2023-01-01 │ 2025-03-15 │ false
-1001        │ Alice Lee │ MY      │ 2025-03-15 │ 9999-12-31 │ true
-1002        │ Bob Khan  │ SG      │ 2024-05-10 │ 9999-12-31 │ true
-```
+| customer_id | name      | country | valid_from | valid_to   | is_current |
+| ----------- | --------- | ------- | ---------- | ---------- | ---------- |
+| 1001        | Alice Lee | SG      | 2023-01-01 | 2025-03-15 | false      |
+| 1001        | Alice Lee | MY      | 2025-03-15 | 9999-12-31 | true       |
+| 1002        | Bob Khan  | SG      | 2024-05-10 | 9999-12-31 | true       |
 
-Every change adds a new row. `valid_from` / `valid_to` mark the period it was true. `is_current` is a convenience flag so queries that want "right now" do not have to use `9999-12-31`.
+`valid_from` / `valid_to` mark the period the row was true. `is_current` is a convenience flag so queries that want *right now* do not have to use `9999-12-31`.
 
-Type 3 (one extra column):
+**Type 3 (one extra column).** Track one prior value only.
 
-```
-customers
-─────────────────────────────────────────────────
-customer_id │ name      │ country │ previous_country
-1001        │ Alice Lee │ MY      │ SG
-1002        │ Bob Khan  │ SG      │ NULL
-```
+| customer_id | name      | country | previous_country |
+| ----------- | --------- | ------- | ---------------- |
+| 1001        | Alice Lee | MY      | SG               |
+| 1002        | Bob Khan  | SG      | NULL             |
 
-Tracks one prior value only. Useful for "did this customer recently move."
+Useful for *did this customer recently move*. Cheap. Limited.
 
 ### How to query Type 2 (the as-of join)
 

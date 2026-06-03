@@ -6,20 +6,36 @@
 
 ### The two flows side by side
 
-```
-              ETL  (the old way)
-┌────────┐    ┌──────────────────┐    ┌──────────┐
-│ Source │───▶│ Transform server │───▶│Warehouse │
-└────────┘    │ (Python, Spark,  │    │(clean)   │
-              │  Informatica…)   │    └──────────┘
-              └──────────────────┘
+ETL, the old way: transform on the way in, land clean.
 
-              ELT  (the modern way)
-┌────────┐    ┌──────────┐    ┌─────────────────────┐
-│ Source │───▶│Warehouse │───▶│ Same warehouse runs │
-└────────┘    │ (raw)    │    │ transforms (dbt,    │
-              └──────────┘    │ SQL, scheduled)     │
-                              └─────────────────────┘
+```mermaid
+flowchart LR
+    S1([Source<br/>API, OLTP, files])
+    T1([Transform server<br/>Python, Spark, Informatica])
+    W1([Warehouse<br/>clean only])
+
+    S1 --> T1 --> W1
+
+    style S1 fill:#dcfce7,stroke:#15803d,color:#14532d
+    style T1 fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style W1 fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+```
+
+ELT, the modern way: land raw, transform in the warehouse.
+
+```mermaid
+flowchart LR
+    S2([Source<br/>API, OLTP, files])
+    R2([Warehouse<br/>raw layer])
+    T2([Warehouse<br/>transforms in SQL<br/>dbt, scheduled])
+    M2([Warehouse<br/>marts])
+
+    S2 --> R2 --> T2 --> M2
+
+    style S2 fill:#dcfce7,stroke:#15803d,color:#14532d
+    style R2 fill:#fef3c7,stroke:#a16207,color:#713f12
+    style T2 fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style M2 fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
 ### One line definitions

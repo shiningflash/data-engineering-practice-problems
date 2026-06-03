@@ -6,37 +6,41 @@
 
 ### Picture it
 
+```mermaid
+flowchart TB
+    subgraph CSV["CSV, text, row-based"]
+        direction TB
+        R1([row 1: id, name, country, amount])
+        R2([row 2: id, name, country, amount])
+        R3([row 3: id, name, country, amount])
+        R1 -.- R2 -.- R3
+    end
+
+    subgraph JSON["JSON Lines, text, row-based, nested"]
+        direction TB
+        J1([row 1: id, name, country, amount, tags])
+        J2([row 2: id, name, country, amount])
+        J3([row 3: id, name, country, amount, meta])
+        J1 -.- J2 -.- J3
+    end
+
+    subgraph PARQ["Parquet, binary, column-based, compressed"]
+        direction TB
+        PC1([id column<br/>compressed integers])
+        PC2([name column<br/>dictionary encoded])
+        PC3([country column<br/>run length encoded])
+        PC4([amount column<br/>compressed floats])
+    end
+
+    style CSV fill:#fef3c7,stroke:#a16207,color:#713f12
+    style JSON fill:#fef3c7,stroke:#a16207,color:#713f12
+    style PARQ fill:#dcfce7,stroke:#15803d,color:#14532d
 ```
-CSV (row by row, text)
-──────────────────────
-id,name,country,amount
-1,Alice,SG,100.00
-2,Bob,MY,250.00
-3,Carol,SG,75.50
-…
 
-A query "SELECT SUM(amount) WHERE country='SG'"
-must read every column of every row.
+A query `SELECT SUM(amount) WHERE country='SG'`:
 
-JSON (row by row, with structure)
-──────────────────────────────────
-{"id":1,"name":"Alice","country":"SG","amount":100.00,"tags":["new"]}
-{"id":2,"name":"Bob","country":"MY","amount":250.00}
-{"id":3,"name":"Carol","country":"SG","amount":75.50,"meta":{"src":"web"}}
-
-Same problem as CSV for analytics, plus parsing overhead.
-Good for nested fields and schema that wiggles.
-
-Parquet (column by column, binary, compressed)
-───────────────────────────────────────────────
-id      : [1, 2, 3, ...]               (compressed integers)
-name    : [Alice, Bob, Carol, ...]     (dictionary encoded)
-country : [SG, MY, SG, ...]            (run length encoded)
-amount  : [100.00, 250.00, 75.50, ...] (compressed floats)
-
-Same query reads only `country` and `amount` columns.
-Skips reading `id`, `name`, and everything else.
-```
+- **CSV and JSON**: read every column of every row.
+- **Parquet**: read only the `country` and `amount` columns. Skip everything else.
 
 ### How each one is laid out
 

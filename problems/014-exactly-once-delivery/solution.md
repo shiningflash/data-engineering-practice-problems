@@ -6,21 +6,22 @@
 
 ### Picture the three modes
 
+```mermaid
+flowchart LR
+    P([Producer]) --> B([Broker]) --> C([Consumer])
+
+    style P fill:#dcfce7,stroke:#15803d,color:#14532d
+    style B fill:#fef3c7,stroke:#a16207,color:#713f12
+    style C fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
 ```
-                Producer ────▶ Broker ────▶ Consumer
 
-At most once    │ Fire and forget. If the message is lost in the wire, it is gone.
-                │ Used for telemetry where losing a tiny percent is fine.
+| Mode | Loss | Duplicates | Where you see it |
+| --- | --- | --- | --- |
+| **At most once** | Possible | Never | Telemetry where losing a tiny percent is fine |
+| **At least once** | Never | Possible | Default for Kafka |
+| **Exactly once** | Never | Never | What everyone wants; few systems truly deliver |
 
-At least once   │ The producer retries until it sees an ack. The broker retries
-                │ delivery until the consumer commits. Result: never lost,
-                │ but can be delivered more than once. Default for Kafka.
-
-Exactly once    │ Each message effects the consumer exactly one time.
-                │ Hard, because retries are the only safe way to avoid loss,
-                │ and retries cause duplicates. So "exactly once" really means
-                │ "duplicate-aware consumer."
-```
+At least once is what real networks naturally give you. Exactly once is hard because the only way to guarantee no loss is to retry on uncertainty, and retrying creates duplicates. The practical fix is to make the consumer idempotent, so duplicates from the wire stop mattering.
 
 ### Why it is hard
 
@@ -86,12 +87,25 @@ So the payments engineer in the scenario was technically right that Kafka delive
 
 ### The whole picture
 
-```
-End-to-end exactly once = at-least-once delivery + idempotent end side
+```mermaid
+flowchart LR
+    A([At-least-once delivery<br/>retries on uncertainty])
+    B([Idempotent consumer<br/>recognises duplicates])
+    C([End-to-end<br/>exactly-once effect])
 
-Even with Kafka EOS, the moment you write to anything outside Kafka,
-you are back to needing idempotency in that external write.
+    A --> C
+    B --> C
+
+    X([External write<br/>Postgres, Stripe, email])
+    X -.->|Kafka EOS<br/>does NOT cover this| C
+
+    style A fill:#dcfce7,stroke:#15803d,color:#14532d
+    style B fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style C fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style X fill:#fecaca,stroke:#b91c1c,color:#7f1d1d
 ```
+
+Even with Kafka EOS, the moment you write to anything outside Kafka, you are back to needing idempotency in that external write.
 
 ### Common mistakes interviewers want you to name
 

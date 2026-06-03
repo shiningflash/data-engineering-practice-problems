@@ -12,23 +12,31 @@ Data contracts are the industry trying to apply software engineering discipline 
 
 ### What a contract actually contains
 
+```mermaid
+flowchart TB
+    C([Data contract<br/>schema · semantics · quality<br/>freshness · owner · version])
+
+    P([Producer team<br/>app backend])
+    Q([Consumer teams<br/>analytics, ML, finance])
+
+    C --> P
+    C --> Q
+
+    style C fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style P fill:#dcfce7,stroke:#15803d,color:#14532d
+    style Q fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
 ```
-                 ┌────────────────────────────────────────┐
-                 │              DATA CONTRACT             │
-                 │                                        │
-                 │   Schema    fields, types, nullability │
-                 │   Semantics what each field means      │
-                 │   Quality   rules and SLAs             │
-                 │   Freshness how often, how late        │
-                 │   Owner     team and on-call           │
-                 │   Version   semver, deprecation policy │
-                 └─────────────┬──────────────────────────┘
-                               │
-              ┌────────────────┴────────────────┐
-              ▼                                 ▼
-        Producer team                    Consumer teams
-        (app backend)                    (analytics, ML, finance)
-```
+
+Six things to nail down:
+
+| Piece | What it covers |
+| --- | --- |
+| **Schema** | fields, types, nullability |
+| **Semantics** | what each field means |
+| **Quality** | rules and SLAs |
+| **Freshness** | how often, how late |
+| **Owner** | team and on-call |
+| **Version** | semver, deprecation policy |
 
 A typical YAML contract might look like:
 
@@ -78,20 +86,23 @@ Same shape as a Protobuf schema, an OpenAPI spec, or an Avro schema, plus extra 
 
 The whole point is that the contract is machine readable and checked automatically. Three common enforcement points:
 
-```
-┌─────────┐   1   ┌──────────┐   2   ┌──────────┐   3   ┌──────────┐
-│Producer │──────▶│  Kafka / │──────▶│  Warehouse│─────▶│ Consumer │
-│   code  │       │  S3      │       │           │       │   code   │
-└─────────┘       └──────────┘       └──────────┘       └──────────┘
-    │                  │                   │
-    ▼                  ▼                   ▼
-1. CI check in        2. Schema             3. dbt tests against
-   producer repo         registry              the contract on
-   (a renamed            (Avro / Protobuf,     every model run.
-   column fails          rejects messages
-   the build)            that don't match
-                         the registered
-                         schema)
+```mermaid
+flowchart LR
+    PC([Producer code])
+    Q([Kafka or S3])
+    W([Warehouse])
+    CC([Consumer code])
+
+    PC -->|1| Q -->|2| W -->|3| CC
+
+    PC -. CI check<br/>fails build if<br/>contract breaks .-> PC
+    Q -. Schema registry<br/>rejects bad events .-> Q
+    W -. dbt tests<br/>per model run .-> W
+
+    style PC fill:#dcfce7,stroke:#15803d,color:#14532d
+    style Q fill:#fef3c7,stroke:#a16207,color:#713f12
+    style W fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style CC fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
 ```
 
 * Producer side. A CI test fails the build if a code change would break the contract. This is the most valuable spot, because it catches the issue before it leaves the producer team.

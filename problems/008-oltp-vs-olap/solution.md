@@ -6,27 +6,35 @@
 
 ### Picture it
 
+```mermaid
+flowchart TB
+    subgraph LEFT["OLTP, row store<br/>Postgres, MySQL, SQL Server"]
+        direction TB
+        R1([row 1: id, name, email, ...])
+        R2([row 2: id, name, email, ...])
+        R3([row 3: id, name, email, ...])
+        R1 -.- R2 -.- R3
+    end
+
+    subgraph RIGHT["OLAP, column store<br/>BigQuery, Snowflake, ClickHouse"]
+        direction TB
+        C1([id column: 1, 2, 3, ...])
+        C2([name column: A, B, C, ...])
+        C3([email column: a@, b@, c@, ...])
+    end
+
+    style LEFT fill:#fef3c7,stroke:#a16207,color:#713f12
+    style RIGHT fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style R1 fill:#ffffff,stroke:#a16207
+    style R2 fill:#ffffff,stroke:#a16207
+    style R3 fill:#ffffff,stroke:#a16207
+    style C1 fill:#ffffff,stroke:#1e40af
+    style C2 fill:#ffffff,stroke:#1e40af
+    style C3 fill:#ffffff,stroke:#1e40af
 ```
-        OLTP                                  OLAP
-   (Postgres, MySQL,                  (BigQuery, Snowflake,
-    SQL Server, Oracle)                Redshift, ClickHouse)
 
-   Row-oriented storage              Column-oriented storage
-
-   ┌──────────────────┐              ┌─────┬──────┬─────┬──────┐
-   │ id│name│email│…  │              │ id  │ name │email│ …    │
-   │ 1 │A   │a@..│..  │              ├─────┼──────┼─────┼──────┤
-   │ 2 │B   │b@..│..  │              │ 1   │ A    │ a@. │ ..   │
-   │ 3 │C   │c@..│..  │              │ 2   │ B    │ b@. │ ..   │
-   └──────────────────┘              │ 3   │ C    │ c@. │ ..   │
-                                     └─────┴──────┴─────┴──────┘
-   Whole row stored together.        Each column stored together.
-
-   Best at:                          Best at:
-   - "Give me row id=42"             - "SUM(amount) by month"
-   - "Insert this new order"         - "COUNT DISTINCT customer"
-   - Transactional updates           - Reading 5 columns out of 100
-```
+Row store: best at *give me row id=42* and *insert this new order*.
+Column store: best at *SUM(amount) by month* and *reading 5 columns out of 100*.
 
 ### What each one is, in one paragraph
 
@@ -70,16 +78,21 @@ The story at the top of the problem is the answer: if you run a long analytical 
 
 A typical company therefore runs:
 
-```
-   ┌─────────┐    sync     ┌──────────┐
-   │ OLTP DB │ ──────────▶ │ OLAP DW  │
-   │(Postgres│ (CDC, daily │(BigQuery │
-   │  app DB)│   batch,    │ Snowflake│
-   └─────────┘   Fivetran) └──────────┘
-        ▲                       ▲
-        │                       │
-   The app reads             Analysts and
-   and writes here.          dashboards read here.
+```mermaid
+flowchart LR
+    APP([Application<br/>reads + writes])
+    OLTP([OLTP database<br/>Postgres, MySQL])
+    SYNC([CDC, daily batch, Fivetran])
+    OLAP([OLAP warehouse<br/>BigQuery, Snowflake])
+    BI([Analysts, dashboards, ML])
+
+    APP <--> OLTP --> SYNC --> OLAP <--> BI
+
+    style APP fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style OLTP fill:#fef3c7,stroke:#a16207,color:#713f12
+    style SYNC fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style OLAP fill:#dcfce7,stroke:#15803d,color:#14532d
+    style BI fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
 ```
 
 ### Bonus follow-up the interviewer might throw
