@@ -6,15 +6,28 @@
 
 ### My mental order of checks
 
+```mermaid
+flowchart TB
+    A([1. Time zone difference?])
+    B([2. Row-level security / filtered views?])
+    C([3. Late-arriving rows? Snapshot timing?])
+    D([4. Are you really reading the same table?])
+    E([5. Session settings, date format, locale?])
+    F([6. Collation, case sensitivity, trim?])
+    G([7. Materialized views or aggregated layers?])
+
+    A --> B --> C --> D --> E --> F --> G
+
+    style A fill:#fecaca,stroke:#b91c1c,color:#7f1d1d
+    style B fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style C fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style D fill:#fef3c7,stroke:#a16207,color:#713f12
+    style E fill:#fef3c7,stroke:#a16207,color:#713f12
+    style F fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style G fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
 ```
-1. Time zone difference?     ← starts here most often
-2. Row-level security / views the user can see?
-3. Late-arriving rows: when was each snapshot taken?
-4. Are you really reading the same table?
-5. Session settings (date format, locale, NULLs ordering)?
-6. Collation / case sensitivity / trim differences?
-7. Materialized views or aggregated layers?
-```
+
+About 90% of the time it's one of the first three.
 
 Let me walk through each.
 

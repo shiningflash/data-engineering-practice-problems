@@ -22,17 +22,14 @@ Most of the time, "directional tonight" is the answer. The exec needs a number t
 
 One number per channel, plus a comparison metric they'll want next.
 
-```
-Channel        CAC last quarter   vs last year
-─────────────────────────────────────────────
-Paid Search          $42                +12%
-Social               $61                +18%
-Affiliate            $28                -4%
-Referral             $9                 +2%
-Organic              $3                 -1%
-                  ─────────
-Blended              $34                +9%
-```
+| Channel | CAC last quarter | vs last year |
+| --- | ---: | ---: |
+| Paid Search | $42 | +12% |
+| Social | $61 | +18% |
+| Affiliate | $28 | -4% |
+| Referral | $9 | +2% |
+| Organic | $3 | -1% |
+| **Blended** | **$34** | **+9%** |
 
 The "vs last year" is unsolicited but always asked next. Saves the second round.
 

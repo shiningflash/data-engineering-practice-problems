@@ -2,48 +2,23 @@
 
 ### The whole flow at a glance
 
-```
-   ┌──────────────────────────┐
-   │ Meter readings (15-min)  │
-   │ s3://meter-raw/...       │
-   └────────────┬─────────────┘
-                │ parser, validation
-                ▼
-   ┌──────────────────────────┐
-   │ Curated 15-min fact      │   (reads_15min, partitioned by date)
-   └────────────┬─────────────┘
-                │
-                ▼
-   ┌──────────────────────────────────────────────┐
-   │  Billing calc job                            │
-   │  (runs once per customer per billing period) │
-   │                                              │
-   │  Inputs:                                     │
-   │   - reads_15min for the period               │
-   │   - tariffs (SCD2)                           │
-   │   - customers (dim)                          │
-   │   - account_adjustments                      │
-   │                                              │
-   │  Output: one bill row + bill_lines           │
-   └────────────┬─────────────────────────────────┘
-                │
-                ▼
-   ┌──────────────────────────┐
-   │  bills (sealed)          │   immutable once issued
-   │  bill_lines              │
-   └────────────┬─────────────┘
-                │
-                ▼
-   ┌──────────────────────────┐
-   │  PDF rendering service   │   pure function of bill_id
-   │  (deterministic)         │
-   └────────────┬─────────────┘
-                │
-                ▼
-   ┌──────────────────────────┐
-   │  Customer portal +       │
-   │  email delivery          │
-   └──────────────────────────┘
+```mermaid
+flowchart TB
+    M([Meter readings, 15-min<br/>s3://meter-raw/...])
+    C([Curated 15-min fact<br/>reads_15min<br/>partitioned by date])
+    B([Billing calc job<br/>per customer per period<br/>uses reads_15min + tariffs (SCD2)<br/>+ customers + adjustments])
+    S([bills (sealed) + bill_lines<br/>immutable once issued])
+    P([PDF rendering service<br/>deterministic, pure function of bill_id])
+    D([Customer portal + email delivery])
+
+    M --> C --> B --> S --> P --> D
+
+    style M fill:#fef3c7,stroke:#a16207,color:#713f12
+    style C fill:#fef3c7,stroke:#a16207,color:#713f12
+    style B fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style S fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style P fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style D fill:#dcfce7,stroke:#15803d,color:#14532d
 ```
 
 The principle: each step is a function of the layer beneath it. Re-run the same step on the same inputs and you get the same output. The PDF is the last and least interesting step.

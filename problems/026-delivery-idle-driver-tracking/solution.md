@@ -2,68 +2,45 @@
 
 ### The shape of the system
 
-```
-Driver app                          Trip system
-sends ping every 5 sec              emits trip events
-  │                                   │
-  ▼                                   ▼
- ─────────────────────────────────────────────
-                 Kafka
-   ┌─────────────┐    ┌──────────────────┐
-   │ driver_ping │    │ trip_status      │
-   │ topic       │    │ topic            │
-   └──────┬──────┘    └────────┬─────────┘
-          │                    │
-          └────────┬───────────┘
-                   ▼
-   ┌────────────────────────────────────────┐
-   │  Stream processor (Flink)              │
-   │                                        │
-   │  Keyed by driver_id, holds the state:  │
-   │    online | on_trip | break | offline  │
-   │  Updated by pings + trip events.       │
-   │                                        │
-   │  For idle drivers, emits to            │
-   │  the "idle drivers" store keyed by H3. │
-   └────────────────┬───────────────────────┘
-                    │
-                    ▼
-   ┌─────────────────────────────────────────┐
-   │  Live driver store                      │
-   │   Redis / DragonflyDB / Aerospike       │
-   │                                         │
-   │   Per-driver hash: { state, lat, lng,   │
-   │                       h3, last_ping }   │
-   │   TTL: 60 sec (auto-expire stale)       │
-   │                                         │
-   │   Index: H3 -> set of driver_ids        │
-   └────────────────┬────────────────────────┘
-                    │
-                    ▼
-   ┌─────────────────────────────────────────┐
-   │  Dispatch service                       │
-   │  Query: "idle drivers within 1.5 km     │
-   │  of (lat, lng)"                         │
-   │  → resolves to hex + neighbors,         │
-   │    reads sets, returns up to N drivers  │
-   └─────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    DA([Driver app<br/>ping every 5s])
+    TR([Trip system<br/>trip events])
+    KP([Kafka: driver_ping])
+    KT([Kafka: trip_status])
+    FL([Flink stream processor<br/>keyed by driver_id<br/>state: online / on_trip / break / offline<br/>emits idle drivers keyed by H3])
+    STORE([Live driver store<br/>Redis / DragonflyDB<br/>per-driver hash with TTL 60s<br/>H3 index to driver set])
+    DISP([Dispatch service<br/>query: idle drivers within 1.5 km<br/>resolves to hex + neighbors])
+
+    DA --> KP --> FL
+    TR --> KT --> FL
+    FL --> STORE --> DISP
+
+    style DA fill:#dcfce7,stroke:#15803d,color:#14532d
+    style TR fill:#dcfce7,stroke:#15803d,color:#14532d
+    style KP fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style KT fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style FL fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style STORE fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style DISP fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
 ### The driver state machine
 
-Drivers move between a few states:
+Drivers move between four states:
 
+```mermaid
+stateDiagram-v2
+    [*] --> offline
+    offline --> online: login
+    online --> offline: logout
+    online --> on_trip: start_trip
+    on_trip --> online: end_trip
+    online --> break: break_start
+    break --> online: break_end
 ```
-       login         start_trip
-offline ────▶ online ────────▶ on_trip
-   ▲           ▲ ▲              │
-   │           │ │  end_trip    │
-   │   logout  │ └──────────────┘
-   └───────────┘
-               break_start ┌─▶ break ─┐ break_end
-                           │          ▼
-                           └─── back to online
-```
+
+Only `online` is idle.
 
 Only `online` is idle. The stream processor maintains this state per driver from two streams:
 
