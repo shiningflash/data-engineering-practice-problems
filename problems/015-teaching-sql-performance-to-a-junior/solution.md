@@ -6,16 +6,25 @@
 
 ### The mental model I would teach them
 
-```
-A SQL query has two costs:
-  1. How much data the engine touches.
-  2. How much work it does per row.
+```mermaid
+flowchart LR
+    Q([SQL query])
+    C1([Cost 1<br/>how much data is touched])
+    C2([Cost 2<br/>how much work per row])
+    OPT([Optimization]):::tgt
 
-Optimization is mostly about touching less data.
-The rest is helping the engine pick the right plan.
+    Q --> C1 --> OPT
+    Q --> C2 --> OPT
+
+    classDef tgt fill:#dcfce7,stroke:#15803d,color:#14532d
+    style Q fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style C1 fill:#fef3c7,stroke:#a16207,color:#713f12
+    style C2 fill:#fef3c7,stroke:#a16207,color:#713f12
 ```
 
-Then I would teach four habits, in this order.
+Optimization is mostly about *touching less data*. The rest is helping the engine pick the right plan.
+
+Then I teach four habits, in this order.
 
 ### Habit 1: Read EXPLAIN before guessing
 

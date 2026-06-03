@@ -50,11 +50,21 @@ Don't panic. Read it inside out.
 **1. Find the innermost steps first.**
 The plan is a tree. The innermost nodes (deepest indentation) run first. Here that's the two `Seq Scan` nodes. Reading inside out:
 
-```
-Seq Scan on orders → filter by date         (3.5 seconds, returns 1.85M rows)
-Seq Scan on customers → loaded into a Hash  (0.16 seconds)
-Hash Join the two                            (7.9 seconds total)
-HashAggregate the result                     (8.42 seconds total)
+```mermaid
+flowchart TB
+    A([Seq Scan on orders<br/>filter by date<br/>3.5 s, returns 1.85M rows])
+    B([Seq Scan on customers<br/>loaded into Hash<br/>0.16 s])
+    C([Hash Join<br/>7.9 s total])
+    D([HashAggregate<br/>8.42 s total])
+
+    A --> C
+    B --> C
+    C --> D
+
+    style A fill:#fef3c7,stroke:#a16207,color:#713f12
+    style B fill:#fef3c7,stroke:#a16207,color:#713f12
+    style C fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style D fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
 **2. Look at the biggest time.**

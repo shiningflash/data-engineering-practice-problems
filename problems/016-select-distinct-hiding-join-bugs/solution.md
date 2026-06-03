@@ -6,28 +6,43 @@
 
 ### Where the duplicates come from
 
-```
-orders                       order_items
-─────────────                ─────────────────
-id │ customer_id             order_id │ product
-1  │ 100                     1        │ apple
-2  │ 100                     1        │ banana
-3  │ 200                     2        │ apple
-                             3        │ apple
-                             3        │ apple
+`orders` (grain: one row per order):
 
+| id | customer_id |
+| -- | ----------- |
+| 1  | 100         |
+| 2  | 100         |
+| 3  | 200         |
+
+`order_items` (grain: one row per item):
+
+| order_id | product |
+| -------- | ------- |
+| 1        | apple   |
+| 1        | banana  |
+| 2        | apple   |
+| 3        | apple   |
+| 3        | apple   |
+
+Join them:
+
+```sql
 SELECT o.id, o.customer_id
 FROM orders o
 JOIN order_items i ON i.order_id = o.id;
-
-Result:
-id │ customer_id
-1  │ 100          ← order 1 has 2 items, so it shows twice
-1  │ 100
-2  │ 100
-3  │ 200          ← order 3 has 2 items of the same product
-3  │ 200
 ```
+
+Result (5 rows, not 3):
+
+| id | customer_id |
+| -- | ----------- |
+| 1  | 100         |
+| 1  | 100         |
+| 2  | 100         |
+| 3  | 200         |
+| 3  | 200         |
+
+Order 1 shows twice because it has 2 items. Order 3 shows twice because it has 2 items of the same product. The grain of the result is *one row per item*, not *one row per order*.
 
 The analyst sees order 1 twice and thinks "I need DISTINCT." But the row repetition is correct given the join. It is just that they joined a one-row-per-order table to a one-row-per-item table, so the result has one row per item.
 
@@ -42,12 +57,12 @@ JOIN order_items i ON i.order_id = o.id;
 ```
 
 This returns:
-```
-id │ customer_id
-1  │ 100
-2  │ 100
-3  │ 200
-```
+
+| id | customer_id |
+| -- | ----------- |
+| 1  | 100         |
+| 2  | 100         |
+| 3  | 200         |
 
 Looks clean. But two real risks:
 

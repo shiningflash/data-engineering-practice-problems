@@ -6,25 +6,29 @@
 
 ### The story above, drawn out
 
-```
-Non idempotent (the bug)
-─────────────────────────
-Run 1:   INSERT INTO orders SELECT * FROM source WHERE date = '2025-05-14';
-         ✗ Crashes halfway through.
-Retry:   INSERT INTO orders SELECT * FROM source WHERE date = '2025-05-14';
-         ✓ Success. But the first INSERT had already written rows.
-Result:  Some rows appear twice. Yesterday's revenue is doubled.
+```mermaid
+flowchart TB
+    subgraph BAD["Non idempotent, the bug"]
+        direction TB
+        R1A([Run 1: INSERT partial rows<br/>crashes halfway])
+        R1B([Retry: INSERT all rows<br/>succeeds])
+        R1C([Result: yesterday's revenue is doubled])
+        R1A --> R1B --> R1C
+    end
 
-Idempotent (the fix)
-────────────────────
-Run 1:   DELETE FROM orders WHERE date = '2025-05-14';
-         INSERT INTO orders SELECT * FROM source WHERE date = '2025-05-14';
-         ✗ Crashes halfway through.
-Retry:   DELETE FROM orders WHERE date = '2025-05-14';
-         INSERT INTO orders SELECT * FROM source WHERE date = '2025-05-14';
-         ✓ Success. The DELETE wipes anything from the bad run.
-Result:  Exactly one set of rows for that date, every time.
+    subgraph GOOD["Idempotent, the fix"]
+        direction TB
+        R2A([Run 1: DELETE + INSERT<br/>crashes halfway])
+        R2B([Retry: DELETE + INSERT<br/>succeeds])
+        R2C([Result: exactly one set of rows<br/>for that date, every time])
+        R2A --> R2B --> R2C
+    end
+
+    style BAD fill:#fecaca,stroke:#b91c1c,color:#7f1d1d
+    style GOOD fill:#dcfce7,stroke:#15803d,color:#14532d
 ```
+
+The fix has two halves: a `DELETE` that wipes anything the previous attempt may have written, and an `INSERT` (or `MERGE`) that puts the canonical state down. Crashing between the two is safe; the next retry starts with `DELETE` again.
 
 ### What "idempotent" means in this context
 
