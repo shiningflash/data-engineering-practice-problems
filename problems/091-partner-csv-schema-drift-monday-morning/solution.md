@@ -1,40 +1,72 @@
 ## Solution 91: Partner CSV, Schema Drift on Monday Morning
 
-### Short version you can say out loud
+### So, what just happened?
 
-> Schema drift from a partner you do not control is a question of when, not if. The immediate move is to stop today's bad data from poisoning anything more, restore yesterday's correct state in the warehouse, and notify the partner. The durable design is a three-layer ingestion: land the file as raw strings into a "landing" table that cannot fail on schema changes, validate that landing against a known contract before promoting to staging, and only then transform. Add a schema diff that runs after every land and fails the build with a Slack ping when the column list, order, or types differ from yesterday. Pair this with a written contract that names an owner on the partner side, a 10-day notice requirement, and a `schema_version` column you both agree to bump on any break. Done well, the next surprise lands as a CI failure with the diff in the alert, not a Monday morning outage.
+Friday, the partner's file had a column called `country` with values like "Sweden". Monday morning, the same file shows up with a column called `country_code` and values like "SE". Nobody told you. The job did not fail because the file is still a perfectly valid CSV. It is just not the same file as before.
 
-### Triage in the first 30 minutes
+Now your dashboards are quietly wrong. Every chart that groups by country is reading whatever ended up in that third column, and it is no longer the name of a country, it is a two-letter code.
 
 ```mermaid
 flowchart LR
-    A[Stop tomorrow's job<br/>or pin to last good schema]:::act --> B[Roll back to<br/>yesterday's table]:::act
-    B --> C[Page the partner contact]:::act
-    C --> D[Quarantine today's file<br/>to a 'pending review' prefix]:::act
+    F[("Friday's file<br/>country: Sweden")]:::ok --> J["Same job, no changes"]:::tx
+    M[("Monday's file<br/>country_code: SE")]:::bad --> J
+    J --> W[("Warehouse")]:::wh --> D(["Dashboards wrong but green"]):::bad
 
-    classDef act fill:#fef3c7,stroke:#a16207,color:#713f12
+    classDef ok fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef bad fill:#fecaca,stroke:#b91c1c,color:#7f1d1d
+    classDef tx fill:#fef3c7,stroke:#a16207,color:#713f12
+    classDef wh fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
-1. **Stop the next run.** Pause tomorrow's scheduled job. The pipeline is in an unknown state and a second run will compound the damage.
-2. **Roll back the warehouse.** If you have time travel (Snowflake, BigQuery, Iceberg), restore the affected tables to their state before today's load. If not, restore from yesterday's snapshot.
-3. **Quarantine today's file.** Move `customers.csv` from the live prefix to `quarantine/2026-06-04/`. Do not delete; you may need to reload it once the situation is understood.
-4. **Notify the partner.** Single point of contact, one message, what changed, what you need (confirmation of intent, a rollback if it was a mistake, or a contract update if it was deliberate).
-5. **Tell stakeholders.** The three dashboard owners. One Slack message in the data channel. Estimate of the fix window.
+The scary part is that nothing went red. The job is green, the warehouse query returns rows, and no alert fired. You only know because a person looked at a dashboard.
 
-The whole sequence is under 30 minutes if you have the runbook ready. Building that runbook is part of the durable design below.
+### Why this is the dangerous kind of break
 
-### The durable design: three-layer ingestion
+There are two flavours of broken pipeline.
+
+The loud kind is when something fails outright. The job throws an error, the orchestrator pages someone, and you fix it. Annoying, but at least everyone knows.
+
+The quiet kind is when everything succeeds and the data is wrong. That is what you have here. The cost is much higher, because the team can spend a week making decisions on bad numbers before anyone notices.
+
+So the goal of the fix is not "stop the pipeline from failing." It is "turn this quiet break into a loud one."
+
+### Step 1, before you change any code
+
+You will want to dive into the pipeline and start adding checks. Resist for now. You have 22 hours before tomorrow's run. The first job is to stop the damage from spreading, not to redesign the system.
+
+Here is the order:
 
 ```mermaid
 flowchart LR
-    S[("Partner S3<br/>customers.csv")]:::src
-    L[("Landing:<br/>all-string,<br/>add load_ts, source_file")]:::stg
-    V{Validate:<br/>contract + diff}:::tx
-    ST[("Staging:<br/>typed, contract-shaped")]:::stg
-    M[("Marts")]:::wh
+    A[Pause tomorrow's run]:::s --> B[Move today's file<br/>to a quarantine folder]:::s --> C[Roll the table back<br/>to Friday's data]:::s --> D[Message the partner]:::s --> E[Tell the dashboard owners]:::s
 
-    S --> L --> V -->|"pass"| ST --> M
-    V -->|"fail"| BAD([Fail loudly,<br/>halt downstream]):::bad
+    classDef s fill:#fef3c7,stroke:#a16207,color:#713f12
+```
+
+**Pause tomorrow's run.** If you do not, you get a second day of bad data on top of the first. Now you have two days to clean up instead of one.
+
+**Move today's file to a quarantine folder.** Do not delete it. You may need to reload it once you understand what changed. Just get it out of the live path so nothing else picks it up by accident.
+
+**Roll the table back.** Snowflake, BigQuery, and Iceberg all support time travel. Restore the table to its state before today's load. If you cannot time-travel, use yesterday's snapshot. The point is to put the warehouse back to "correct as of Friday" before any human queries it again.
+
+**Message the partner.** One sentence. "Hi, we noticed your customers.csv file changed column names this morning. Was this intentional? We have paused our ingestion until we hear back." Specific, calm, asks one thing. No meeting needed.
+
+**Tell the dashboard owners.** One Slack message in the data channel. What happened, what you have done, when you will be back. This stops the "is the dashboard broken?" thread from starting on its own.
+
+The whole sequence is about half an hour. The cost of skipping any step is a worse Monday.
+
+### Step 2, the durable fix
+
+Now the long-term fix.
+
+The single rule that kills this whole class of problem: the partner's file never goes straight into your real table. There are two stops in between.
+
+```mermaid
+flowchart LR
+    P[("Partner file")]:::src --> L[("Stop 1: Landing<br/>every column as text")]:::stg
+    L --> V{Stop 2: Check<br/>columns match yesterday?<br/>match the contract?}:::tx
+    V -->|"yes"| R[("Real table")]:::wh
+    V -->|"no"| X([Alert and halt]):::bad
 
     classDef src fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
     classDef stg fill:#fef3c7,stroke:#a16207,color:#713f12
@@ -43,102 +75,73 @@ flowchart LR
     classDef bad fill:#fecaca,stroke:#b91c1c,color:#7f1d1d
 ```
 
-**Layer 1, landing.** The CSV lands into a single landing table with one column per source column, all typed as `STRING`. Plus `load_ts`, `source_file`, and `row_number`. This layer cannot fail on a schema change because every value is a string. It cannot fail on a value change because nothing is being asserted yet.
+Two stops, two simple ideas. Let me walk through each one.
 
-**Layer 2, validate.** Before any downstream model reads from staging, run the contract check. Three independent checks:
+### Why the landing layer is the trick
 
-* **Column list and order match yesterday's** (schema diff).
-* **Every column matches the named contract** (column count, names, types).
-* **Distribution looks sane** (null rate, distinct count, regex match for known formats).
+The landing table is just a copy of the file where every column is a `STRING`. No types, no rules, nothing strict.
 
-Any failure halts the pipeline. Staging is not updated. Marts read yesterday's staging until the team intervenes.
+Why does that help? Because the load step can never fail. A column rename, a type change, a new column, a missing column. None of it kills the load, because the load is not enforcing anything yet.
 
-**Layer 3, staging.** Once validation passes, cast strings into typed columns, apply the contract's column names, and write to staging. The transform from landing to staging is the one place where the schema is enforced.
+That sounds bad at first, but it is exactly what you want. The file is now safely inside your warehouse, in a controlled place, where you can look at it and decide what to do next. The damage cannot leak further than the landing table.
 
-### The four detection layers
+Compare with the old setup. The load went straight into the typed table. If a type changed, the load itself died and you lost the file. If the type happened to still match (like the scenario), the load succeeded silently and everything downstream went wrong.
 
-You want drift to surface as early as possible. Different layers catch different breakages.
+### The check that catches it
 
-| Layer | What it catches | Cost |
-| --- | --- | --- |
-| Schema diff (landing vs yesterday) | Renamed, added, dropped, reordered columns | Cheap, runs in seconds |
-| Contract check (landing vs declared spec) | Drift from your agreed-on schema | Cheap |
-| Distribution checks (landing) | Value-level drift (units, encoding, format) | Medium |
-| dbt tests (staging and marts) | Logical breakages your code depends on | Already in place |
-
-The cheapest and most valuable is the schema diff. One query:
+Now the second stop. Before anything moves from landing to the real table, run one small query:
 
 ```sql
-WITH today AS (
-  SELECT column_name, ordinal_position, data_type
-  FROM `region.INFORMATION_SCHEMA.COLUMNS`
-  WHERE table_name = 'landing_customers'
-),
-yesterday AS (
-  SELECT column_name, ordinal_position, data_type
-  FROM `governance.schema_snapshots`
-  WHERE table_name = 'landing_customers'
-    AND snapshot_date = CURRENT_DATE - INTERVAL '1' DAY
-)
-SELECT * FROM today FULL OUTER JOIN yesterday USING (column_name, ordinal_position)
-WHERE today.column_name IS NULL OR yesterday.column_name IS NULL
-   OR today.data_type <> yesterday.data_type;
+SELECT column_name FROM information_schema.columns
+WHERE table_name = 'landing_partner_csv'
+ORDER BY ordinal_position;
 ```
 
-Returns zero rows on a stable run. Returns a row per change otherwise. Wire to Slack.
+Save the result every morning. Tomorrow's job compares to yesterday's saved result. If anything is different (a new column, a missing one, a different order), the job halts and posts one Slack message:
 
-In the scenario, that single check would have caught the rename at 03:15 instead of 09:00, with a diff in the message: `+country_code (STRING), -country (STRING)`.
+```
+Schema drift on partner_csv
+  + country_code (text)
+  - country
+```
 
-### The data contract
+That is all you need. One alert, with the diff right in the message. The on-call engineer sees it at 03:15, decides "expected" or "not expected," and resumes or calls the partner.
 
-The contract is the human side. Three things in writing:
+Run this check on the morning of the scenario, and instead of an angry PM at 09:14 you have a quiet Slack ping at 03:15 that already tells you exactly what changed. The rest of the morning is calm.
 
-1. **Schema spec.** Column list, types, accepted values for enum-like columns, required vs nullable. Versioned (`v1`, `v2`).
-2. **Notice SLA.** "Any change to the schema requires 10 business days notice. Breaking changes require 30 days and a parallel-run window." Specific durations, not "reasonable."
-3. **Named owners on both sides.** A specific person on the partner side, a specific person on your side. Both get paged when drift is detected.
+### The contract part
 
-A `schema_version` field in the file (column or filename suffix) lets your pipeline reject a v2 file when only v1 has been agreed. Stop, do not process, page.
+The two technical stops only buy you time. They do not stop drift from happening. Stopping drift is a people problem.
 
-What you give the partner in return:
+So get the partner to sign one page that says:
 
-* A clear validation report after every load. "Today's file accepted, no drift."
-* Your contract spec in their language, reviewed quarterly.
-* A test environment where they can drop a candidate file and see your validation result before going live.
+- Here are the columns and their types.
+- Here is the file name pattern.
+- You will tell us 10 business days before any change.
+- Here is the person we call if we see a surprise.
 
-### The "fail loudly" rule
+One page. Not a 20-page MSA. The point is that when the next drift happens, you have a named human to call, a notice window to point at, and a written agreement to enforce.
 
-The opposite of drift defense is silent degradation. Two patterns to refuse:
+The hard part is getting them to sign it. Worth pushing for, because every conversation about the next incident is now about whether the contract was followed, not whether one existed.
 
-* **Auto-add new columns.** A "schema_change_policy: append" config silently swallows new columns. Today's `country_code` becomes a third column in staging while your dbt model still reads `country` (now full of nulls). Marts go silently wrong.
-* **Coerce on type change.** A type change from `INT64` to `STRING` "succeeds" by casting everything. Aggregations break later.
+### Tomorrow's drift, walked through
 
-For partner data, fail. The cost of a halted pipeline is hours. The cost of silent corruption is weeks of wrong dashboards plus rebuilds.
+To make it concrete: tomorrow the partner adds a `signup_source` column without telling you. Here is what happens now.
 
-### What changes long-term
+1. The file lands in `landing_partner_csv`. Loads fine, every column is text.
+2. The column-diff check sees 8 columns today, 7 yesterday. Job halts.
+3. Slack alert: `+ signup_source (text)`. You see it at 03:15.
+4. You decide whether it is expected. Yes means add the column to the staging model and resume. No means ping the partner contact.
 
-* The runbook gets shorter every time you use it.
-* Validation rules accumulate (each incident adds one).
-* The contract gets clauses added for every category of break that ever happened.
-* The partner sees fewer surprises from their side too, because you push diffs both ways.
+The real table is untouched until you make the call. Dashboards stay on yesterday's correct numbers. No PM messages.
 
-Two years in, a "schema drift incident" is a five-minute Slack thread, not a four-hour debug.
+### Things people get wrong
 
-### Common mistakes interviewers want you to name
+- **Turning on "auto-add new columns."** Sounds friendly. Means the next surprise column lands silently and your model does not even know it should query it.
+- **Loading straight into typed tables.** A type change kills the load and you lose the file too. With a landing layer, the file is safe.
+- **Keeping the contract in a wiki.** Wikis rot. Put it in the code repo so it shows up in code reviews.
+- **No named partner contact.** "We thought you knew" is the most expensive sentence in data engineering.
 
-1. **No landing layer.** Direct load into typed staging means any schema change breaks the load itself. You lose the file too.
-2. **Schema-on-read everywhere.** Lets drift pass silently. Use it for raw, not for marts.
-3. **Contract in a wiki nobody reads.** It rots. Put it in the source tree, review it on every partner onboarding.
-4. **No partner notification SLA in writing.** "We thought you knew" is the most expensive sentence in data engineering.
-5. **Reactive Slack alerts only.** Every alert needs a runbook entry. Otherwise the on-call engineer reinvents the response each time.
+### Take-home
 
-### Bonus follow-up the interviewer might throw
-
-> *"What if the partner refuses to sign a contract or version their schema?"*
-
-Three positions, ordered by how much pain you accept.
-
-1. **Treat their data as untrusted.** Heavy validation, all-string landing, no automatic acceptance of new columns. Costs you engineer hours; lets you survive without their cooperation.
-2. **Charge the cost back internally.** Each incident gets a postmortem that names the partner and the dollar impact. Two or three of these and procurement starts caring.
-3. **Replace the source.** If the partner is critical and uncooperative, the durable answer is a different source. Sometimes that means buying it; sometimes it means moving to a vendor (Fivetran, Airbyte) that handles the contract layer for you.
-
-In practice the answer is usually (1) with (2) running in parallel until something changes.
+> Land partner files as text first. Compare today's columns to yesterday's. Promote only if they match. The morning surprise becomes a Slack ping instead of a board meeting question.

@@ -1,160 +1,132 @@
 ## Solution 92: Late Events After the Partition Closed
 
-### Short version you can say out loud
+### So, what just happened?
 
-> Late data is the rule, not the exception, the moment your producers run on devices you do not control. Streaming pipelines handle it with two concepts: event time (when the event happened, on the producer's clock) and processing time (when your system saw it). Aggregations group by event time so the answer is correct, and the watermark is the system's promise that "no more events older than X will be accepted into the live window." Allowed lateness extends that window for a configurable amount of time. Anything later than that goes to a side table you handle out of band. The recovery for 380,000 three-day-late events is a deterministic, idempotent recomputation of the affected closed hours, followed by a revised-numbers note to every downstream that read the wrong total. The policy choice is a trade-off: longer allowed lateness means slower closes and more memory; shorter means more side-table events. There is no right answer, only a defensible one.
+You have a streaming pipeline that buckets app events by hour. The promise to consumers is: "30 minutes after the hour ends, that bucket is final." Saturday closed cleanly. Sunday's rollup ran on those final numbers. Monday's dashboard refreshed. The ML training pipeline grabbed a snapshot.
 
-### Event time and processing time
+Then Tuesday afternoon, 380,000 events for Saturday 14:00 to 18:00 showed up. A customer's phone was in airplane mode all weekend. The app buffered events locally. When the phone reconnected, everything flushed at once.
 
-```mermaid
-flowchart LR
-    P([Producer<br/>phone, app]):::p -->|"event_time = 14:23"| K[("Kafka topic")]:::k
-    K -->|"processing_time = 14:24"| C["Stream processor"]:::tx
-    C -->|"window 14:00-15:00"| W[("Aggregated by event_time")]:::wh
-
-    P -.->|"3 days offline, arrives at processing 17:30 +3d"| K
-
-    classDef p fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
-    classDef k fill:#fef3c7,stroke:#a16207,color:#713f12
-    classDef tx fill:#dcfce7,stroke:#15803d,color:#14532d
-    classDef wh fill:#fed7aa,stroke:#c2410c,color:#7c2d12
-```
-
-The event carries its own timestamp (`event_time`). The system stamps when it sees the event (`processing_time`). For "events in the 14:00-15:00 hour," you group by event_time, not processing_time, or your number reflects "events I happened to see at that hour," which is wrong the moment any event is delayed.
-
-But you cannot wait forever for late events. You have to declare the window closed and ship the number.
-
-### Watermarks and allowed lateness
-
-The watermark is your stream processor's belief about how far event time has progressed. In Flink and Spark Structured Streaming, you declare it explicitly:
-
-```python
-events = (spark.readStream
-    .format("kafka")
-    .load()
-    .selectExpr("CAST(value AS STRING)")
-    .select(from_json("value", schema).alias("e"))
-    .select("e.*")
-    .withWatermark("event_time", "30 minutes")
-)
-
-agg = (events
-    .groupBy(window("event_time", "1 hour"), "country")
-    .count()
-)
-```
-
-`withWatermark("event_time", "30 minutes")` tells the engine: "Trust event_time. I claim the watermark is the maximum event_time seen so far, minus 30 minutes."
-
-Once the watermark passes the end of a window, the engine emits the result and drops the window's state. Late events that arrive after that are either:
-
-* Silently dropped (default).
-* Routed to a side table for out-of-band handling (preferred).
-* Updated into the window if `allowedLateness` is set wider (memory-expensive).
-
-For 380,000 events three days late, no reasonable production system holds the window open that long. The right answer is the side table.
-
-### The side table is a deliberate design
+Your "final" Saturday numbers are now too low. Sunday's rollup is wrong. Monday's dashboard is wrong. The ML features used for last night's training are wrong.
 
 ```mermaid
 flowchart LR
-    K[("Kafka")]:::k --> C["Stream"]:::tx
-    C -->|"in window"| LIVE[("Aggregates")]:::wh
-    C -->|"past watermark"| LATE[("_late_events<br/>raw, with arrival_ts")]:::late
-    LATE -.->|"batch recompute"| LIVE
+    P([Customer phone,<br/>airplane mode]):::off --> K[("Kafka")]:::tx
+    K -->|"Saturday's stream"| S[("Saturday buckets,<br/>marked final at 18:30")]:::wh
+    S --> R(["Sunday rollup"]):::out
+    S --> D(["Monday dashboard"]):::out
+    S --> M(["ML training set"]):::out
+    P -.->|"3 days later,<br/>380k events flush"| K
+    K --> L[("_late_events table")]:::late
 
-    classDef k fill:#fef3c7,stroke:#a16207,color:#713f12
-    classDef tx fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef off fill:#fecaca,stroke:#b91c1c,color:#7f1d1d
+    classDef tx fill:#fef3c7,stroke:#a16207,color:#713f12
     classDef wh fill:#fed7aa,stroke:#c2410c,color:#7c2d12
-    classDef late fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    classDef out fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef late fill:#fef3c7,stroke:#a16207,color:#713f12
 ```
 
-`_late_events` holds the raw event payload, the original event_time, and the arrival_time. It accumulates until you decide what to do.
+### Two clocks, that is the whole problem
 
-For most teams the policy is:
+Every event has two timestamps.
 
-* Daily, scan `_late_events` for events that fall into the previous N days of closed windows.
-* If the count or impact exceeds a threshold, run a deterministic recomputation of the affected windows.
-* Update the aggregates table.
-* Send a "revised numbers" notification to downstream consumers.
+**Event time** is when the event actually happened, on the user's phone. Saturday 14:23.
 
-In the scenario, the 380,000 events trigger this exact flow.
+**Processing time** is when your system saw the event. Tuesday 11:47.
 
-### Idempotent recomputation
+Group your hourly buckets by event time and you get correct totals for Saturday. Group by processing time and you get "events I happened to see at that hour," which is meaningless the second any event is delayed.
 
-The recompute reads the closed window's source events plus the late events, recomputes the aggregate, and replaces the old row.
+Your pipeline already does the right thing. Buckets are keyed by event time. That is not the problem.
 
-```sql
--- Deterministic: same inputs, same output
-MERGE INTO hourly_events_by_country target
-USING (
-  SELECT
-    DATE_TRUNC(event_time, HOUR) AS hour,
-    country,
-    COUNT(*) AS n
-  FROM (
-    SELECT * FROM raw_events
-    UNION ALL
-    SELECT * FROM _late_events
-  )
-  WHERE event_time >= '2026-05-31 14:00:00'
-    AND event_time <  '2026-05-31 18:00:00'
-  GROUP BY hour, country
-) source
-ON target.hour = source.hour AND target.country = source.country
-WHEN MATCHED THEN UPDATE SET n = source.n
-WHEN NOT MATCHED THEN INSERT (hour, country, n) VALUES (...);
+The problem is the next question: when do you stop waiting and call the bucket "final"? Wait forever and the dashboard never updates. Stop too soon and late events get lost.
+
+This is what a watermark is for.
+
+### What a watermark is, in one sentence
+
+A watermark is your pipeline saying out loud: "I believe event time has now reached this point. Anything older is closed."
+
+You set it to 30 minutes. That works fine for normal users on a normal day. It does not work for a phone that has been offline for three days, and no setting ever would.
+
+Anything later than 30 minutes goes into `_late_events`, not into the live bucket. That side table is not a bug. It is the part of the system designed to catch exactly this situation.
+
+The good news: your 380,000 events are sitting in `_late_events` right now, waiting for you.
+
+### What you do this afternoon
+
+You need to put the numbers right without breaking anything that already depends on them.
+
+```mermaid
+flowchart LR
+    A[Confirm the events<br/>are actually in _late_events]:::s --> B[Run a recompute job<br/>for Saturday 14-18]:::s --> C[Replace the affected<br/>aggregate rows]:::s --> D[Re-run Sunday rollup<br/>and downstream models]:::s --> E[Tell consumers<br/>the numbers were revised]:::s
+
+    classDef s fill:#fef3c7,stroke:#a16207,color:#713f12
 ```
 
-Two properties matter:
+**Confirm the late events are captured.** First question: are they actually there, or did they fall through the cracks? Query `_late_events` for the affected window. If 380,000 rows are sitting there, good, you can rebuild. If they are not, the recovery is much harder and the policy needs a rethink.
 
-* **Idempotent.** Running the recompute twice gives the same result. Safe to retry, safe to rerun the next day.
-* **Deterministic.** Same input set, same numbers. No `NOW()` or random seeds in the aggregate.
+**Recompute the affected hours.** Read all events (live plus late) for Saturday 14-18. Regroup by event time. Recompute the aggregates from scratch. The recompute must be idempotent: same inputs, same numbers, every single time. No `NOW()`, no random seeds, no environment-dependent quirks.
 
-After the merge, downstream models that depend on the aggregate either re-derive (if incremental, the new max(updated_at) pulls the change) or get a `--full-refresh` for the affected window.
+**Replace the rows.** Use `MERGE` keyed on the bucket so the recompute can run safely twice without doubling anything. The affected aggregate rows get the new totals. The unaffected rows stay untouched.
 
-### The "how late is too late" policy
+**Re-run downstream models.** Sunday rollup reads the aggregates. Rerun it. ML feature snapshot for those hours, regenerate. If you have proper lineage, this is a single dbt command. If you do not, this is the moment you wish you did.
 
-Three knobs, with consequences:
+**Tell people.** One Slack message naming the window, the size of the revision (something like "Saturday 14-18 revenue revised up by 1.4%"), and the new "as of" timestamp. Auto-generate if you can. Hand-write if you cannot. Either way, do not let stakeholders find out by accident.
 
-| Knob | What it costs | Where it shines |
-| --- | --- | --- |
-| `watermark = X` (10s, 1m, 30m) | Memory: state for windows up to X late | The base trade-off |
-| `allowedLateness = Y` (0, 5m, 1h) | More memory, slower close | Sub-minute updates for slightly-late |
-| Side table reprocessing window | Storage + a batch job | Anything later than allowedLateness |
+### Make it routine, not a fire drill
 
-The decision is policy, not engineering. Three questions:
+You will deal with this again. There is always another offline customer, another bad cell tower, another delayed sync.
 
-* **How fresh does the dashboard need to be?** A 30-minute close serves "today's number by tomorrow morning" with room to spare. A 5-second close is for real-time fraud, ads, or trading.
-* **What is the cost of revising a number after the fact?** For an internal dashboard, low. For an SEC filing, infinite.
-* **How late do events actually arrive?** Measure it. The 99th percentile delay tells you the real-world floor for "how long should I wait."
+So the recompute should be a scheduled job, not something an engineer reinvents each time.
 
-For the scenario, the 30-minute watermark plus a 7-day side-table reprocessing window is a reasonable default. Anything later than 7 days is dropped with a metric so you can argue with the policy if it bites.
+```mermaid
+flowchart LR
+    LATE[("_late_events<br/>accumulates daily")]:::late --> CHK{Daily check:<br/>late events for<br/>closed windows<br/>in last 7 days?}:::tx
+    CHK -->|"yes, over threshold"| RC[(Recompute<br/>aggregate rows)]:::tx
+    RC --> DOWN[(Re-run<br/>downstream models)]:::tx
+    DOWN --> NOTI([Notify consumers<br/>numbers were revised]):::out
+    CHK -->|"under threshold"| LOG([Log and move on]):::out
 
-### Communicating revised numbers
+    classDef late fill:#fef3c7,stroke:#a16207,color:#713f12
+    classDef tx fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    classDef out fill:#dcfce7,stroke:#15803d,color:#14532d
+```
 
-Recomputation is half the job. The other half is telling people their previous number changed.
+Every day, the job scans `_late_events` for the last 7 days of closed windows. If the count or impact crosses a threshold, recompute and notify. Below the threshold, log it and move on. The 7-day window is your policy: anything later than that, you drop or hold for manual review.
 
-* **Note the revision in the aggregate.** A `last_revised_at` column on the row. Dashboards display "revised 2026-06-04" when the value is newer than the original close.
-* **Notify subscribers.** A Slack message to the data channel naming the affected window, the impact, and the new number. Auto-generated, not hand-written.
-* **Flag the lineage.** Anywhere that depends on the original number (a published report, an investor deck) gets a flag. Downstream owners decide whether to republish.
+The threshold matters. Recomputing for 12 late events is wasted work. Recomputing for 380,000 is mandatory. Pick a number that catches what matters and skips the noise.
 
-This is the difference between a mature streaming pipeline and an early one: revisions are a planned event, not a fire drill.
+### The policy is a written choice, not a default
 
-### Common mistakes interviewers want you to name
+You have three knobs. Each one trades freshness against completeness.
 
-1. **Grouping by processing time.** "Events seen at 14:00" is meaningless; it changes with system load.
-2. **`allowedLateness = 7 days`.** State blows up. The OOM finds you Monday morning.
-3. **Silently dropping late events.** They show up in raw queries; nobody reconciles them; trust erodes.
-4. **Non-idempotent recompute.** Two reruns yield two different numbers. Trust dies.
-5. **No revision notification.** The dashboard quietly changes; the PM who screenshotted it last week is now wrong and does not know.
+**Watermark length.** How late an event can be and still land in the live bucket. Short = fresher numbers, more events lost to the side table. Long = slower close, more memory in the stream processor.
 
-### Bonus follow-up the interviewer might throw
+**Reprocessing window.** How far back you accept revisions. 7 days is reasonable for most teams. 1 day is too short for offline users. 30 days is too long for "stable" numbers.
 
-> *"Would Lambda architecture have prevented this?"*
+**Drop policy.** What you do with events later than the reprocessing window. Drop and log, or hold for human review.
 
-Lambda runs a fast streaming layer (approximate, low-latency) and a slow batch layer (exact, eventual) in parallel. The batch layer reads everything including late events and overwrites the streaming layer's numbers on a schedule.
+There is no objectively right answer. There is only a written policy you can defend. Pick the numbers based on data you actually have. The 99th-percentile delay from the last 30 days tells you whether your policy is even close to reality. If you have never measured this, do it before you tune anything.
 
-It would have caught the 380,000 events when the batch ran. So yes, the wrong numbers would still have been visible for a day, then corrected automatically.
+### Two weeks from now, walked through
 
-Modern teams usually skip lambda in favor of a single streaming engine with watermarks and a side table because it has the same property (the side-table reprocess is the batch layer in spirit) with one codebase instead of two. Pick lambda only when you genuinely cannot reconcile fast and exact in the same engine, which in 2026 is rare.
+Different customer, different problem. They go offline for two days. 18,000 events arrive late for Thursday afternoon.
+
+1. The events land in `_late_events`. Friday morning, the daily check runs.
+2. It sees 18,000 late events for Thursday 12-16, above your threshold of, say, 5,000.
+3. The recompute job runs. Thursday aggregates update. Sunday rollup will pick them up on its next run because it filters on `MAX(updated_at)`.
+4. Slack message at 06:45: "Thursday 12-16 revenue revised up by 0.3%."
+5. Dashboard shows a small "revised Fri 06:45" badge over that range.
+
+No fire drill. No PM ping. The system handled the revision the same way it handles a normal close.
+
+### Things people get wrong
+
+- **Grouping by processing time.** "Events seen at 14:00" changes with system load and means nothing. Always group by event time.
+- **Allowed lateness of 7 days.** The stream processor holds state for everything for a week. Memory blows up. The OOM finds you on Monday.
+- **Silently dropping late events.** Analysts notice the discrepancy in raw queries and lose trust in the aggregates.
+- **Non-idempotent recompute.** Two runs give two different totals. That is the worst kind of bug.
+- **No revision notification.** The number quietly changes overnight. The PM who screenshotted yesterday's number is now wrong without knowing.
+
+### Take-home
+
+> Buckets close on a watermark. Late events land in a side table on purpose. A scheduled job recomputes the affected windows, replaces rows idempotently, and tells consumers their numbers were revised. Late data is not an emergency. It is a planned event.
