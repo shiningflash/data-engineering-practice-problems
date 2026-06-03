@@ -27,14 +27,13 @@ CREATE INDEX ix_sub_customer_valid
 
 Example rows:
 
-```
-customer_id │ plan       │ cycle    │ status │ valid_from           │ valid_to
-1001        │ basic      │ monthly  │ active │ 2024-08-15 10:00:00  │ 2025-01-12 14:30:00
-1001        │ pro        │ monthly  │ active │ 2025-01-12 14:30:00  │ 2025-04-01 09:00:00
-1001        │ pro        │ yearly   │ active │ 2025-04-01 09:00:00  │ 2025-05-10 11:00:00
-1001        │ pro        │ yearly   │ paused │ 2025-05-10 11:00:00  │ 2025-05-22 09:30:00
-1001        │ pro        │ yearly   │ active │ 2025-05-22 09:30:00  │ 9999-12-31 00:00:00
-```
+| customer_id | plan  | cycle   | status | valid_from          | valid_to            |
+| ----------- | ----- | ------- | ------ | ------------------- | ------------------- |
+| 1001        | basic | monthly | active | 2024-08-15 10:00:00 | 2025-01-12 14:30:00 |
+| 1001        | pro   | monthly | active | 2025-01-12 14:30:00 | 2025-04-01 09:00:00 |
+| 1001        | pro   | yearly  | active | 2025-04-01 09:00:00 | 2025-05-10 11:00:00 |
+| 1001        | pro   | yearly  | paused | 2025-05-10 11:00:00 | 2025-05-22 09:30:00 |
+| 1001        | pro   | yearly  | active | 2025-05-22 09:30:00 | 9999-12-31 00:00:00 |
 
 Read it row by row and you understand the customer's life: started on basic, upgraded to pro, switched to yearly billing, paused for 12 days, resumed.
 

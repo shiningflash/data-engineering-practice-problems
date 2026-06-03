@@ -6,60 +6,80 @@
 
 ### Entities in the OLTP layer
 
-```
-users
-─────────────────────────────────
-user_id (PK)
-email, name, joined_at, country
-is_host (bool)
+```mermaid
+erDiagram
+    users ||--o{ listings : hosts
+    users ||--o{ bookings : "books as guest"
+    listings ||--o{ listing_amenities : has
+    listings ||--o{ calendar : has
+    listings ||--o{ bookings : "is booked"
+    bookings ||--o{ payments : "is paid"
+    bookings ||--o{ reviews : generates
 
-listings
-─────────────────────────────────
-listing_id (PK)
-host_id (FK → users.user_id)
-title, description, city, country, lat, lng
-property_type, max_guests, num_bedrooms
-created_at
-
-listing_amenities       (one row per amenity per listing)
-─────────────────────────────────
-listing_id, amenity        (composite PK)
-
-calendar
-─────────────────────────────────
-listing_id, date           (composite PK)
-is_available (bool)
-nightly_price (cents)
-minimum_stay
-updated_at
-
-bookings
-─────────────────────────────────
-booking_id (PK)
-listing_id (FK)
-guest_id   (FK)
-checkin_date, checkout_date
-num_guests
-total_price_cents
-status   (requested, confirmed, cancelled, completed)
-created_at, cancelled_at
-
-payments
-─────────────────────────────────
-payment_id (PK)
-booking_id (FK)
-amount_cents, currency
-type (charge, refund, payout)
-status (pending, succeeded, failed)
-created_at
-
-reviews
-─────────────────────────────────
-review_id (PK)
-booking_id (FK)
-reviewer_id, reviewee_id
-rating, body
-created_at
+    users {
+        bigint user_id PK
+        string email
+        string name
+        timestamp joined_at
+        string country
+        bool is_host
+    }
+    listings {
+        bigint listing_id PK
+        bigint host_id FK
+        string title
+        string description
+        string city
+        string country
+        float lat
+        float lng
+        string property_type
+        int max_guests
+        int num_bedrooms
+        timestamp created_at
+    }
+    listing_amenities {
+        bigint listing_id PK
+        string amenity PK
+    }
+    calendar {
+        bigint listing_id PK
+        date day PK
+        bool is_available
+        int nightly_price_cents
+        int minimum_stay
+        timestamp updated_at
+    }
+    bookings {
+        bigint booking_id PK
+        bigint listing_id FK
+        bigint guest_id FK
+        date checkin_date
+        date checkout_date
+        int num_guests
+        int total_price_cents
+        string booking_status
+        timestamp created_at
+        timestamp cancelled_at
+    }
+    payments {
+        bigint payment_id PK
+        bigint booking_id FK
+        int amount_cents
+        string currency
+        string payment_type
+        string payment_status
+        timestamp created_at
+    }
+    reviews {
+        bigint review_id PK
+        bigint booking_id FK
+        bigint reviewer_id FK
+        bigint reviewee_id FK
+        int rating
+        string body
+        timestamp created_at
+    }
 ```
 
 Three things worth pointing out:
@@ -78,42 +98,67 @@ If you also need a price history (say, to analyze price changes), keep a `calend
 
 ### The warehouse layer
 
-```
-                 ┌──────────────────┐
-                 │  dim_date        │
-                 │  date, dow, ...  │
-                 └────────┬─────────┘
-                          │
-                          │
-   ┌─────────────┐        │        ┌──────────────────┐
-   │ dim_user    │        │        │ dim_listing      │
-   │ (guest +    │        │        │ (SCD2: title,    │
-   │  host)      │        │        │  type, location) │
-   └─────┬───────┘        │        └────────┬─────────┘
-         │                ▼                 │
-         │     ┌──────────────────────┐     │
-         └────▶│  fact_booking        │◀────┘
-               │  ──────────────────  │
-               │  booking_id (DD)     │
-               │  guest_key (FK)      │
-               │  host_key  (FK)      │
-               │  listing_key (FK)    │
-               │  booked_date_key     │
-               │  checkin_date_key    │
-               │  checkout_date_key   │
-               │  nights, guests      │
-               │  total_price_cents   │
-               │  status              │
-               └──────────────────────┘
-                         │
-            ┌────────────┴────────────┐
-            ▼                         ▼
-   ┌────────────────┐        ┌──────────────────┐
-   │ fact_payment   │        │ fact_review      │
-   │ booking_key,   │        │ booking_key,     │
-   │ amount, type,  │        │ rating, body,    │
-   │ date_key       │        │ direction        │
-   └────────────────┘        └──────────────────┘
+```mermaid
+erDiagram
+    dim_date ||--o{ fact_booking : "via date keys"
+    dim_user ||--o{ fact_booking : guest_key
+    dim_user ||--o{ fact_booking : host_key
+    dim_listing ||--o{ fact_booking : listing_key
+    fact_booking ||--o{ fact_payment : produces
+    fact_booking ||--o{ fact_review : produces
+
+    dim_date {
+        date date_key PK
+        int year
+        int quarter
+        int month
+        int day_of_week
+        bool is_holiday
+    }
+    dim_user {
+        bigint user_key PK
+        bigint user_id
+        string country
+        bool is_host
+        bool verified
+    }
+    dim_listing {
+        bigint listing_key PK
+        bigint listing_id
+        string title
+        string property_type
+        string city
+        timestamp valid_from
+        timestamp valid_to
+        bool is_current
+    }
+    fact_booking {
+        bigint booking_id PK
+        bigint guest_key FK
+        bigint host_key FK
+        bigint listing_key FK
+        date booked_date_key FK
+        date checkin_date_key FK
+        date checkout_date_key FK
+        int nights
+        int guests
+        int total_price_cents
+        string booking_status
+    }
+    fact_payment {
+        bigint payment_id PK
+        bigint booking_key FK
+        int amount_cents
+        string payment_type
+        date date_key FK
+    }
+    fact_review {
+        bigint review_id PK
+        bigint booking_key FK
+        int rating
+        string body
+        string direction
+    }
 ```
 
 * `fact_booking` has grain "one row per booking." This is the most queried table.

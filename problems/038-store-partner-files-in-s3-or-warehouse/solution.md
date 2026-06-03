@@ -18,33 +18,21 @@ For the 30 GB / 50 files / daily scenario, the answer is clearly **land in S3 fi
 
 ### The standard pattern
 
-```
-Partner SFTP
-     │
-     │ scheduled pull (or partner pushes)
-     ▼
-┌──────────────────────────┐
-│  S3 (raw zone)           │   immutable, append-only,
-│  s3://partner-raw/       │   partitioned by date
-│    date=2025-05-14/      │
-│      file_001.csv        │
-│      file_002.csv        │
-│      ...                 │
-└──────────┬───────────────┘
-           │
-           │ scheduled load job
-           ▼
-┌──────────────────────────┐
-│  Warehouse (raw layer)   │   one-to-one mirror,
-│  raw.partner_xxx         │   schema enforced, partitioned
-└──────────┬───────────────┘
-           │
-           │ dbt transforms
-           ▼
-┌──────────────────────────┐
-│  Warehouse (marts)       │   business-ready, joined,
-│  marts.customers, etc.   │   aggregated
-└──────────────────────────┘
+```mermaid
+flowchart TB
+    SFTP([Partner SFTP])
+    S3([S3 raw zone<br/>immutable, append-only<br/>partitioned by date])
+    WHR([Warehouse raw layer<br/>raw.partner_xxx<br/>schema enforced, partitioned])
+    WHM([Warehouse marts<br/>business-ready, joined, aggregated])
+
+    SFTP -->|scheduled pull or push| S3
+    S3 -->|scheduled load job| WHR
+    WHR -->|dbt transforms| WHM
+
+    style SFTP fill:#fef3c7,stroke:#a16207,color:#713f12
+    style S3 fill:#fef3c7,stroke:#a16207,color:#713f12
+    style WHR fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style WHM fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
 Three layers. Each one has a clear purpose, and you can rebuild every layer below from the layer above.

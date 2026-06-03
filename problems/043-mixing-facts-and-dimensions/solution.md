@@ -6,45 +6,60 @@
 
 ### The symptom, drawn out
 
-```
-The single wide orders table
+**Before** the wide `orders` table:
 
-order_id │ order_date │ customer_name │ customer_address    │ product_name │ amount
-1001     │ Jan 2      │ Alice Tan     │ 12 Bukit Rd, SG     │ Widget A     │ 50
-1002     │ Jan 5      │ Bob Khan      │ 5 Orchard Rd, SG    │ Widget B     │ 30
-1003     │ Mar 1      │ Alice Tan     │ 12 Bukit Rd, SG     │ Widget A     │ 50
+| order_id | order_date | customer_name | customer_address | product_name | amount |
+| -------- | ---------- | ------------- | ---------------- | ------------ | ------ |
+| 1001     | Jan 2      | Alice Tan     | 12 Bukit Rd, SG  | Widget A     | 50     |
+| 1002     | Jan 5      | Bob Khan      | 5 Orchard Rd, SG | Widget B     | 30     |
+| 1003     | Mar 1      | Alice Tan     | 12 Bukit Rd, SG  | Widget A     | 50     |
 
-Now Alice moves to Malaysia. They update the row in the app DB.
-The ETL re-runs the orders table from scratch.
+Alice moves to Malaysia. The app DB updates her row. The ETL re-runs `orders` from scratch.
 
-order_id │ order_date │ customer_name │ customer_address    │ product_name │ amount
-1001     │ Jan 2      │ Alice Tan     │ 8 Jalan Ipoh, MY    │ Widget A     │ 50  ← changed
-1002     │ Jan 5      │ Bob Khan      │ 5 Orchard Rd, SG    │ Widget B     │ 30
-1003     │ Mar 1      │ Alice Tan     │ 8 Jalan Ipoh, MY    │ Widget A     │ 50  ← changed
+| order_id | order_date | customer_name | customer_address  | product_name | amount |
+| -------- | ---------- | ------------- | ----------------- | ------------ | ------ |
+| 1001     | Jan 2      | Alice Tan     | 8 Jalan Ipoh, MY  | Widget A     | 50     |
+| 1002     | Jan 5      | Bob Khan      | 5 Orchard Rd, SG  | Widget B     | 30     |
+| 1003     | Mar 1      | Alice Tan     | 8 Jalan Ipoh, MY  | Widget A     | 50     |
 
-The January revenue by region report now shifts $50 from SG to MY.
-But that order was placed and shipped in SG. The history is now wrong.
-```
+The January revenue by region report now shifts $50 from SG to MY. But that order was placed and shipped in SG. **History is rewritten.**
 
 This is the classic SCD problem (Problem 10) in disguise. By denormalizing customer attributes onto the fact table, every change to a customer mutates the past.
 
 ### The fix
 
-```
-fact_orders                              dim_customer (SCD2)
-─────────────────────────────────        ───────────────────────────────────
-order_id (PK)                            customer_key (PK, surrogate)
-order_date                               customer_id  (natural)
-customer_key (FK to dim_customer)        name, address, country
-product_key  (FK to dim_product)         valid_from, valid_to, is_current
-amount
+```mermaid
+erDiagram
+    dim_customer ||--o{ fact_orders : "via customer_key"
+    dim_product ||--o{ fact_orders : "via product_key"
 
-dim_product
-─────────────────────────────────
-product_key (PK, surrogate)
-product_id (natural)
-name, category, brand
-valid_from, valid_to, is_current
+    fact_orders {
+        bigint order_id PK
+        date order_date
+        bigint customer_key FK
+        bigint product_key FK
+        int amount
+    }
+    dim_customer {
+        bigint customer_key PK
+        bigint customer_id "natural"
+        string name
+        string address
+        string country
+        timestamp valid_from
+        timestamp valid_to
+        bool is_current
+    }
+    dim_product {
+        bigint product_key PK
+        bigint product_id "natural"
+        string name
+        string category
+        string brand
+        timestamp valid_from
+        timestamp valid_to
+        bool is_current
+    }
 ```
 
 When Alice moves, dim_customer gets a new row (Type 2). The old order rows still point to her old customer_key. The January revenue by region report is correct.

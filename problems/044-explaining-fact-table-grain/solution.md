@@ -18,32 +18,29 @@ Imagine a coffee shop chain.
 
 **Grain: one sale.**
 
-```
-sale_id │ store │ date       │ total_amount
-1       │ A     │ 2025-05-14 │ 12.50
-2       │ A     │ 2025-05-14 │  7.00
-```
+| sale_id | store | date       | total_amount |
+| ------- | ----- | ---------- | ------------ |
+| 1       | A     | 2025-05-14 | 12.50        |
+| 2       | A     | 2025-05-14 | 7.00         |
 
-Useful for "total revenue today per store." Not useful for "how many large lattes were sold."
+Useful for *total revenue today per store*. Not useful for *how many large lattes were sold*.
 
 **Grain: one item on one sale.**
 
-```
-sale_id │ store │ date       │ product  │ qty │ amount
-1       │ A     │ 2025-05-14 │ Latte L  │ 1   │ 6.50
-1       │ A     │ 2025-05-14 │ Croissant│ 2   │ 6.00
-2       │ A     │ 2025-05-14 │ Coffee   │ 2   │ 7.00
-```
+| sale_id | store | date       | product   | qty | amount |
+| ------- | ----- | ---------- | --------- | --- | ------ |
+| 1       | A     | 2025-05-14 | Latte L   | 1   | 6.50   |
+| 1       | A     | 2025-05-14 | Croissant | 2   | 6.00   |
+| 2       | A     | 2025-05-14 | Coffee    | 2   | 7.00   |
 
-Useful for everything the first grain can do, plus "how many lattes did we sell." More rows, more flexibility.
+Useful for everything the first grain can do, plus *how many lattes did we sell*. More rows, more flexibility.
 
 **Grain: one minute of sales per store.**
 
-```
-store │ minute               │ revenue │ items_sold
-A     │ 2025-05-14 09:01:00  │ 23.50   │ 4
-A     │ 2025-05-14 09:02:00  │ 0.00    │ 0
-```
+| store | minute              | revenue | items_sold |
+| ----- | ------------------- | ------- | ---------- |
+| A     | 2025-05-14 09:01:00 | 23.50   | 4          |
+| A     | 2025-05-14 09:02:00 | 0.00    | 0          |
 
 Useful for "what minute are we busiest." Not useful for "what was sale 1234."
 

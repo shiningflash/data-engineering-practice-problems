@@ -30,14 +30,17 @@ The file lands in an AWS bucket. The S3 event is the trigger. Three reasonable p
 
 Pattern A: Lambda in AWS, push to GCP from there.
 
-```
-S3 (partner)  ──ObjectCreated──▶  Lambda (Python)
-                                     │
-                                     ▼
-                          validate, transform
-                                     │
-                                     ▼
-                   BigQuery load API (cross-cloud HTTPS)
+```mermaid
+flowchart LR
+    S3([S3 bucket<br/>partner upload])
+    L([Lambda Python<br/>validate + transform])
+    BQ([BigQuery load API<br/>cross-cloud HTTPS])
+
+    S3 -->|ObjectCreated| L --> BQ
+
+    style S3 fill:#fef3c7,stroke:#a16207,color:#713f12
+    style L fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style BQ fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
 * Trigger lives where the data lives. No polling, no cross-cloud event copy.
@@ -49,17 +52,21 @@ This is what I'd actually ship for this scenario.
 
 Pattern B: copy file to GCS first, then Cloud Function.
 
-```
-S3 (partner)  ──ObjectCreated──▶  Lambda copies to GCS
-                                     │
-                                     ▼
-                                  GCS ObjectFinalized
-                                     │
-                                     ▼
-                          Cloud Function (Python)
-                                     │
-                                     ▼
-                          validate, transform, load BQ
+```mermaid
+flowchart LR
+    S3([S3 bucket])
+    L([Lambda<br/>copies S3 to GCS])
+    GCS([GCS bucket])
+    CF([Cloud Function<br/>validate + transform])
+    BQ([BigQuery load])
+
+    S3 -->|ObjectCreated| L --> GCS -->|ObjectFinalized| CF --> BQ
+
+    style S3 fill:#fef3c7,stroke:#a16207,color:#713f12
+    style L fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style GCS fill:#fef3c7,stroke:#a16207,color:#713f12
+    style CF fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style BQ fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
 Two hops, more moving parts. The reason to do this is if the team has strict "all data must enter GCP first for audit" rules, or if the validation is complex and the team's library is GCP-only.
