@@ -15,56 +15,25 @@ Two takeaways:
 
 ### The architecture
 
-```
-   ┌────────────────────────┐
-   │  Client (apps, web,    │
-   │  speakers, etc.)       │
-   │  emits play heartbeats │
-   │  every ~30 sec while   │
-   │  audio is playing      │
-   └───────────┬────────────┘
-               │
-               ▼
-   ┌────────────────────────┐
-   │ Kafka topic            │
-   │ play_heartbeats        │
-   │ (12B events/day)       │
-   └───────────┬────────────┘
-               │
-               ▼
-   ┌────────────────────────────────────────────┐
-   │ Stream processor (Flink)                   │
-   │                                            │
-   │  Per heartbeat:                            │
-   │   - Validate (real play, not seek/scrub)   │
-   │   - Compute elapsed seconds since previous │
-   │     heartbeat for this user                │
-   │   - Key by (user_id, week_id)              │
-   │   - Increment counter                      │
-   │                                            │
-   │  Emit updates to serving store every       │
-   │  N seconds (e.g. 30s window).              │
-   └───────────┬────────────────────────────────┘
-               │
-               ▼
-   ┌────────────────────────────────────────────┐
-   │ Serving store (Bigtable / Cassandra /      │
-   │ DynamoDB / Aerospike)                      │
-   │                                            │
-   │ Row key: user_id|week_id                   │
-   │ Value:   { minutes, updated_at, version }  │
-   └───────────┬────────────────────────────────┘
-               │
-               │ <20ms point read
-               ▼
-   ┌────────────────────────┐
-   │ Profile service        │
-   │ "minutes this week"    │
-   └────────────────────────┘
+```mermaid
+flowchart TB
+    CL([Clients<br/>apps, web, speakers<br/>play heartbeats every 30s])
+    K([Kafka topic<br/>play_heartbeats<br/>12B events per day])
+    FL([Flink stream processor<br/>validate, compute elapsed seconds<br/>key by user_id and week_id<br/>increment counter])
+    SS([Serving store<br/>Bigtable, Cassandra, DynamoDB<br/>key: user_id | week_id])
+    PROF([Profile service<br/>point read under 20 ms])
 
-                  (parallel branch)
-   Kafka → S3 (Firehose) → Warehouse (BigQuery)
-   Used for analytics, Year in Review, ML, audit.
+    WH([S3 then BigQuery<br/>Year in Review, ML, audit])
+
+    CL --> K --> FL --> SS --> PROF
+    K -. parallel .-> WH
+
+    style CL fill:#dcfce7,stroke:#15803d,color:#14532d
+    style K fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style FL fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style SS fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style PROF fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style WH fill:#fef3c7,stroke:#a16207,color:#713f12
 ```
 
 ### What counts as a "minute listened"
@@ -102,21 +71,21 @@ The store ends up roughly: 200M active users × ~12 weeks of retention = ~2.4 bi
 
 ### Update path
 
-```
-Every 30 sec, a play heartbeat arrives.
-   │
-   ▼
-Flink computes "this heartbeat = +28 seconds for user 12345, week 2025-W20"
-   │
-   ▼
-Flink keeps a per-key running total in state.
-   │
-   ▼
-Every 30 seconds (a small commit window), Flink flushes the new value to
-the serving store with a versioned write (compare-and-set on version).
-   │
-   ▼
-Profile reads see a number that is at most ~30 seconds behind reality.
+```mermaid
+flowchart TB
+    HB([Heartbeat arrives<br/>every 30 sec while playing])
+    COMP([Flink computes<br/>+28 seconds for user 12345, week 2025-W20])
+    ST([Flink keeps per-key<br/>running total in state])
+    FLUSH([Every 30s commit window<br/>flush to serving store<br/>versioned write with CAS])
+    READ([Profile reads see a number<br/>at most ~30 seconds stale])
+
+    HB --> COMP --> ST --> FLUSH --> READ
+
+    style HB fill:#dcfce7,stroke:#15803d,color:#14532d
+    style COMP fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style ST fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style FLUSH fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style READ fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
 We do not write to the store on every heartbeat (that's 12B writes a day). We write once per commit window per user. Most users have 1 heartbeat per 30 seconds anyway, so the savings come from buffering and from idle users dropping out of writes entirely.

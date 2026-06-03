@@ -6,36 +6,50 @@
 
 ### The whiteboard picture
 
-```
 Same data, two shapes.
 
-orders
-─────────────────────────────────────────
-order_id │ customer_id │ amount │ created_at
-1        │ A           │ 100    │ Jan 1
-2        │ A           │ 50     │ Jan 5
-3        │ B           │ 200    │ Jan 3
-4        │ A           │ 70     │ Jan 10
+**The input** `orders`:
 
-GROUP BY                          WINDOW
-────────────────                  ──────────────────────────────────
-SELECT                            SELECT
-  customer_id,                      order_id, customer_id, amount,
-  SUM(amount) AS total              SUM(amount) OVER (
-FROM orders                           PARTITION BY customer_id
-GROUP BY customer_id;                 ORDER BY created_at
-                                    ) AS running_total
-                                  FROM orders;
+| order_id | customer_id | amount | created_at |
+| -------- | ----------- | ------ | ---------- |
+| 1        | A           | 100    | Jan 1      |
+| 2        | A           | 50     | Jan 5      |
+| 3        | B           | 200    | Jan 3      |
+| 4        | A           | 70     | Jan 10     |
 
-Result:                           Result:
-customer │ total                   order │ customer │ amount │ running
-A        │ 220                     1     │ A        │ 100    │ 100
-B        │ 200                     2     │ A        │ 50     │ 150
-                                   3     │ B        │ 200    │ 200
-                                   4     │ A        │ 70     │ 220
+```mermaid
+flowchart LR
+    IN([4 rows])
+    GB([GROUP BY<br/>SUM amount<br/>collapses rows])
+    WIN([WINDOW<br/>SUM amount OVER<br/>partition by customer<br/>keeps every row])
+
+    IN --> GB --> OUTG([2 rows<br/>one per customer])
+    IN --> WIN --> OUTW([4 rows<br/>each with running total])
+
+    style IN fill:#fef3c7,stroke:#a16207,color:#713f12
+    style GB fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style WIN fill:#dcfce7,stroke:#15803d,color:#14532d
+    style OUTG fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style OUTW fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
-Notice: GROUP BY returned 2 rows. WINDOW returned 4 rows. Same SUM, different result shape.
+**GROUP BY result** (2 rows):
+
+| customer | total |
+| -------- | ----- |
+| A        | 220   |
+| B        | 200   |
+
+**Window result** (4 rows):
+
+| order | customer | amount | running_total |
+| ----- | -------- | ------ | ------------- |
+| 1     | A        | 100    | 100           |
+| 2     | A        | 50     | 150           |
+| 3     | B        | 200    | 200           |
+| 4     | A        | 70     | 220           |
+
+Same SUM, different result shape. GROUP BY collapsed to 2. Window kept all 4.
 
 ### What each one is, in one line
 

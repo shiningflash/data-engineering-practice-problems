@@ -8,59 +8,29 @@ That number drives every design choice. A warehouse query takes seconds. A relat
 
 ### The shape of the system
 
-```
-   Card swipe / digital payment
-              │
-              ▼
-   ┌──────────────────────┐
-   │   Core banking       │   (source of truth, OLTP, Postgres or
-   │   transactions DB    │    a mainframe-equivalent)
-   └─────────┬────────────┘
-             │ CDC (Debezium / Striim)
-             ▼
-   ┌──────────────────────┐
-   │   Kafka topic        │
-   │   "transactions"     │
-   └─────────┬────────────┘
-             │
-             ▼
-   ┌─────────────────────────────┐
-   │  Stream processor (Flink /  │
-   │  Kafka Streams)             │
-   │                             │
-   │  - look up category for     │
-   │    merchant_id              │
-   │  - apply +/-  (refund vs    │
-   │    purchase)                │
-   │  - keyed by (user, month,   │
-   │    category)                │
-   │  - emit updated totals      │
-   └────────────┬────────────────┘
-                │
-                ▼
-   ┌─────────────────────────────┐
-   │  Fast serving store         │
-   │  (DynamoDB / Bigtable /     │
-   │  Redis / Aerospike)         │
-   │                             │
-   │  Key: user_id|YYYY-MM       │
-   │  Value: { category -> sum,  │
-   │           total, updated_at}│
-   └────────────┬────────────────┘
-                │
-                │ <50 ms point read
-                ▼
-   ┌──────────────────────┐
-   │   Mobile app widget  │
-   └──────────────────────┘
+```mermaid
+flowchart TB
+    SW([Card swipe<br/>or digital payment])
+    CORE([Core banking transactions DB<br/>source of truth, OLTP])
+    CDC([CDC stream<br/>Debezium reading the WAL])
+    K([Kafka topic: transactions])
+    SP([Stream processor<br/>Flink or Kafka Streams<br/>look up category, apply sign,<br/>key by user, month, category])
+    SS([Fast serving store<br/>DynamoDB, Bigtable, Redis<br/>key: user_id | YYYY-MM])
+    APP([Mobile app widget<br/>point read under 50 ms])
 
-                  (in parallel, for analytics / dispute / reporting)
-                ┌─────────────────────────────────┐
-                │  Same Kafka topic also drains   │
-                │  to S3 → Warehouse (BigQuery /  │
-                │  Snowflake) for non realtime    │
-                │  use cases                      │
-                └─────────────────────────────────┘
+    WH([S3 then warehouse<br/>BigQuery or Snowflake<br/>for dispute and reporting])
+
+    SW --> CORE --> CDC --> K --> SP --> SS --> APP
+    K -. parallel drain .-> WH
+
+    style SW fill:#dcfce7,stroke:#15803d,color:#14532d
+    style CORE fill:#fef3c7,stroke:#a16207,color:#713f12
+    style CDC fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style K fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style SP fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style SS fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style APP fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style WH fill:#fef3c7,stroke:#a16207,color:#713f12
 ```
 
 ### Data shape in the serving store
