@@ -9,63 +9,35 @@ This is large but very tractable. It is not "needs Spark" territory. A modest wa
 
 ### The shape of the platform
 
-```
-                                ┌──────────────────────┐
-   Smart meters (200k)          │      HEAD-END SYSTEM │
-   send every 15 min via        │  (vendor system that │
-   the utility's protocol  ────▶│  collects from MDM,  │
-   (DLMS, NB-IoT, etc.)         │  emits files / API)  │
-                                └──────────┬───────────┘
-                                           │
-                            JSON / CSV per device per hour
-                                           │
-                                           ▼
-                                ┌──────────────────────┐
-                                │   S3 (RAW LAYER)     │
-                                │  s3://meter-raw/     │
-                                │   yyyy/mm/dd/hh/     │
-                                └──────────┬───────────┘
-                                           │
-                                Triggered by S3 event
-                                           │
-                                           ▼
-                                ┌──────────────────────┐
-                                │   AWS Lambda /       │
-                                │   Glue parser        │
-                                │  validate, normalize │
-                                └──────────┬───────────┘
-                                           │ Parquet
-                                           ▼
-                                ┌──────────────────────┐
-                                │  S3 (CURATED LAYER)  │
-                                │  s3://meter-curated/ │
-                                │   date=YYYY-MM-DD/   │
-                                └──────────┬───────────┘
-                                           │
-                              dbt + Airflow (hourly)
-                                           │
-                                           ▼
-                                ┌──────────────────────────────┐
-                                │  WAREHOUSE (Redshift /       │
-                                │  Snowflake / BigQuery)       │
-                                │                              │
-                                │  reads_15min   (raw fact)    │
-                                │  reads_hourly  (rollup)      │
-                                │  reads_daily   (rollup)      │
-                                │  customers     (dim)         │
-                                │  tariffs       (SCD2 dim)    │
-                                │  bills         (mart)        │
-                                └──────────┬───────────────────┘
-                                           │
-              ┌────────────────────────────┼────────────────────┐
-              ▼                            ▼                    ▼
-   ┌──────────────────┐         ┌──────────────────┐   ┌──────────────────┐
-   │  Customer app    │         │  Ops dashboards  │   │  Forecasting     │
-   │  reads from a    │         │  (Looker, Metab) │   │  model (Python,  │
-   │  small Postgres  │         │  query warehouse │   │  reads warehouse │
-   │  serving table   │         │  directly        │   │  history)        │
-   │  (last 90 days)  │         │                  │   │                  │
-   └──────────────────┘         └──────────────────┘   └──────────────────┘
+```mermaid
+flowchart TB
+    M([Smart meters, 200k<br/>every 15 min via DLMS, NB-IoT])
+    HE([Head-end system<br/>vendor MDM])
+    RAW([S3 raw layer<br/>yyyy/mm/dd/hh/])
+    L([Lambda / Glue parser<br/>validate, normalize])
+    CUR([S3 curated layer<br/>Parquet, date partitioned])
+    DBT([dbt + Airflow<br/>hourly])
+    WH([Warehouse<br/>Redshift, Snowflake, BigQuery<br/>reads_15min, reads_hourly, reads_daily<br/>customers, tariffs (SCD2), bills])
+
+    APP([Customer app<br/>Postgres serving table<br/>last 90 days])
+    DASH([Ops dashboards<br/>Looker, Metabase])
+    FC([Forecasting model<br/>Python])
+
+    M --> HE --> RAW --> L --> CUR --> DBT --> WH
+    WH --> APP
+    WH --> DASH
+    WH --> FC
+
+    style M fill:#dcfce7,stroke:#15803d,color:#14532d
+    style HE fill:#fef3c7,stroke:#a16207,color:#713f12
+    style RAW fill:#fef3c7,stroke:#a16207,color:#713f12
+    style L fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style CUR fill:#fef3c7,stroke:#a16207,color:#713f12
+    style DBT fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style WH fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style APP fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style DASH fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style FC fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
 ```
 
 ### Why each piece
@@ -110,12 +82,25 @@ Three rules:
 2. **Curated and rollup layers are rebuilt by partition, not by row.** A late file for May 10 triggers a rebuild of May 10 in `reads_15min`, `reads_hourly`, `reads_daily`. The MERGE / overwrite pattern from Problem 9.
 3. **Bills are sealed.** Once a bill is sent, the bill row is frozen. Subsequent corrections produce an *adjustment* row, not an edit. This is how regulators expect it.
 
-```
-Raw    : May 10 partition gains 32 new late readings
-Curated: May 10 rebuilt (idempotent overwrite)
-Rollups: May 10 hourly + daily rebuilt
-Bill   : May was already sent → adjustment row
-         May was not yet billed → next bill picks up the change
+```mermaid
+flowchart TB
+    LATE([May 10 partition gains 32 new late readings])
+    CURE([Curated layer<br/>May 10 rebuilt, idempotent overwrite])
+    ROLL([Rollups<br/>May 10 hourly + daily rebuilt])
+    BILL{Bill for May<br/>already sent?}
+    ADJ([Adjustment row])
+    NEXT([Next bill picks up the change])
+
+    LATE --> CURE --> ROLL --> BILL
+    BILL -->|yes| ADJ
+    BILL -->|no| NEXT
+
+    style LATE fill:#fecaca,stroke:#b91c1c,color:#7f1d1d
+    style CURE fill:#fef3c7,stroke:#a16207,color:#713f12
+    style ROLL fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style BILL fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style ADJ fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style NEXT fill:#dcfce7,stroke:#15803d,color:#14532d
 ```
 
 ### Schema sketch

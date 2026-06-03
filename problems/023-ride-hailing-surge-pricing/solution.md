@@ -8,43 +8,35 @@ The math is simple. The hard parts are: bucketing the map into "areas," keeping 
 
 ### The architecture
 
-```
-   ┌───────────────────┐        ┌────────────────────┐
-   │ Rider app         │        │ Driver app         │
-   │ "request ride"    │        │ "online / idle /   │
-   │ events            │        │  on trip" events   │
-   └─────────┬─────────┘        └──────────┬─────────┘
-             │ Kafka topic                 │ Kafka topic
-             │ ride_requests               │ driver_status
-             ▼                             ▼
-   ┌─────────────────────────────────────────────────┐
-   │            Stream processor (Flink)             │
-   │                                                 │
-   │  1. Map GPS → H3 hex (resolution 8 or 9)        │
-   │  2. Per hex, 3-minute sliding window:           │
-   │       requests  = count of ride_requests        │
-   │       supply    = unique drivers idle in window │
-   │  3. Compute raw_multiplier = f(requests, supply)│
-   │  4. Smooth with EMA over last 3 windows         │
-   │  5. Snap to allowed price tiers (1.0, 1.25, …)  │
-   └─────────────┬───────────────────────────────────┘
-                 │
-                 ▼
-   ┌─────────────────────────────────────────────────┐
-   │   Pricing store (Redis or Bigtable)             │
-   │   Key:   h3_hex                                 │
-   │   Value: { multiplier, valid_until, updated_at }│
-   │   TTL:   60 seconds (fail-safe to 1.0x)         │
-   └─────────────┬───────────────────────────────────┘
-                 │
-        ┌────────┴───────────────┐
-        ▼                        ▼
-   ┌─────────────┐      ┌────────────────────┐
-   │ Pricing API │      │ Driver heatmap API │
-   │ (rider quote│      │ (where to drive)   │
-   │  + final    │      │                    │
-   │  price)     │      │                    │
-   └─────────────┘      └────────────────────┘
+```mermaid
+flowchart TB
+    RA([Rider app<br/>request ride events])
+    DA([Driver app<br/>online / idle / on trip events])
+
+    KR([Kafka: ride_requests])
+    KD([Kafka: driver_status])
+
+    FL([Flink stream processor<br/>1. GPS to H3 hex<br/>2. 3-min sliding window per hex<br/>3. compute raw_multiplier<br/>4. EMA smoothing<br/>5. snap to allowed tiers])
+
+    PS([Pricing store<br/>Redis or Bigtable<br/>key: h3_hex<br/>TTL 60s, fail-safe 1.0x])
+
+    PAPI([Pricing API<br/>rider quote + final price])
+    HMAP([Driver heatmap API<br/>where to drive])
+
+    RA --> KR --> FL
+    DA --> KD --> FL
+    FL --> PS
+    PS --> PAPI
+    PS --> HMAP
+
+    style RA fill:#dcfce7,stroke:#15803d,color:#14532d
+    style DA fill:#dcfce7,stroke:#15803d,color:#14532d
+    style KR fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style KD fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style FL fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style PS fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style PAPI fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style HMAP fill:#fed7aa,stroke:#c2410c,color:#7c2d12
 ```
 
 ### Bucketing the map: H3 hexagons

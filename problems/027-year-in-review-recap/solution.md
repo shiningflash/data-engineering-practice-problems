@@ -8,56 +8,28 @@ There is no real-time anything. The "magic" is in the design, copywriting, and i
 
 ### The architecture
 
-```
-   ┌───────────────────────────────────┐
-   │   Warehouse (full year of events) │
-   │   plays / orders / activity rows  │
-   │   already in BigQuery / Snowflake │
-   └────────────────┬──────────────────┘
-                    │
-                    ▼
-   ┌────────────────────────────────────────────────┐
-   │  Yearly aggregation job (SQL + dbt)            │
-   │                                                │
-   │  Per user, compute ~20-50 features:            │
-   │   - total minutes / km / spend                 │
-   │   - top 5 things by count                      │
-   │   - "biggest day", "longest streak"            │
-   │   - novelty / rank vs other users              │
-   │                                                │
-   │  Output: one big table user_recap_features     │
-   └────────────────┬───────────────────────────────┘
-                    │
-                    ▼
-   ┌────────────────────────────────────────────────┐
-   │  Story template selection (deterministic)      │
-   │                                                │
-   │  Map features → which "story cards" each user  │
-   │  gets, in what order. Pure function of         │
-   │  features. Same user, same year, same cards.   │
-   └────────────────┬───────────────────────────────┘
-                    │
-                    ▼
-   ┌────────────────────────────────────────────────┐
-   │  Pre-rendered share images                     │
-   │  (one PNG per user, generated headless)        │
-   │  Stored on S3 / CDN                            │
-   └────────────────┬───────────────────────────────┘
-                    │
-                    ▼
-   ┌────────────────────────────────────────────────┐
-   │  Serving store (DynamoDB / Bigtable / Memcache)│
-   │  Key: user_id                                  │
-   │  Value: { cards: [...], share_image_url, hash }│
-   └────────────────┬───────────────────────────────┘
-                    │
-        ┌───────────┴────────────┐
-        ▼                        ▼
-   ┌──────────────┐         ┌────────────────────┐
-   │ Mobile app   │         │ Social share image │
-   │ requests     │         │ served from CDN    │
-   │ recap        │         │ (no compute)       │
-   └──────────────┘         └────────────────────┘
+```mermaid
+flowchart TB
+    WH([Warehouse<br/>BigQuery or Snowflake<br/>full year of events])
+    AGG([Yearly aggregation job<br/>SQL + dbt<br/>~20-50 features per user])
+    SEL([Story template selection<br/>deterministic, pure function])
+    IMG([Pre-rendered share images<br/>one PNG per user<br/>stored on S3 / CDN])
+    SS([Serving store<br/>DynamoDB or Bigtable<br/>key: user_id])
+
+    APP([Mobile app<br/>requests recap])
+    CDN([Social share image<br/>served from CDN])
+
+    WH --> AGG --> SEL --> IMG --> SS
+    SS --> APP
+    SS --> CDN
+
+    style WH fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style AGG fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style SEL fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style IMG fill:#fef3c7,stroke:#a16207,color:#713f12
+    style SS fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style APP fill:#dcfce7,stroke:#15803d,color:#14532d
+    style CDN fill:#dcfce7,stroke:#15803d,color:#14532d
 ```
 
 ### Why batch is fine

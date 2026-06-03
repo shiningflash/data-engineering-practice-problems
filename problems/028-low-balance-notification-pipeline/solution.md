@@ -2,46 +2,21 @@
 
 ### The pipeline
 
-```
-   ┌──────────────────────────────────────────────┐
-   │  Warehouse (BigQuery / Snowflake)            │
-   │   - accounts (current balance, tz, opt-in)   │
-   │   - notifications_sent (audit log)           │
-   └────────────────┬─────────────────────────────┘
-                    │
-            Scheduled per time zone
-                    │
-                    ▼
-   ┌──────────────────────────────────────────────┐
-   │  Eligibility query (SQL)                     │
-   │                                              │
-   │  WHERE balance < threshold                   │
-   │    AND user is opted in                      │
-   │    AND user's local time is within           │
-   │        send-window (9 AM .. 7 PM)            │
-   │    AND no notification sent today already    │
-   │        for this user (anti-join)             │
-   │                                              │
-   │  → produces a small "candidates" set         │
-   └────────────────┬─────────────────────────────┘
-                    │
-                    ▼
-   ┌──────────────────────────────────────────────┐
-   │  Notification job                            │
-   │   For each candidate:                        │
-   │    1. Insert into notifications_sent with    │
-   │       unique key (user_id, date, type)       │
-   │    2. If insert succeeds (no duplicate),     │
-   │       call push API with idempotency_key     │
-   │       = the same (user_id, date, type) hash  │
-   │    3. If insert fails (already there), skip  │
-   └────────────────┬─────────────────────────────┘
-                    │
-                    ▼
-   ┌──────────────────────────────────────────────┐
-   │  Push provider (APNs / FCM / Twilio)         │
-   │  Receives idempotency_key, dedupes on it     │
-   └──────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    WH([Warehouse<br/>accounts: balance, tz, opt-in<br/>notifications_sent: audit log])
+    SCHED([Scheduled per time zone])
+    Q([Eligibility query<br/>balance below threshold<br/>opted in<br/>local time in send-window<br/>no notification sent today])
+    JOB([Notification job<br/>1. INSERT notifications_sent with unique key<br/>2. If insert succeeds, call push API<br/>3. If insert fails, skip])
+    P([Push provider<br/>APNs / FCM / Twilio<br/>dedup on idempotency_key])
+
+    WH --> SCHED --> Q --> JOB --> P
+
+    style WH fill:#fed7aa,stroke:#c2410c,color:#7c2d12
+    style SCHED fill:#fef3c7,stroke:#a16207,color:#713f12
+    style Q fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style JOB fill:#dbeafe,stroke:#1e40af,color:#1e3a8a
+    style P fill:#dcfce7,stroke:#15803d,color:#14532d
 ```
 
 The trick: **the dedup gate is a row in a real table with a unique constraint**. The order is "claim the right to send" first, then "send." If two workers try the same user at the same instant, only one wins the INSERT, only one calls the push API.
