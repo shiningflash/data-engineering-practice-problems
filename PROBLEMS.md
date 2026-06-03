@@ -96,6 +96,10 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 | 88 | Polars vs Pandas for ETL | SQL & Querying | Easy | optional | [Question](problems/088-polars-vs-pandas-for-etl/question.md) | [Solution](problems/088-polars-vs-pandas-for-etl/solution.md) |
 | 89 | Great Expectations vs dbt Tests | Batch Pipelines & Orchestration | Medium | strong | [Question](problems/089-great-expectations-vs-dbt-tests/question.md) | [Solution](problems/089-great-expectations-vs-dbt-tests/solution.md) |
 | 90 | OpenLineage and Data Discovery | System Design | Medium | optional | [Question](problems/090-openlineage-and-data-discovery/question.md) | [Solution](problems/090-openlineage-and-data-discovery/solution.md) |
+| 91 | Partner CSV, Schema Drift on Monday Morning | Batch Pipelines & Orchestration | Medium | strong | [Question](problems/091-partner-csv-schema-drift-monday-morning/question.md) | [Solution](problems/091-partner-csv-schema-drift-monday-morning/solution.md) |
+| 92 | Late Events After the Partition Closed | Streaming | Medium | strong | [Question](problems/092-late-events-after-the-partition-closed/question.md) | [Solution](problems/092-late-events-after-the-partition-closed/solution.md) |
+| 93 | Dashboard Stale Despite a Healthy Job | Batch Pipelines & Orchestration | Medium | strong | [Question](problems/093-dashboard-stale-despite-healthy-job/question.md) | [Solution](problems/093-dashboard-stale-despite-healthy-job/solution.md) |
+| 94 | Versioning a Breaking Grain Change | Data Modeling | Hard | ⭐ must | [Question](problems/094-versioning-a-breaking-grain-change/question.md) | [Solution](problems/094-versioning-a-breaking-grain-change/solution.md) |
 
 ---
 
@@ -129,7 +133,7 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 
 ### ⭐ Interview Must-Haves
 
-34 problems that cover the questions you cannot dodge in a senior data engineer loop. Read them in the order shown, top to bottom.
+35 problems that cover the questions you cannot dodge in a senior data engineer loop. Read them in the order shown, top to bottom.
 
 3. [Window Functions vs GROUP BY](problems/020-window-functions-vs-group-by/question.md) — *SQL & Querying*
 5. [Reading an EXPLAIN Plan](problems/017-reading-an-explain-plan/question.md) — *SQL & Querying*
@@ -165,12 +169,13 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 82. [Iceberg, Schema Evolution and Time Travel](problems/080-iceberg-schema-evolution-and-time-travel/question.md) — *Storage & Lakehouse*
 85. [Spark Shuffle, Skew, and the Small File Problem](problems/079-spark-shuffle-skew-and-small-files/question.md) — *Cloud & Cost*
 88. [Data Observability, Freshness, Volume, and Drift](problems/084-data-observability-freshness-volume-drift/question.md) — *System Design*
+94. [Versioning a Breaking Grain Change](problems/094-versioning-a-breaking-grain-change/question.md) — *Data Modeling*
 
 ---
 
 ### Recommended Reading Order
 
-All 90 problems arranged as a pedagogical sequence. Read top to bottom for a complete path from SQL to senior-level data engineering.
+All 94 problems arranged as a pedagogical sequence. Read top to bottom for a complete path from SQL to senior-level data engineering.
 
 1. [Teaching SQL Performance to a Junior](problems/015-teaching-sql-performance-to-a-junior/question.md) — *SQL & Querying*, Medium
 2. [CTE vs Subquery](problems/018-cte-vs-subquery/question.md) — *SQL & Querying*, Medium
@@ -262,5 +267,9 @@ All 90 problems arranged as a pedagogical sequence. Read top to bottom for a com
 88. [Data Observability, Freshness, Volume, and Drift](problems/084-data-observability-freshness-volume-drift/question.md) — *System Design*, Medium
 89. [OpenLineage and Data Discovery](problems/090-openlineage-and-data-discovery/question.md) — *System Design*, Medium
 90. [Feature Store, Online vs Offline](problems/085-feature-store-online-vs-offline/question.md) — *System Design*, Hard
+91. [Partner CSV, Schema Drift on Monday Morning](problems/091-partner-csv-schema-drift-monday-morning/question.md) — *Batch Pipelines & Orchestration*, Medium
+92. [Late Events After the Partition Closed](problems/092-late-events-after-the-partition-closed/question.md) — *Streaming*, Medium
+93. [Dashboard Stale Despite a Healthy Job](problems/093-dashboard-stale-despite-healthy-job/question.md) — *Batch Pipelines & Orchestration*, Medium
+94. [Versioning a Breaking Grain Change](problems/094-versioning-a-breaking-grain-change/question.md) — *Data Modeling*, Hard
 
 > New problems are added regularly. If you want to contribute, see the [Contribution Guide](CONTRIBUTION.md).
