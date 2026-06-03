@@ -29,12 +29,14 @@ INDEX = REPO / "PROBLEMS.md"
 CATEGORY_LEGEND = [
     ("SQL & Querying",          "Writing, reading and reasoning about SQL like a senior engineer"),
     ("Data Modeling",           "Star schemas, history tracking, grain, dimensions, SCDs"),
-    ("Databases",               "Engines, ACID, isolation, indexes, replication, sharding"),
+    ("Database Internals",      "Engines, ACID, isolation levels, indexes, B-tree vs LSM, normalization"),
+    ("Database Operations",     "Running databases at scale: replicas, sharding, connection pools, deadlocks"),
     ("Batch Pipelines",         "ETL/ELT, idempotency, data cleaning, contracts, orchestration"),
     ("Streaming",               "Kafka, watermarks, exactly-once, ordering, consumer lag"),
     ("Storage & Formats",       "Parquet, lakehouse, partitioning, clustering, materialized views"),
     ("System Design",           "End-to-end pipelines for real consumer and energy-sector products"),
-    ("Cloud & Cost",            "Picking between AWS / GCP services, finding waste, controlling spend"),
+    ("Cloud Services",          "Picking between AWS, GCP and Azure services with clear trade-offs"),
+    ("Cost Optimization",       "Finding waste in queries, jobs, and infrastructure when the bill spikes"),
     ("Debugging & Reliability", "Step-by-step investigation when the number is wrong or the job died"),
     ("People & Process",        "Mentoring, comms, postmortems, ownership, rollouts"),
 ]

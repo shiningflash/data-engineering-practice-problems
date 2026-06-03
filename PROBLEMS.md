@@ -13,7 +13,7 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 | 5 | Merging Messy CSVs from Multiple Partners | Batch Pipelines | Medium | optional | [Question](problems/005-merging-messy-csvs-from-multiple-partners/question.md) | [Solution](problems/005-merging-messy-csvs-from-multiple-partners/solution.py) |
 | 6 | Partitioning vs Clustering in BigQuery | Storage & Formats | Easy | strong | [Question](problems/006-partitioning-vs-clustering-in-bigquery/question.md) | [Solution](problems/006-partitioning-vs-clustering-in-bigquery/solution.md) |
 | 7 | ETL vs ELT and Why ELT Won | Batch Pipelines | Easy | ⭐ must | [Question](problems/007-etl-vs-elt-and-why-elt-won/question.md) | [Solution](problems/007-etl-vs-elt-and-why-elt-won/solution.md) |
-| 8 | OLTP vs OLAP | Databases | Easy | ⭐ must | [Question](problems/008-oltp-vs-olap/question.md) | [Solution](problems/008-oltp-vs-olap/solution.md) |
+| 8 | OLTP vs OLAP | Database Internals | Easy | ⭐ must | [Question](problems/008-oltp-vs-olap/question.md) | [Solution](problems/008-oltp-vs-olap/solution.md) |
 | 9 | Idempotency in Data Pipelines | Batch Pipelines | Medium | ⭐ must | [Question](problems/009-idempotency-in-data-pipelines/question.md) | [Solution](problems/009-idempotency-in-data-pipelines/solution.md) |
 | 10 | Slowly Changing Dimensions | Data Modeling | Medium | ⭐ must | [Question](problems/010-slowly-changing-dimensions/question.md) | [Solution](problems/010-slowly-changing-dimensions/solution.md) |
 | 11 | Data Contracts in Plain Words | Batch Pipelines | Medium | strong | [Question](problems/011-data-contracts-in-plain-words/question.md) | [Solution](problems/011-data-contracts-in-plain-words/solution.md) |
@@ -35,17 +35,17 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 | 27 | Year in Review Recap | System Design | Medium | strong | [Question](problems/027-year-in-review-recap/question.md) | [Solution](problems/027-year-in-review-recap/solution.md) |
 | 28 | Low Balance Notification Pipeline | System Design | Medium | strong | [Question](problems/028-low-balance-notification-pipeline/question.md) | [Solution](problems/028-low-balance-notification-pipeline/solution.md) |
 | 29 | Daily Report Quietly Wrong for Two Weeks | Debugging & Reliability | Medium | ⭐ must | [Question](problems/029-daily-report-quietly-wrong-for-two-weeks/question.md) | [Solution](problems/029-daily-report-quietly-wrong-for-two-weeks/solution.md) |
-| 30 | Warehouse Cost Doubled in Two Months | Cloud & Cost | Medium | ⭐ must | [Question](problems/030-warehouse-cost-doubled-in-two-months/question.md) | [Solution](problems/030-warehouse-cost-doubled-in-two-months/solution.md) |
+| 30 | Warehouse Cost Doubled in Two Months | Cost Optimization | Medium | ⭐ must | [Question](problems/030-warehouse-cost-doubled-in-two-months/question.md) | [Solution](problems/030-warehouse-cost-doubled-in-two-months/solution.md) |
 | 31 | The Dashboard is Wrong | Debugging & Reliability | Easy | strong | [Question](problems/031-the-dashboard-is-wrong/question.md) | [Solution](problems/031-the-dashboard-is-wrong/solution.md) |
 | 32 | Inheriting a Pipeline No One Owns | People & Process | Medium | optional | [Question](problems/032-inheriting-a-pipeline-no-one-owns/question.md) | [Solution](problems/032-inheriting-a-pipeline-no-one-owns/solution.md) |
 | 33 | Executive Needs a Number Tomorrow | People & Process | Medium | optional | [Question](problems/033-executive-needs-a-number-tomorrow/question.md) | [Solution](problems/033-executive-needs-a-number-tomorrow/solution.md) |
 | 34 | Three Days of Data Lost | Debugging & Reliability | Hard | ⭐ must | [Question](problems/034-three-days-of-data-lost/question.md) | [Solution](problems/034-three-days-of-data-lost/solution.md) |
-| 35 | Lambda vs Cloud Function vs Cloud Run | Cloud & Cost | Medium | strong | [Question](problems/035-lambda-vs-cloud-function-vs-cloud-run/question.md) | [Solution](problems/035-lambda-vs-cloud-function-vs-cloud-run/solution.md) |
-| 36 | Scheduled Pipeline Pay Only When Run | Cloud & Cost | Easy | optional | [Question](problems/036-scheduled-pipeline-pay-only-when-run/question.md) | [Solution](problems/036-scheduled-pipeline-pay-only-when-run/solution.md) |
-| 37 | BigQuery vs Snowflake for New Team | Cloud & Cost | Medium | strong | [Question](problems/037-bigquery-vs-snowflake-for-new-team/question.md) | [Solution](problems/037-bigquery-vs-snowflake-for-new-team/solution.md) |
-| 38 | Store Partner Files in S3 or Warehouse | Cloud & Cost | Easy | optional | [Question](problems/038-store-partner-files-in-s3-or-warehouse/question.md) | [Solution](problems/038-store-partner-files-in-s3-or-warehouse/solution.md) |
-| 39 | Managed Airflow vs Self Hosted | Cloud & Cost | Medium | strong | [Question](problems/039-managed-airflow-vs-self-hosted/question.md) | [Solution](problems/039-managed-airflow-vs-self-hosted/solution.md) |
-| 40 | BigQuery Access Control for 50 Person Company | Cloud & Cost | Medium | optional | [Question](problems/040-bigquery-access-control-for-50-person-company/question.md) | [Solution](problems/040-bigquery-access-control-for-50-person-company/solution.md) |
+| 35 | Lambda vs Cloud Function vs Cloud Run | Cloud Services | Medium | strong | [Question](problems/035-lambda-vs-cloud-function-vs-cloud-run/question.md) | [Solution](problems/035-lambda-vs-cloud-function-vs-cloud-run/solution.md) |
+| 36 | Scheduled Pipeline Pay Only When Run | Cloud Services | Easy | optional | [Question](problems/036-scheduled-pipeline-pay-only-when-run/question.md) | [Solution](problems/036-scheduled-pipeline-pay-only-when-run/solution.md) |
+| 37 | BigQuery vs Snowflake for New Team | Cloud Services | Medium | strong | [Question](problems/037-bigquery-vs-snowflake-for-new-team/question.md) | [Solution](problems/037-bigquery-vs-snowflake-for-new-team/solution.md) |
+| 38 | Store Partner Files in S3 or Warehouse | Cloud Services | Easy | optional | [Question](problems/038-store-partner-files-in-s3-or-warehouse/question.md) | [Solution](problems/038-store-partner-files-in-s3-or-warehouse/solution.md) |
+| 39 | Managed Airflow vs Self Hosted | Cloud Services | Medium | strong | [Question](problems/039-managed-airflow-vs-self-hosted/question.md) | [Solution](problems/039-managed-airflow-vs-self-hosted/solution.md) |
+| 40 | BigQuery Access Control for 50 Person Company | Cloud Services | Medium | optional | [Question](problems/040-bigquery-access-control-for-50-person-company/question.md) | [Solution](problems/040-bigquery-access-control-for-50-person-company/solution.md) |
 | 41 | Tables for an Airbnb Like App | Data Modeling | Medium | ⭐ must | [Question](problems/041-tables-for-an-airbnb-like-app/question.md) | [Solution](problems/041-tables-for-an-airbnb-like-app/solution.md) |
 | 42 | Tracking Subscription Plan History | Data Modeling | Medium | strong | [Question](problems/042-tracking-subscription-plan-history/question.md) | [Solution](problems/042-tracking-subscription-plan-history/solution.md) |
 | 43 | Mixing Facts and Dimensions | Data Modeling | Medium | strong | [Question](problems/043-mixing-facts-and-dimensions/question.md) | [Solution](problems/043-mixing-facts-and-dimensions/solution.md) |
@@ -56,10 +56,10 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 | 48 | Query Suddenly 80x Slower | Debugging & Reliability | Medium | ⭐ must | [Question](problems/048-query-suddenly-80x-slower/question.md) | [Solution](problems/048-query-suddenly-80x-slower/solution.md) |
 | 49 | User Says Data Is Wrong | Debugging & Reliability | Easy | optional | [Question](problems/049-user-says-data-is-wrong/question.md) | [Solution](problems/049-user-says-data-is-wrong/solution.md) |
 | 50 | Partition Always Ten Percent Smaller | Debugging & Reliability | Medium | strong | [Question](problems/050-partition-always-ten-percent-smaller/question.md) | [Solution](problems/050-partition-always-ten-percent-smaller/solution.md) |
-| 51 | BigQuery Bill Eight Times Higher | Cloud & Cost | Medium | ⭐ must | [Question](problems/051-bigquery-bill-eight-times-higher/question.md) | [Solution](problems/051-bigquery-bill-eight-times-higher/solution.md) |
-| 52 | Four Hour Spark Job Under One Hour | Cloud & Cost | Medium | strong | [Question](problems/052-four-hour-spark-job-under-one-hour/question.md) | [Solution](problems/052-four-hour-spark-job-under-one-hour/solution.md) |
-| 53 | Hourly Scan on Daily Data | Cloud & Cost | Easy | strong | [Question](problems/053-hourly-scan-on-daily-data/question.md) | [Solution](problems/053-hourly-scan-on-daily-data/solution.md) |
-| 54 | Just Throw More Memory At It | Cloud & Cost | Medium | strong | [Question](problems/054-just-throw-more-memory-at-it/question.md) | [Solution](problems/054-just-throw-more-memory-at-it/solution.md) |
+| 51 | BigQuery Bill Eight Times Higher | Cost Optimization | Medium | ⭐ must | [Question](problems/051-bigquery-bill-eight-times-higher/question.md) | [Solution](problems/051-bigquery-bill-eight-times-higher/solution.md) |
+| 52 | Four Hour Spark Job Under One Hour | Cost Optimization | Medium | strong | [Question](problems/052-four-hour-spark-job-under-one-hour/question.md) | [Solution](problems/052-four-hour-spark-job-under-one-hour/solution.md) |
+| 53 | Hourly Scan on Daily Data | Cost Optimization | Easy | strong | [Question](problems/053-hourly-scan-on-daily-data/question.md) | [Solution](problems/053-hourly-scan-on-daily-data/solution.md) |
+| 54 | Just Throw More Memory At It | Cost Optimization | Medium | strong | [Question](problems/054-just-throw-more-memory-at-it/question.md) | [Solution](problems/054-just-throw-more-memory-at-it/solution.md) |
 | 55 | Partitioning Clustering Materialized Views | Storage & Formats | Easy | strong | [Question](problems/055-partitioning-clustering-materialized-views/question.md) | [Solution](problems/055-partitioning-clustering-materialized-views/solution.md) |
 | 56 | Watermarks in Plain Words | Streaming | Medium | ⭐ must | [Question](problems/056-watermarks-in-plain-words/question.md) | [Solution](problems/056-watermarks-in-plain-words/solution.md) |
 | 57 | Kafka Ordering Guarantee | Streaming | Medium | ⭐ must | [Question](problems/057-kafka-ordering-guarantee/question.md) | [Solution](problems/057-kafka-ordering-guarantee/solution.md) |
@@ -71,16 +71,16 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 | 63 | Inherited Pipeline No Docs No Tests | People & Process | Medium | optional | [Question](problems/063-inherited-pipeline-no-docs-no-tests/question.md) | [Solution](problems/063-inherited-pipeline-no-docs-no-tests/solution.md) |
 | 64 | Breaking Change in dbt Model 200 Consumers | People & Process | Medium | strong | [Question](problems/064-breaking-change-in-dbt-model-200-consumers/question.md) | [Solution](problems/064-breaking-change-in-dbt-model-200-consumers/solution.md) |
 | 65 | 4000 DAG Airflow at 90 Percent CPU | Debugging & Reliability | Medium | strong | [Question](problems/065-4000-dag-airflow-at-90-percent-cpu/question.md) | [Solution](problems/065-4000-dag-airflow-at-90-percent-cpu/solution.md) |
-| 66 | Indexes When to Add and When They Hurt | Databases | Easy | ⭐ must | [Question](problems/066-indexes-when-to-add-and-when-they-hurt/question.md) | [Solution](problems/066-indexes-when-to-add-and-when-they-hurt/solution.md) |
-| 67 | Transactions and ACID | Databases | Easy | ⭐ must | [Question](problems/067-transactions-and-acid/question.md) | [Solution](problems/067-transactions-and-acid/solution.md) |
-| 68 | Isolation Levels in Plain Words | Databases | Medium | ⭐ must | [Question](problems/068-isolation-levels-in-plain-words/question.md) | [Solution](problems/068-isolation-levels-in-plain-words/solution.md) |
-| 69 | Normalization and When to Denormalize | Databases | Medium | strong | [Question](problems/069-normalization-and-when-to-denormalize/question.md) | [Solution](problems/069-normalization-and-when-to-denormalize/solution.md) |
-| 70 | B-Tree vs Hash vs LSM Tree | Databases | Medium | ⭐ must | [Question](problems/070-b-tree-vs-hash-vs-lsm-tree/question.md) | [Solution](problems/070-b-tree-vs-hash-vs-lsm-tree/solution.md) |
-| 71 | Read Replicas and Replication Lag | Databases | Medium | strong | [Question](problems/071-read-replicas-and-replication-lag/question.md) | [Solution](problems/071-read-replicas-and-replication-lag/solution.md) |
-| 72 | Sharding and Picking a Shard Key | Databases | Hard | ⭐ must | [Question](problems/072-sharding-and-picking-a-shard-key/question.md) | [Solution](problems/072-sharding-and-picking-a-shard-key/solution.md) |
-| 73 | Database Connection Pooling | Databases | Medium | strong | [Question](problems/073-database-connection-pooling/question.md) | [Solution](problems/073-database-connection-pooling/solution.md) |
-| 74 | Deadlocks and Lock Escalation | Databases | Medium | strong | [Question](problems/074-deadlocks-and-lock-escalation/question.md) | [Solution](problems/074-deadlocks-and-lock-escalation/solution.md) |
-| 75 | SQL vs NoSQL | Databases | Medium | strong | [Question](problems/075-sql-vs-nosql/question.md) | [Solution](problems/075-sql-vs-nosql/solution.md) |
+| 66 | Indexes When to Add and When They Hurt | Database Internals | Easy | ⭐ must | [Question](problems/066-indexes-when-to-add-and-when-they-hurt/question.md) | [Solution](problems/066-indexes-when-to-add-and-when-they-hurt/solution.md) |
+| 67 | Transactions and ACID | Database Internals | Easy | ⭐ must | [Question](problems/067-transactions-and-acid/question.md) | [Solution](problems/067-transactions-and-acid/solution.md) |
+| 68 | Isolation Levels in Plain Words | Database Internals | Medium | ⭐ must | [Question](problems/068-isolation-levels-in-plain-words/question.md) | [Solution](problems/068-isolation-levels-in-plain-words/solution.md) |
+| 69 | Normalization and When to Denormalize | Database Internals | Medium | strong | [Question](problems/069-normalization-and-when-to-denormalize/question.md) | [Solution](problems/069-normalization-and-when-to-denormalize/solution.md) |
+| 70 | B-Tree vs Hash vs LSM Tree | Database Internals | Medium | ⭐ must | [Question](problems/070-b-tree-vs-hash-vs-lsm-tree/question.md) | [Solution](problems/070-b-tree-vs-hash-vs-lsm-tree/solution.md) |
+| 71 | Read Replicas and Replication Lag | Database Operations | Medium | strong | [Question](problems/071-read-replicas-and-replication-lag/question.md) | [Solution](problems/071-read-replicas-and-replication-lag/solution.md) |
+| 72 | Sharding and Picking a Shard Key | Database Operations | Hard | ⭐ must | [Question](problems/072-sharding-and-picking-a-shard-key/question.md) | [Solution](problems/072-sharding-and-picking-a-shard-key/solution.md) |
+| 73 | Database Connection Pooling | Database Operations | Medium | strong | [Question](problems/073-database-connection-pooling/question.md) | [Solution](problems/073-database-connection-pooling/solution.md) |
+| 74 | Deadlocks and Lock Escalation | Database Operations | Medium | strong | [Question](problems/074-deadlocks-and-lock-escalation/question.md) | [Solution](problems/074-deadlocks-and-lock-escalation/solution.md) |
+| 75 | SQL vs NoSQL | Database Internals | Medium | strong | [Question](problems/075-sql-vs-nosql/question.md) | [Solution](problems/075-sql-vs-nosql/solution.md) |
 
 ---
 
@@ -90,12 +90,14 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 |----------|-------------------|
 | SQL & Querying | Writing, reading and reasoning about SQL like a senior engineer |
 | Data Modeling | Star schemas, history tracking, grain, dimensions, SCDs |
-| Databases | Engines, ACID, isolation, indexes, replication, sharding |
+| Database Internals | Engines, ACID, isolation levels, indexes, B-tree vs LSM, normalization |
+| Database Operations | Running databases at scale: replicas, sharding, connection pools, deadlocks |
 | Batch Pipelines | ETL/ELT, idempotency, data cleaning, contracts, orchestration |
 | Streaming | Kafka, watermarks, exactly-once, ordering, consumer lag |
 | Storage & Formats | Parquet, lakehouse, partitioning, clustering, materialized views |
 | System Design | End-to-end pipelines for real consumer and energy-sector products |
-| Cloud & Cost | Picking between AWS / GCP services, finding waste, controlling spend |
+| Cloud Services | Picking between AWS, GCP and Azure services with clear trade-offs |
+| Cost Optimization | Finding waste in queries, jobs, and infrastructure when the bill spikes |
 | Debugging & Reliability | Step-by-step investigation when the number is wrong or the job died |
 | People & Process | Mentoring, comms, postmortems, ownership, rollouts |
 
@@ -119,12 +121,12 @@ Twenty-nine problems that cover the questions you cannot dodge in a senior data 
 
 3. [Window Functions vs GROUP BY](problems/020-window-functions-vs-group-by/question.md) — *SQL & Querying*
 5. [Reading an EXPLAIN Plan](problems/017-reading-an-explain-plan/question.md) — *SQL & Querying*
-7. [OLTP vs OLAP](problems/008-oltp-vs-olap/question.md) — *Databases*
-9. [Transactions and ACID](problems/067-transactions-and-acid/question.md) — *Databases*
-10. [Isolation Levels in Plain Words](problems/068-isolation-levels-in-plain-words/question.md) — *Databases*
-12. [Indexes When to Add and When They Hurt](problems/066-indexes-when-to-add-and-when-they-hurt/question.md) — *Databases*
-13. [B-Tree vs Hash vs LSM Tree](problems/070-b-tree-vs-hash-vs-lsm-tree/question.md) — *Databases*
-17. [Sharding and Picking a Shard Key](problems/072-sharding-and-picking-a-shard-key/question.md) — *Databases*
+7. [OLTP vs OLAP](problems/008-oltp-vs-olap/question.md) — *Database Internals*
+9. [Transactions and ACID](problems/067-transactions-and-acid/question.md) — *Database Internals*
+10. [Isolation Levels in Plain Words](problems/068-isolation-levels-in-plain-words/question.md) — *Database Internals*
+12. [Indexes When to Add and When They Hurt](problems/066-indexes-when-to-add-and-when-they-hurt/question.md) — *Database Internals*
+13. [B-Tree vs Hash vs LSM Tree](problems/070-b-tree-vs-hash-vs-lsm-tree/question.md) — *Database Internals*
+17. [Sharding and Picking a Shard Key](problems/072-sharding-and-picking-a-shard-key/question.md) — *Database Operations*
 18. [Explaining Fact Table Grain](problems/044-explaining-fact-table-grain/question.md) — *Data Modeling*
 20. [Slowly Changing Dimensions](problems/010-slowly-changing-dimensions/question.md) — *Data Modeling*
 21. [Tables for an Airbnb Like App](problems/041-tables-for-an-airbnb-like-app/question.md) — *Data Modeling*
@@ -143,8 +145,8 @@ Twenty-nine problems that cover the questions you cannot dodge in a senior data 
 58. [Daily Report Quietly Wrong for Two Weeks](problems/029-daily-report-quietly-wrong-for-two-weeks/question.md) — *Debugging & Reliability*
 60. [Query Suddenly 80x Slower](problems/048-query-suddenly-80x-slower/question.md) — *Debugging & Reliability*
 61. [Three Days of Data Lost](problems/034-three-days-of-data-lost/question.md) — *Debugging & Reliability*
-65. [BigQuery Bill Eight Times Higher](problems/051-bigquery-bill-eight-times-higher/question.md) — *Cloud & Cost*
-66. [Warehouse Cost Doubled in Two Months](problems/030-warehouse-cost-doubled-in-two-months/question.md) — *Cloud & Cost*
+65. [BigQuery Bill Eight Times Higher](problems/051-bigquery-bill-eight-times-higher/question.md) — *Cost Optimization*
+66. [Warehouse Cost Doubled in Two Months](problems/030-warehouse-cost-doubled-in-two-months/question.md) — *Cost Optimization*
 75. [Postmortem After a Bad Day](problems/062-postmortem-after-a-bad-day/question.md) — *People & Process*
 
 ---
@@ -159,17 +161,17 @@ All 75 problems arranged as a pedagogical sequence. Read top to bottom for a com
 4. [SELECT DISTINCT Hiding Join Bugs](problems/016-select-distinct-hiding-join-bugs/question.md) — *SQL & Querying*, Medium
 5. [Reading an EXPLAIN Plan](problems/017-reading-an-explain-plan/question.md) — *SQL & Querying*, Medium
 6. [Same Query Different Answers](problems/019-same-query-different-answers/question.md) — *SQL & Querying*, Medium
-7. [OLTP vs OLAP](problems/008-oltp-vs-olap/question.md) — *Databases*, Easy
-8. [SQL vs NoSQL](problems/075-sql-vs-nosql/question.md) — *Databases*, Medium
-9. [Transactions and ACID](problems/067-transactions-and-acid/question.md) — *Databases*, Easy
-10. [Isolation Levels in Plain Words](problems/068-isolation-levels-in-plain-words/question.md) — *Databases*, Medium
-11. [Normalization and When to Denormalize](problems/069-normalization-and-when-to-denormalize/question.md) — *Databases*, Medium
-12. [Indexes When to Add and When They Hurt](problems/066-indexes-when-to-add-and-when-they-hurt/question.md) — *Databases*, Easy
-13. [B-Tree vs Hash vs LSM Tree](problems/070-b-tree-vs-hash-vs-lsm-tree/question.md) — *Databases*, Medium
-14. [Database Connection Pooling](problems/073-database-connection-pooling/question.md) — *Databases*, Medium
-15. [Deadlocks and Lock Escalation](problems/074-deadlocks-and-lock-escalation/question.md) — *Databases*, Medium
-16. [Read Replicas and Replication Lag](problems/071-read-replicas-and-replication-lag/question.md) — *Databases*, Medium
-17. [Sharding and Picking a Shard Key](problems/072-sharding-and-picking-a-shard-key/question.md) — *Databases*, Hard
+7. [OLTP vs OLAP](problems/008-oltp-vs-olap/question.md) — *Database Internals*, Easy
+8. [SQL vs NoSQL](problems/075-sql-vs-nosql/question.md) — *Database Internals*, Medium
+9. [Transactions and ACID](problems/067-transactions-and-acid/question.md) — *Database Internals*, Easy
+10. [Isolation Levels in Plain Words](problems/068-isolation-levels-in-plain-words/question.md) — *Database Internals*, Medium
+11. [Normalization and When to Denormalize](problems/069-normalization-and-when-to-denormalize/question.md) — *Database Internals*, Medium
+12. [Indexes When to Add and When They Hurt](problems/066-indexes-when-to-add-and-when-they-hurt/question.md) — *Database Internals*, Easy
+13. [B-Tree vs Hash vs LSM Tree](problems/070-b-tree-vs-hash-vs-lsm-tree/question.md) — *Database Internals*, Medium
+14. [Database Connection Pooling](problems/073-database-connection-pooling/question.md) — *Database Operations*, Medium
+15. [Deadlocks and Lock Escalation](problems/074-deadlocks-and-lock-escalation/question.md) — *Database Operations*, Medium
+16. [Read Replicas and Replication Lag](problems/071-read-replicas-and-replication-lag/question.md) — *Database Operations*, Medium
+17. [Sharding and Picking a Shard Key](problems/072-sharding-and-picking-a-shard-key/question.md) — *Database Operations*, Hard
 18. [Explaining Fact Table Grain](problems/044-explaining-fact-table-grain/question.md) — *Data Modeling*, Easy
 19. [Mixing Facts and Dimensions](problems/043-mixing-facts-and-dimensions/question.md) — *Data Modeling*, Medium
 20. [Slowly Changing Dimensions](problems/010-slowly-changing-dimensions/question.md) — *Data Modeling*, Medium
@@ -186,12 +188,12 @@ All 75 problems arranged as a pedagogical sequence. Read top to bottom for a com
 31. [Data Lake vs Warehouse vs Lakehouse](problems/013-data-lake-vs-warehouse-vs-lakehouse/question.md) — *Storage & Formats*, Medium
 32. [Partitioning vs Clustering in BigQuery](problems/006-partitioning-vs-clustering-in-bigquery/question.md) — *Storage & Formats*, Easy
 33. [Partitioning Clustering Materialized Views](problems/055-partitioning-clustering-materialized-views/question.md) — *Storage & Formats*, Easy
-34. [Store Partner Files in S3 or Warehouse](problems/038-store-partner-files-in-s3-or-warehouse/question.md) — *Cloud & Cost*, Easy
-35. [Lambda vs Cloud Function vs Cloud Run](problems/035-lambda-vs-cloud-function-vs-cloud-run/question.md) — *Cloud & Cost*, Medium
-36. [Scheduled Pipeline Pay Only When Run](problems/036-scheduled-pipeline-pay-only-when-run/question.md) — *Cloud & Cost*, Easy
-37. [BigQuery vs Snowflake for New Team](problems/037-bigquery-vs-snowflake-for-new-team/question.md) — *Cloud & Cost*, Medium
-38. [Managed Airflow vs Self Hosted](problems/039-managed-airflow-vs-self-hosted/question.md) — *Cloud & Cost*, Medium
-39. [BigQuery Access Control for 50 Person Company](problems/040-bigquery-access-control-for-50-person-company/question.md) — *Cloud & Cost*, Medium
+34. [Store Partner Files in S3 or Warehouse](problems/038-store-partner-files-in-s3-or-warehouse/question.md) — *Cloud Services*, Easy
+35. [Lambda vs Cloud Function vs Cloud Run](problems/035-lambda-vs-cloud-function-vs-cloud-run/question.md) — *Cloud Services*, Medium
+36. [Scheduled Pipeline Pay Only When Run](problems/036-scheduled-pipeline-pay-only-when-run/question.md) — *Cloud Services*, Easy
+37. [BigQuery vs Snowflake for New Team](problems/037-bigquery-vs-snowflake-for-new-team/question.md) — *Cloud Services*, Medium
+38. [Managed Airflow vs Self Hosted](problems/039-managed-airflow-vs-self-hosted/question.md) — *Cloud Services*, Medium
+39. [BigQuery Access Control for 50 Person Company](problems/040-bigquery-access-control-for-50-person-company/question.md) — *Cloud Services*, Medium
 40. [Rolling Average of Sensor Readings](problems/002-rolling-average-of-sensor-readings/question.md) — *Streaming*, Easy
 41. [Schema Evolution and Validation for Streaming Events](problems/004-schema-evolution-and-validation-for-streaming-events/question.md) — *Streaming*, Medium
 42. [Watermarks in Plain Words](problems/056-watermarks-in-plain-words/question.md) — *Streaming*, Medium
@@ -215,11 +217,11 @@ All 75 problems arranged as a pedagogical sequence. Read top to bottom for a com
 60. [Query Suddenly 80x Slower](problems/048-query-suddenly-80x-slower/question.md) — *Debugging & Reliability*, Medium
 61. [Three Days of Data Lost](problems/034-three-days-of-data-lost/question.md) — *Debugging & Reliability*, Hard
 62. [4000 DAG Airflow at 90 Percent CPU](problems/065-4000-dag-airflow-at-90-percent-cpu/question.md) — *Debugging & Reliability*, Medium
-63. [Just Throw More Memory At It](problems/054-just-throw-more-memory-at-it/question.md) — *Cloud & Cost*, Medium
-64. [Hourly Scan on Daily Data](problems/053-hourly-scan-on-daily-data/question.md) — *Cloud & Cost*, Easy
-65. [BigQuery Bill Eight Times Higher](problems/051-bigquery-bill-eight-times-higher/question.md) — *Cloud & Cost*, Medium
-66. [Warehouse Cost Doubled in Two Months](problems/030-warehouse-cost-doubled-in-two-months/question.md) — *Cloud & Cost*, Medium
-67. [Four Hour Spark Job Under One Hour](problems/052-four-hour-spark-job-under-one-hour/question.md) — *Cloud & Cost*, Medium
+63. [Just Throw More Memory At It](problems/054-just-throw-more-memory-at-it/question.md) — *Cost Optimization*, Medium
+64. [Hourly Scan on Daily Data](problems/053-hourly-scan-on-daily-data/question.md) — *Cost Optimization*, Easy
+65. [BigQuery Bill Eight Times Higher](problems/051-bigquery-bill-eight-times-higher/question.md) — *Cost Optimization*, Medium
+66. [Warehouse Cost Doubled in Two Months](problems/030-warehouse-cost-doubled-in-two-months/question.md) — *Cost Optimization*, Medium
+67. [Four Hour Spark Job Under One Hour](problems/052-four-hour-spark-job-under-one-hour/question.md) — *Cost Optimization*, Medium
 68. [Onboarding a New Analyst](problems/059-onboarding-a-new-analyst/question.md) — *People & Process*, Easy
 69. [Metric by Tomorrow vs Doing It Right](problems/060-metric-by-tomorrow-vs-doing-it-right/question.md) — *People & Process*, Easy
 70. [Executive Needs a Number Tomorrow](problems/033-executive-needs-a-number-tomorrow/question.md) — *People & Process*, Medium

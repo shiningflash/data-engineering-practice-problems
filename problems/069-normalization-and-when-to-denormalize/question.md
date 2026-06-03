@@ -1,7 +1,7 @@
 ---
 id: 69
 title: Normalization and When to Denormalize
-category: Databases
+category: Database Internals
 topics: [normalization, 3NF, denormalization, star schema]
 difficulty: Medium
 interview_value: strong

@@ -1,7 +1,7 @@
 ---
 id: 52
 title: Four Hour Spark Job Under One Hour
-category: Cloud & Cost
+category: Cost Optimization
 topics: [Spark UI, skew, AQE, broadcast joins]
 difficulty: Medium
 interview_value: strong

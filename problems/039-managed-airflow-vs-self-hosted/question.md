@@ -1,7 +1,7 @@
 ---
 id: 39
 title: Managed Airflow vs Self Hosted
-category: Cloud & Cost
+category: Cloud Services
 topics: [Airflow, MWAA, Composer, Astronomer, Dagster]
 difficulty: Medium
 interview_value: strong

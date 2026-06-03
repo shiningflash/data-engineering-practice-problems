@@ -1,7 +1,7 @@
 ---
 id: 67
 title: Transactions and ACID
-category: Databases
+category: Database Internals
 topics: [transactions, ACID, durability, atomicity]
 difficulty: Easy
 interview_value: must-have

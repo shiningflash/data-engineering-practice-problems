@@ -1,7 +1,7 @@
 ---
 id: 66
 title: Indexes When to Add and When They Hurt
-category: Databases
+category: Database Internals
 topics: [indexes, B-tree, write cost, EXPLAIN]
 difficulty: Easy
 interview_value: must-have

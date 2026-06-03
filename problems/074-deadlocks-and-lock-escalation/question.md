@@ -1,7 +1,7 @@
 ---
 id: 74
 title: Deadlocks and Lock Escalation
-category: Databases
+category: Database Operations
 topics: [deadlocks, locks, retries, lock escalation]
 difficulty: Medium
 interview_value: strong

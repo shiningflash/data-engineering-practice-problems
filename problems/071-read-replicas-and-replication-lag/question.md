@@ -1,7 +1,7 @@
 ---
 id: 71
 title: Read Replicas and Replication Lag
-category: Databases
+category: Database Operations
 topics: [replicas, replication lag, read after write]
 difficulty: Medium
 interview_value: strong

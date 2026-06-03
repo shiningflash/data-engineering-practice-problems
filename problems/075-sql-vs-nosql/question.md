@@ -1,7 +1,7 @@
 ---
 id: 75
 title: SQL vs NoSQL
-category: Databases
+category: Database Internals
 topics: [SQL, NoSQL, KV, document, wide column, graph]
 difficulty: Medium
 interview_value: strong

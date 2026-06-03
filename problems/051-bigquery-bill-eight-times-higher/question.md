@@ -1,7 +1,7 @@
 ---
 id: 51
 title: BigQuery Bill Eight Times Higher
-category: Cloud & Cost
+category: Cost Optimization
 topics: [INFORMATION_SCHEMA, top queries, slot reservation]
 difficulty: Medium
 interview_value: must-have
