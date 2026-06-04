@@ -100,6 +100,14 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 | 92 | Late Events After the Partition Closed | Streaming | Medium | strong | [Question](problems/092-late-events-after-the-partition-closed/question.md) | [Solution](problems/092-late-events-after-the-partition-closed/solution.md) |
 | 93 | Dashboard Stale Despite a Healthy Job | Batch Pipelines & Orchestration | Medium | strong | [Question](problems/093-dashboard-stale-despite-healthy-job/question.md) | [Solution](problems/093-dashboard-stale-despite-healthy-job/solution.md) |
 | 94 | Versioning a Breaking Grain Change | Data Modeling | Hard | ⭐ must | [Question](problems/094-versioning-a-breaking-grain-change/question.md) | [Solution](problems/094-versioning-a-breaking-grain-change/solution.md) |
+| 95 | Duplicate Rows From a Successful Pipeline | Batch Pipelines & Orchestration | Medium | ⭐ must | [Question](problems/095-duplicate-rows-from-a-successful-pipeline/question.md) | [Solution](problems/095-duplicate-rows-from-a-successful-pipeline/solution.md) |
+| 96 | The 20-Minute Query That Should Be 2 Seconds | SQL & Querying | Medium | strong | [Question](problems/096-the-twenty-minute-query-that-should-be-two-seconds/question.md) | [Solution](problems/096-the-twenty-minute-query-that-should-be-two-seconds/solution.md) |
+| 97 | Backfill 90 Days Without Blowing the Budget | Batch Pipelines & Orchestration | Hard | strong | [Question](problems/097-backfill-ninety-days-without-blowing-the-budget/question.md) | [Solution](problems/097-backfill-ninety-days-without-blowing-the-budget/solution.md) |
+| 98 | Same Metric, Three Different Numbers | Data Modeling | Medium | ⭐ must | [Question](problems/098-same-metric-three-different-numbers/question.md) | [Solution](problems/098-same-metric-three-different-numbers/solution.md) |
+| 99 | No Staging Layer, Everything Touches Raw | Data Modeling | Medium | strong | [Question](problems/099-no-staging-layer-everything-touches-raw/question.md) | [Solution](problems/099-no-staging-layer-everything-touches-raw/solution.md) |
+| 100 | Timezones Silently Wrong Across the Warehouse | SQL & Querying | Medium | strong | [Question](problems/100-timezones-silently-wrong-across-the-warehouse/question.md) | [Solution](problems/100-timezones-silently-wrong-across-the-warehouse/solution.md) |
+| 101 | No Dev Environment, Everyone Tests in Prod | People & Process | Medium | strong | [Question](problems/101-no-dev-environment-everyone-tests-in-prod/question.md) | [Solution](problems/101-no-dev-environment-everyone-tests-in-prod/solution.md) |
+| 102 | Critical Model, No Tests, Nobody Dares Touch It | Batch Pipelines & Orchestration | Hard | strong | [Question](problems/102-critical-model-no-tests-nobody-dares-touch-it/question.md) | [Solution](problems/102-critical-model-no-tests-nobody-dares-touch-it/solution.md) |
 
 ---
 
@@ -133,7 +141,7 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 
 ### ⭐ Interview Must-Haves
 
-35 problems that cover the questions you cannot dodge in a senior data engineer loop. Read them in the order shown, top to bottom.
+37 problems that cover the questions you cannot dodge in a senior data engineer loop. Read them in the order shown, top to bottom.
 
 3. [Window Functions vs GROUP BY](problems/020-window-functions-vs-group-by/question.md) — *SQL & Querying*
 5. [Reading an EXPLAIN Plan](problems/017-reading-an-explain-plan/question.md) — *SQL & Querying*
@@ -170,12 +178,14 @@ A quick overview of every problem in this repo. Use the **Category** and **Topic
 85. [Spark Shuffle, Skew, and the Small File Problem](problems/079-spark-shuffle-skew-and-small-files/question.md) — *Cloud & Cost*
 88. [Data Observability, Freshness, Volume, and Drift](problems/084-data-observability-freshness-volume-drift/question.md) — *System Design*
 94. [Versioning a Breaking Grain Change](problems/094-versioning-a-breaking-grain-change/question.md) — *Data Modeling*
+95. [Duplicate Rows From a Successful Pipeline](problems/095-duplicate-rows-from-a-successful-pipeline/question.md) — *Batch Pipelines & Orchestration*
+98. [Same Metric, Three Different Numbers](problems/098-same-metric-three-different-numbers/question.md) — *Data Modeling*
 
 ---
 
 ### Recommended Reading Order
 
-All 94 problems arranged as a pedagogical sequence. Read top to bottom for a complete path from SQL to senior-level data engineering.
+All 102 problems arranged as a pedagogical sequence. Read top to bottom for a complete path from SQL to senior-level data engineering.
 
 1. [Teaching SQL Performance to a Junior](problems/015-teaching-sql-performance-to-a-junior/question.md) — *SQL & Querying*, Medium
 2. [CTE vs Subquery](problems/018-cte-vs-subquery/question.md) — *SQL & Querying*, Medium
@@ -271,5 +281,13 @@ All 94 problems arranged as a pedagogical sequence. Read top to bottom for a com
 92. [Late Events After the Partition Closed](problems/092-late-events-after-the-partition-closed/question.md) — *Streaming*, Medium
 93. [Dashboard Stale Despite a Healthy Job](problems/093-dashboard-stale-despite-healthy-job/question.md) — *Batch Pipelines & Orchestration*, Medium
 94. [Versioning a Breaking Grain Change](problems/094-versioning-a-breaking-grain-change/question.md) — *Data Modeling*, Hard
+95. [Duplicate Rows From a Successful Pipeline](problems/095-duplicate-rows-from-a-successful-pipeline/question.md) — *Batch Pipelines & Orchestration*, Medium
+96. [The 20-Minute Query That Should Be 2 Seconds](problems/096-the-twenty-minute-query-that-should-be-two-seconds/question.md) — *SQL & Querying*, Medium
+97. [Backfill 90 Days Without Blowing the Budget](problems/097-backfill-ninety-days-without-blowing-the-budget/question.md) — *Batch Pipelines & Orchestration*, Hard
+98. [Same Metric, Three Different Numbers](problems/098-same-metric-three-different-numbers/question.md) — *Data Modeling*, Medium
+99. [No Staging Layer, Everything Touches Raw](problems/099-no-staging-layer-everything-touches-raw/question.md) — *Data Modeling*, Medium
+100. [Timezones Silently Wrong Across the Warehouse](problems/100-timezones-silently-wrong-across-the-warehouse/question.md) — *SQL & Querying*, Medium
+101. [No Dev Environment, Everyone Tests in Prod](problems/101-no-dev-environment-everyone-tests-in-prod/question.md) — *People & Process*, Medium
+102. [Critical Model, No Tests, Nobody Dares Touch It](problems/102-critical-model-no-tests-nobody-dares-touch-it/question.md) — *Batch Pipelines & Orchestration*, Hard
 
 > New problems are added regularly. If you want to contribute, see the [Contribution Guide](CONTRIBUTION.md).
